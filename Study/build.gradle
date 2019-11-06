@@ -5,9 +5,6 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
-    kotlinOptions{
-        jvmTarget = "1.8"
-    }
     defaultConfig {
         applicationId "com.abelhu.androidstudy"
         minSdkVersion 15
@@ -62,6 +59,13 @@ android {
         check{
             dimension "source"
         }
+    }
+    kotlinOptions{
+        jvmTarget = "1.8"
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
     variantFilter {
         def names = it.flavors*.name
