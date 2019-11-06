@@ -5,6 +5,9 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
+    kotlinOptions{
+        jvmTarget = "1.8"
+    }
     defaultConfig {
         applicationId "com.abelhu.androidstudy"
         minSdkVersion 15
@@ -12,17 +15,61 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        buildConfigField("String","Host","\"https://www.qq.com/\"")
     }
     buildTypes {
-        release {
+        debug {
+            debuggable true
             minifyEnabled false
+            shrinkResources false
+            applicationIdSuffix ".debug"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String","Host","\"https://www.baidu.com/\"")
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String","Host","\"https://www.qq.com/\"")
         }
     }
-    kotlinOptions{
-        jvmTarget = "1.8"
+    flavorDimensions "game", "source"
+    productFlavors{
+        landlords{
+            dimension "game"
+            applicationId "com.xianlai.guandan"
+        }
+        mahjong{
+            dimension "game"
+            applicationId "com.xianlai.mahjonghnsy"
+        }
+        run{
+            dimension "game"
+            applicationId "com.ixianlai.gouji"
+        }
+
+        master{
+            dimension "source"
+        }
+        ali{
+            dimension "source"
+            applicationIdSuffix ".aligames"
+        }
+        bytes{
+            dimension "source"
+            applicationIdSuffix ".jrtt"
+        }
+        check{
+            dimension "source"
+        }
+    }
+    variantFilter {
+        def names = it.flavors*.name
+        // To check for a certain build type, use variant.buildType.name == "<buildType>"
+        if (names.contains("minApi21") && names.contains("demo")) {
+            // Gradle ignores any variants that satisfy the conditions above.
+            setIgnore(true)
+        }
     }
 }
 
