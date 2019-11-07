@@ -1,6 +1,7 @@
 package com.abelhu.androidstudy.ui.send
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,11 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class SendFragment : Fragment() {
+class SendFragment : EventBusBaseFragment() {
+
+    companion object{
+        val Tag = SendFragment::class.simpleName
+    }
 
     private lateinit var sendViewModel: SendViewModel
 
@@ -38,7 +43,14 @@ class SendFragment : Fragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.POSTING)
-    fun sendMessage(message:SendMessage){
+    override fun subscribeMessage0(message:SendMessage){
         Snackbar.make(rootView, "get message from main", Snackbar.LENGTH_LONG).setAction("Action", null).show()
+        Log.d(Tag, "subscribeMessage0")
     }
+    // there is a bug in EventBus: https://github.com/greenrobot/EventBus/issues/539
+    // but i fix this bug: https://github.com/greenrobot/EventBus/pull/615
+//    @Subscribe(threadMode = ThreadMode.POSTING)
+//    override fun subscribeMessage1(message:SendMessage){
+//        Log.d(Tag, "subscribeMessage1")
+//    }
 }

@@ -102,4 +102,6 @@ dependencies {
     implementation 'com.orhanobut:logger:2.2.0'
     // eventBus: https://github.com/greenrobot/EventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
+    // tcp: https://github.com/TooTallNate/Java-WebSocket
+    implementation "org.java-websocket:Java-WebSocket:1.4.0"
 }
