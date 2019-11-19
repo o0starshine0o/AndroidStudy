@@ -7,7 +7,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.abelhu.androidstudy"
-        minSdkVersion 15
+        minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -79,7 +79,7 @@ android {
 
 dependencies {
     // libs
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     // kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
@@ -103,5 +103,8 @@ dependencies {
     // eventBus: https://github.com/greenrobot/EventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
     // tcp: https://github.com/TooTallNate/Java-WebSocket
-    implementation "org.java-websocket:Java-WebSocket:1.4.0"
+    implementation 'org.java-websocket:Java-WebSocket:1.4.0'
+    // rxJava: https://github.com/ReactiveX/RxJava
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.14'
 }
