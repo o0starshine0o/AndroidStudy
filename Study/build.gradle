@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
@@ -107,4 +108,12 @@ dependencies {
     // rxJava: https://github.com/ReactiveX/RxJava
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.14'
+    // cache video: https://github.com/danikula/AndroidVideoCache
+    implementation 'com.danikula:videocache:2.7.1'
+    // dagger Dependency Injection : https://github.com/google/dagger
+    implementation 'com.google.dagger:dagger:2.25.2'
+    kapt 'com.google.dagger:dagger-compiler:2.25.2'
+    implementation 'com.google.dagger:dagger-android:2.25.2'
+    implementation 'com.google.dagger:dagger-android-support:2.25.2'
+    kapt 'com.google.dagger:dagger-android-processor:2.25.2'
 }
