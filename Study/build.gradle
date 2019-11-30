@@ -19,7 +19,6 @@ android {
             debuggable true
             minifyEnabled false
             shrinkResources false
-            applicationIdSuffix ".debug"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String","Host","\"https://www.baidu.com/\"")
         }
@@ -29,36 +28,6 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String","Host","\"https://www.qq.com/\"")
-        }
-    }
-    flavorDimensions "game", "source"
-    productFlavors{
-        landlords{
-            dimension "game"
-            applicationId "com.xianlai.guandan"
-        }
-        mahjong{
-            dimension "game"
-            applicationId "com.xianlai.mahjonghnsy"
-        }
-        run{
-            dimension "game"
-            applicationId "com.ixianlai.gouji"
-        }
-
-        master{
-            dimension "source"
-        }
-        ali{
-            dimension "source"
-            applicationIdSuffix ".aligames"
-        }
-        bytes{
-            dimension "source"
-            applicationIdSuffix ".jrtt"
-        }
-        check{
-            dimension "source"
         }
     }
     kotlinOptions{
@@ -99,8 +68,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    // logger:https://github.com/orhanobut/logger
-    implementation 'com.orhanobut:logger:2.2.0'
     // eventBus: https://github.com/greenrobot/EventBus
     implementation 'org.greenrobot:eventbus:3.1.1'
     // tcp: https://github.com/TooTallNate/Java-WebSocket

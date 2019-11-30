@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
 import com.abelhu.androidstudy.instrumentation.MyInstrumentation
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
 import io.reactivex.Single
 import io.reactivex.SingleSource
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -25,7 +23,8 @@ class MyApplication : Application() {
         // set custom looper
         setCustomLooper()
 
-        Single.just(true).subscribeOn(Schedulers.single()).flatMap { asyncNoRelySdk() }.observeOn(AndroidSchedulers.mainThread()).subscribe { e -> asyncRelySdk(e) }
+        Single.just(true).subscribeOn(Schedulers.single()).flatMap { asyncNoRelySdk() }.observeOn(AndroidSchedulers.mainThread())
+            .subscribe { e -> asyncRelySdk(e) }
     }
 
     @SuppressLint("PrivateApi", "DiscouragedPrivateApi")
@@ -45,11 +44,10 @@ class MyApplication : Application() {
 
     private fun asyncNoRelySdk(): SingleSource<Boolean> {
         Log.i(Tag, "asyncNoRelySdk in thread:${Thread.currentThread().name}")
-        Logger.addLogAdapter(AndroidLogAdapter())
         return Single.just(true)
     }
 
     private fun asyncRelySdk(e: Boolean) {
-        Log.i(Tag, "asyncRelySdk in thread:${Thread.currentThread().name}")
+        Log.i(Tag, "asyncRelySdk in thread[${Thread.currentThread().name}]:$e")
     }
 }
