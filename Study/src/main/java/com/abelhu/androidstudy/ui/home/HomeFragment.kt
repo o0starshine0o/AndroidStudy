@@ -1,6 +1,5 @@
 package com.abelhu.androidstudy.ui.home
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,18 +13,23 @@ import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
-    private lateinit var root: View
+    private val homeViewModel: HomeViewModel by lazy { ViewModelProviders.of(this).get(HomeViewModel::class.java) }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        root = inflater.inflate(R.layout.fragment_home, container, false)
-        return root
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        homeViewModel.restoreState(savedInstanceState)
+        lifecycle.addObserver(homeViewModel)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        homeViewModel.text.observe(this, Observer { root.text_home.text = it })
-        root.click.setOnClickListener { Toast.makeText(context, "click", Toast.LENGTH_LONG).show() }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_home, container, false).apply {
+            homeViewModel.text.observe(this@HomeFragment, Observer { text_home.text = it })
+            click.setOnClickListener { Toast.makeText(context, "click", Toast.LENGTH_LONG).show() }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        homeViewModel.saveState(outState)
     }
 }
