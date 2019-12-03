@@ -1,4 +1,4 @@
-package com.abelhu.androidstudy.ui.send
+package com.abelhu.androidstudy.ui.main.send
 
 import android.os.Bundle
 import android.util.Log

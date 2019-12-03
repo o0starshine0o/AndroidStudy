@@ -1,4 +1,4 @@
-package com.abelhu.androidstudy.ui.home
+package com.abelhu.androidstudy.ui.main.home
 
 import android.os.Bundle
 import androidx.lifecycle.*

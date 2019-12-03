@@ -1,4 +1,4 @@
-package com.abelhu.androidstudy.ui.home
+package com.abelhu.androidstudy.ui.main.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,8 @@ import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment() {
 
-    private val homeViewModel: HomeViewModel by lazy { ViewModelProviders.of(this).get(HomeViewModel::class.java) }
+    private val homeViewModel: HomeViewModel by lazy { ViewModelProviders.of(this).get(
+        HomeViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

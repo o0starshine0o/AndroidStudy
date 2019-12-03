@@ -1,4 +1,4 @@
-package com.abelhu.androidstudy.ui.gallery
+package com.abelhu.androidstudy.ui.main.gallery
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.abelhu.androidstudy.ui.tools
+package com.abelhu.androidstudy.ui.main.tools
 
 import android.os.Bundle
 import android.view.LayoutInflater

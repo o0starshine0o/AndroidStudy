@@ -1,4 +1,4 @@
-package com.abelhu.androidstudy.ui.slideshow
+package com.abelhu.androidstudy.ui.main.slideshow
 
 import android.os.Bundle
 import android.view.LayoutInflater

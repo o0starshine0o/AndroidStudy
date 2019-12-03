@@ -18,8 +18,8 @@ class MyApplication : Application() {
     @SuppressLint("CheckResult")
     override fun onCreate() {
         super.onCreate()
-        // set custom instrumentation
-        setCustomInstrumentation()
+        // set custom instrumentation, for UI test , temporarily remove this instrumentation
+//        setCustomInstrumentation()
         // set custom looper
         setCustomLooper()
 

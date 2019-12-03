@@ -1,4 +1,4 @@
-package com.abelhu.androidstudy.ui.send
+package com.abelhu.androidstudy.ui.main.send
 
 import android.util.Log
 import androidx.fragment.app.Fragment

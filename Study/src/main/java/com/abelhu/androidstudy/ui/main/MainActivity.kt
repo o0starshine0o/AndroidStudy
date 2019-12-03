@@ -1,4 +1,4 @@
-package com.abelhu.androidstudy
+package com.abelhu.androidstudy.ui.main
 
 import android.os.Bundle
 import android.view.Menu
@@ -8,6 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.abelhu.androidstudy.R
 import com.abelhu.androidstudy.message.SendMessage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         fab.setOnClickListener { EventBus.getDefault().post(SendMessage()); }
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navController = findNavController(R.id.NavHost)
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -33,7 +34,5 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return findNavController(R.id.nav_host_fragment).navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
+    override fun onSupportNavigateUp() = findNavController(R.id.NavHost).navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
 }
