@@ -21,7 +21,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.hamcrest.Matchers.`is` as _is
 
-
 class MainActivityTest {
 
     @Rule // run before every @Test fun

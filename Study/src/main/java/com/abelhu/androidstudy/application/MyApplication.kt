@@ -3,6 +3,7 @@ package com.abelhu.androidstudy.application
 import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
+import com.abelhu.androidstudy.extension.tag
 import com.abelhu.androidstudy.instrumentation.MyInstrumentation
 import io.reactivex.Single
 import io.reactivex.SingleSource
@@ -11,15 +12,11 @@ import io.reactivex.schedulers.Schedulers
 
 
 class MyApplication : Application() {
-    companion object {
-        val Tag = MyApplication::class.simpleName
-    }
-
     @SuppressLint("CheckResult")
     override fun onCreate() {
         super.onCreate()
         // set custom instrumentation, for UI test , temporarily remove this instrumentation
-//        setCustomInstrumentation()
+        setCustomInstrumentation()
         // set custom looper
         setCustomLooper()
 
@@ -38,16 +35,16 @@ class MyApplication : Application() {
     }
 
     private fun setCustomLooper() {
-        mainLooper.setMessageLogging { Log.i(Tag, it) }
-        Log.i(Tag, applicationContext.filesDir.absolutePath)
+        mainLooper.setMessageLogging { Log.i(tag(), it) }
+        Log.i(tag(), applicationContext.filesDir.absolutePath)
     }
 
     private fun asyncNoRelySdk(): SingleSource<Boolean> {
-        Log.i(Tag, "asyncNoRelySdk in thread:${Thread.currentThread().name}")
+        Log.i(tag(), "asyncNoRelySdk in thread:${Thread.currentThread().name}")
         return Single.just(true)
     }
 
     private fun asyncRelySdk(e: Boolean) {
-        Log.i(Tag, "asyncRelySdk in thread[${Thread.currentThread().name}]:$e")
+        Log.i(tag(), "asyncRelySdk in thread[${Thread.currentThread().name}]:$e")
     }
 }
