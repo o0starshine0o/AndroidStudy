@@ -1,0 +1,9 @@
+apply plugin: 'groovy'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation localGroovy()
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"
