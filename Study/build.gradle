@@ -39,14 +39,6 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
-//    variantFilter {
-//        def names = it.flavors*.name
-//        // To check for a certain build type, use variant.buildType.name == "<buildType>"
-//        if (names.contains("minApi21") && names.contains("demo")) {
-//            // Gradle ignores any variants that satisfy the conditions above.
-//            setIgnore(true)
-//        }
-//    }
 }
 
 dependencies {
@@ -101,4 +93,7 @@ dependencies {
     implementation 'com.google.dagger:dagger-android:2.25.2'
     implementation 'com.google.dagger:dagger-android-support:2.25.2'
     kapt 'com.google.dagger:dagger-android-processor:2.25.2'
+    // customer annotation
+    implementation project(":Annotation")
+    kapt project(":AnnotationCode")
 }
