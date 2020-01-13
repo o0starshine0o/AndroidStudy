@@ -1,4 +1,4 @@
-task initProject{
+task initProject {
     println("init: $rootProject.name")
 }
 
@@ -30,7 +30,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-task hello{
+task hello {
     println("Hello World...")
 }
 

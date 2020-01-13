@@ -96,4 +96,6 @@ dependencies {
     // customer annotation
     implementation project(":Annotation")
     kapt project(":AnnotationCode")
+
+    implementation project(":PagerLayout")
 }
