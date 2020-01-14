@@ -20,6 +20,7 @@ class PagerLayoutManager : RecyclerView.LayoutManager() {
         var remainHeight = height
         // 记录每一层child的最大高度
         var maxHeight = 0
+        var page = 0
         // 布局每一个child
         for (position in 0 until itemCount) {
             // 获取child
@@ -34,9 +35,9 @@ class PagerLayoutManager : RecyclerView.LayoutManager() {
                 addView(child)
                 layoutDecoratedWithMargins(
                     child,
-                    width - remainWidth,
+                    page * width + width - remainWidth,
                     height - remainHeight,
-                    width - remainWidth + childWidth,
+                    page * width + width - remainWidth + childWidth,
                     height - remainHeight + childHeight
                 )
                 maxHeight = max(maxHeight, childHeight)
@@ -53,21 +54,35 @@ class PagerLayoutManager : RecyclerView.LayoutManager() {
                     addView(child)
                     layoutDecoratedWithMargins(
                         child,
-                        width - remainWidth,
+                        page * width + width - remainWidth,
                         height - remainHeight,
-                        width - remainWidth + childWidth,
+                        page * width + width - remainWidth + childWidth,
                         height - remainHeight + childHeight
                     )
                     maxHeight = max(0, childHeight)
                     // 更新剩余空间的可用宽度
                     remainWidth -= childWidth
                 } else {
-                    // 剩余空间的高度不足以放下child，结束对children的布局
-                    break
+                    // 剩余空间的高度不足以放下child，开启新的一页，用以放置child
+                    page += 1
+                    // 重置可用宽高
+                    remainWidth = width
+                    remainHeight = height
+                    // 默认有足够的空间，放置此child
+                    addView(child)
+                    layoutDecoratedWithMargins(
+                        child,
+                        page * width,
+                        height - remainHeight,
+                        page * width + childWidth,
+                        height - remainHeight + childHeight
+                    )
+                    maxHeight = max(0, childHeight)
+                    // 更新剩余空间的可用宽度
+                    remainWidth -= childWidth
                 }
             }
         }
-
     }
 
     override fun canScrollHorizontally(): Boolean {
@@ -77,6 +92,10 @@ class PagerLayoutManager : RecyclerView.LayoutManager() {
     override fun scrollHorizontallyBy(dx: Int, recycler: RecyclerView.Recycler?, state: RecyclerView.State?): Int {
         offsetChildrenHorizontal(-dx)
         return super.scrollHorizontallyBy(dx, recycler, state)
+    }
+
+    fun onLayoutChild() {
+
     }
 
     fun fill(recycler: RecyclerView.Recycler?, state: RecyclerView.State?) {
