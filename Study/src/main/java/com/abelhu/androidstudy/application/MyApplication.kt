@@ -18,7 +18,7 @@ class MyApplication : Application() {
         // set custom instrumentation, for UI test , temporarily remove this instrumentation
         setCustomInstrumentation()
         // set custom looper
-        setCustomLooper()
+//        setCustomLooper()
 
         Single.just(true).subscribeOn(Schedulers.single()).flatMap { asyncNoRelySdk() }.observeOn(AndroidSchedulers.mainThread())
             .subscribe { e -> asyncRelySdk(e) }
