@@ -119,12 +119,12 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
     }
 
     override fun scrollHorizontallyBy(dx: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State): Int {
-        // 记录滚动的距离
-        scrollDistance += dx
         // 填充所有可见child
         fill(recycler, state)
         // 设置所有children的水平偏移
-        offsetChildrenHorizontal(-scrollDistance)
+        offsetChildrenHorizontal(-dx)
+        // 记录滚动的距离
+        scrollDistance += dx
         return dx
     }
 
@@ -152,20 +152,19 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
         for (i in 0 until childCount) {
             getChildAt(i)?.also {
                 val rect = Rect().apply {
-                    left = getDecoratedLeft(it)
+                    left = getDecoratedLeft(it) + scrollDistance
                     top = getDecoratedTop(it)
-                    right = getDecoratedRight(it)
+                    right = getDecoratedRight(it) + scrollDistance
                     bottom = getDecoratedBottom(it)
                 }
-                if (!Rect.intersects(displayRect, rect)) removeAndRecycleViewAt(i, recycler)
+                if (!Rect.intersects(displayRect, rect))
+                    removeAndRecycleViewAt(i, recycler)
             }
         }
-        //
-        detachAndScrapAttachedViews(recycler)
         // 判断child是否和显示区域有交集，如果有就要显示
         for (i in 0 until itemCount) {
             // frame在不可显示时才需要加入
-            if (true && Rect.intersects(displayRect, frames[i].rect())) {
+            if (!frames[i].visible && Rect.intersects(displayRect, frames[i].rect())) {
                 // 获取child
                 val child = recycler.getViewForPosition(i)
                 // 根据spanSizeLookup动态分配child的宽度
@@ -175,12 +174,14 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
                 // 添加进来
                 addView(child)
                 // 设置child的布局
-                frames[i].apply { visible = true }.rect().apply { layoutDecoratedWithMargins(child, left, top, right, bottom) }
+                frames[i].apply { visible = true }.rect().apply {
+                    layoutDecoratedWithMargins(child, left - scrollDistance, top, right - scrollDistance, bottom)
+                }
             }
-//            // 如果frame不在可见区域，设置其不可见的属性
-//            if (frames[i].visible && !Rect.intersects(displayRect, frames[i].rect())){
-//                frames[i].visible = false
-//            }
+            // 如果frame不在可见区域，设置其不可见的属性
+            if (frames[i].visible && !Rect.intersects(displayRect, frames[i].rect())) {
+                frames[i].visible = false
+            }
         }
     }
 
