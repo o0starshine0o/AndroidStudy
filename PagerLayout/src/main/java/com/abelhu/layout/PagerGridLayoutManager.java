@@ -294,9 +294,9 @@ public class PagerGridLayoutManager extends PagerLinearLayoutManager {
     private void updateMeasurements() {
         int totalSpace;
         if (getOrientation() == VERTICAL) {
-            totalSpace = getWidth() - getPaddingRight() - getPaddingLeft();
-        } else {
             totalSpace = getHeight() - getPaddingBottom() - getPaddingTop();
+        } else {
+            totalSpace = getWidth() - getPaddingRight() - getPaddingLeft();
         }
         calculateItemBorders(totalSpace);
     }
@@ -552,8 +552,7 @@ public class PagerGridLayoutManager extends PagerLinearLayoutManager {
         if (flexibleInOtherDir) {
             updateMeasurements(); //  reset measurements
         }
-        final boolean layingOutInPrimaryDirection =
-                layoutState.mItemDirection == LayoutState.ITEM_DIRECTION_TAIL;
+        final boolean layingOutInPrimaryDirection = layoutState.mItemDirection == LayoutState.ITEM_DIRECTION_TAIL;
         int count = 0;
         int consumedSpanCount = 0;
         int remainingSpan = mSpanCount;
