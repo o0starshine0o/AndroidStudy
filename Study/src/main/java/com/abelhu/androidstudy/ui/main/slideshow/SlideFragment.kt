@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.abelhu.androidstudy.R
 import com.abelhu.layout.PagerLayoutManager
 import kotlinx.android.synthetic.main.fragment_slideshow.*
@@ -21,11 +19,11 @@ class SlideFragment : Fragment() {
         recyclerView.adapter = SlideAdapter()
 //        recyclerView.layoutManager = LinearLayoutManager(context)
 //        recyclerView.layoutManager = PagerLinearLayoutManager(context)
-        recyclerView.layoutManager = GridLayoutManager(context, 12, RecyclerView.HORIZONTAL, false)
+//        recyclerView.layoutManager = GridLayoutManager(context, 12, RecyclerView.HORIZONTAL, false)
 //        (recyclerView.layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
 //            override fun getSpanSize(position: Int): Int {
-//                return when (position) {ad
-//                    0, 1 -> 3
+//                return when (position) {
+//                    0, 1 -> 6
 //                    else -> 3
 //                }
 //            }
@@ -39,7 +37,20 @@ class SlideFragment : Fragment() {
 //                }
 //            }
 //        }
-        recyclerView.layoutManager = PagerLayoutManager()
+        recyclerView.layoutManager = PagerLayoutManager(12) {
+            when (it) {
+                0, 1 -> 6
+                else -> 3
+            }
+        }
+//        (recyclerView.layoutManager as PagerLayoutManager).spanSizeLookup = object : SpanSizeLookup() {
+//            override fun getSpanSize(position: Int): Int {
+//                return when (position) {
+//                    0, 1 -> 3
+//                    else -> 3
+//                }
+//            }
+//        }
 //        PagerSnapHelper().attachToRecyclerView(recyclerView)
     }
 }

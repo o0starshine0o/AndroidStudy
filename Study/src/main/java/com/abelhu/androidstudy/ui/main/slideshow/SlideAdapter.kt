@@ -14,6 +14,7 @@ import kotlin.random.Random
 class SlideAdapter : RecyclerView.Adapter<SlideAdapter.SlideHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SlideHolder {
+        Log.i(tag(), "onCreateViewHolder with type: $viewType")
         return SlideHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_icon, parent, false))
     }
 
@@ -22,6 +23,7 @@ class SlideAdapter : RecyclerView.Adapter<SlideAdapter.SlideHolder>() {
     }
 
     override fun onBindViewHolder(holder: SlideHolder, position: Int) {
+        Log.i(tag(), "onBindViewHolder with position: $position")
         holder.initHolder(position)
     }
 
@@ -30,7 +32,7 @@ class SlideAdapter : RecyclerView.Adapter<SlideAdapter.SlideHolder>() {
             itemView.iconView.setBackgroundColor(Color.rgb(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256)))
             itemView.nameView.text = position.toString()
             itemView.tag = position
-            Log.i(tag(), "init holder:$position")
+            Log.i(tag(), "init holder: $position")
         }
     }
 }
