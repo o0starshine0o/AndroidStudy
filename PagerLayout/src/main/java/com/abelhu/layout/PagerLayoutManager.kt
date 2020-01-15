@@ -125,6 +125,8 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
         offsetChildrenHorizontal(-dx)
         // 记录滚动的距离
         scrollDistance += dx
+        // 回收所有不可见的child
+        recycleViewsOutOfBounds(recycler)
         return dx
     }
 
@@ -140,6 +142,7 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
      * 填充所有可见的child
      */
     private fun fill(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
+//        Log.i("PagerLayoutManager", "fill with scrollDistance: $scrollDistance")
         if (itemCount <= 0 || state.isPreLayout) return
         // 根据滑动距离，计算显示区域
         val displayRect = Rect().apply {
@@ -147,19 +150,6 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
             top = 0
             right = left + width
             bottom = height
-        }
-        // 回收所有不可见的child
-        for (i in 0 until childCount) {
-            getChildAt(i)?.also {
-                val rect = Rect().apply {
-                    left = getDecoratedLeft(it) + scrollDistance
-                    top = getDecoratedTop(it)
-                    right = getDecoratedRight(it) + scrollDistance
-                    bottom = getDecoratedBottom(it)
-                }
-                if (!Rect.intersects(displayRect, rect))
-                    removeAndRecycleViewAt(i, recycler)
-            }
         }
         // 判断child是否和显示区域有交集，如果有就要显示
         for (i in 0 until itemCount) {
@@ -185,6 +175,35 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
         }
     }
 
+    private fun recycleViewsOutOfBounds(recycler: RecyclerView.Recycler) {
+        // 根据滑动距离，计算显示区域
+        val displayRect = Rect().apply {
+            left = scrollDistance
+            top = 0
+            right = left + width
+            bottom = height
+        }
+        // 回收所有不可见的child，注意每次回收都会引起childCount的变化，添加参数r，是为了抵消这个影响
+        var r = 0
+        for (i in 0 until childCount) {
+            getChildAt(i - r)?.also {
+                val rect = Rect().apply {
+                    left = getDecoratedLeft(it) + scrollDistance
+                    top = getDecoratedTop(it)
+                    right = getDecoratedRight(it) + scrollDistance
+                    bottom = getDecoratedBottom(it)
+                }
+                if (!Rect.intersects(displayRect, rect)) {
+                    removeAndRecycleView(it, recycler)
+                    r++
+                }
+            }
+        }
+    }
+
+    /**
+     * 因为Rect是final类型的，这里只能继承RectF
+     */
     private class VisibleRect : RectF() {
         var visible: Boolean = false
         fun rect(): Rect {

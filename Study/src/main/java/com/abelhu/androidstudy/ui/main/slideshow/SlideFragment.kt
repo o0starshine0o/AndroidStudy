@@ -17,6 +17,11 @@ class SlideFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView.adapter = SlideAdapter()
+        // 离屏缓存，并不会放入回收池，在反向滑动的时候保证item**不会**经过onBindViewHolder过程直接显示出来
+        recyclerView.setItemViewCacheSize(0)
+        // 根据每屏最多显示的item数量，设置其缓存阈值
+        recyclerView.recycledViewPool.setMaxRecycledViews(SlideAdapter.TYPE_4, 20)
+        recyclerView.recycledViewPool.setMaxRecycledViews(SlideAdapter.TYPE_2, 2)
 //        recyclerView.layoutManager = LinearLayoutManager(context)
 //        recyclerView.layoutManager = PagerLinearLayoutManager(context)
 //        recyclerView.layoutManager = GridLayoutManager(context, 12, RecyclerView.HORIZONTAL, false)
@@ -39,8 +44,8 @@ class SlideFragment : Fragment() {
 //        }
         recyclerView.layoutManager = PagerLayoutManager(12) {
             when (it) {
-                0, 1 -> 6
-                else -> 3
+                0, 1 -> SlideAdapter.TYPE_2
+                else -> SlideAdapter.TYPE_4
             }
         }
 //        (recyclerView.layoutManager as PagerLayoutManager).spanSizeLookup = object : SpanSizeLookup() {
