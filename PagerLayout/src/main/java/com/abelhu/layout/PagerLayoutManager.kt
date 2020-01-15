@@ -115,16 +115,19 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
     }
 
     override fun scrollHorizontallyBy(dx: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State): Int {
-        if (scrollDistance <= 0 && dx <= 0 || scrollDistance >= maxScrollDistance && dx >= 0) return 0
+        val distance = if (scrollDistance <= 0 && dx <= 0 || scrollDistance >= maxScrollDistance && dx >= 0) 0
+        else if (scrollDistance + dx < 0) -scrollDistance
+        else if (scrollDistance + dx > maxScrollDistance) maxScrollDistance - scrollDistance
+        else dx
         // 填充所有可见child
         fill(recycler, state)
         // 设置所有children的水平偏移
-        offsetChildrenHorizontal(-dx)
+        offsetChildrenHorizontal(-distance)
         // 记录滚动的距离
-        scrollDistance += dx
+        scrollDistance += distance
         // 回收所有不可见的child
         recycleViewsOutOfBounds(recycler)
-        return dx
+        return distance
     }
 
     /**
