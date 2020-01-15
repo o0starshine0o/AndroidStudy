@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.abelhu.androidstudy.R
 import com.abelhu.layout.PagerLayoutManager
+import com.abelhu.layout.PagerSnapHelper
 import kotlinx.android.synthetic.main.fragment_slideshow.*
 
 class SlideFragment : Fragment() {
@@ -21,7 +22,7 @@ class SlideFragment : Fragment() {
         recyclerView.setItemViewCacheSize(0)
         // 根据每屏最多显示的item数量，设置其缓存阈值
         recyclerView.recycledViewPool.setMaxRecycledViews(SlideAdapter.TYPE_4, 20)
-        recyclerView.recycledViewPool.setMaxRecycledViews(SlideAdapter.TYPE_2, 2)
+        recyclerView.recycledViewPool.setMaxRecycledViews(SlideAdapter.TYPE_2, 4)
 //        recyclerView.layoutManager = LinearLayoutManager(context)
 //        recyclerView.layoutManager = PagerLinearLayoutManager(context)
 //        recyclerView.layoutManager = GridLayoutManager(context, 12, RecyclerView.HORIZONTAL, false)
@@ -57,5 +58,6 @@ class SlideFragment : Fragment() {
 //            }
 //        }
 //        PagerSnapHelper().attachToRecyclerView(recyclerView)
+        PagerSnapHelper().attachToRecyclerView(recyclerView)
     }
 }

@@ -1,5 +1,6 @@
 package com.abelhu.layout
 
+import android.graphics.PointF
 import android.graphics.Rect
 import android.graphics.RectF
 import android.util.SparseIntArray
@@ -12,7 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.max
 
 
-class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLookup: (position: Int) -> Int = { _ -> 12 }) : RecyclerView.LayoutManager() {
+class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLookup: (position: Int) -> Int = { _ -> 12 }) : RecyclerView.LayoutManager(),
+    RecyclerView.SmoothScroller.ScrollVectorProvider {
     /**
      * 记录滚动的距离
      */
@@ -28,7 +30,7 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
     /**
      * 记录所有child的frame，用于判断frame是否位于可显示区域
      */
-    private var frames = arrayListOf<VisibleRect>()
+    var frames = arrayListOf<VisibleRect>()
 
     override fun generateDefaultLayoutParams(): RecyclerView.LayoutParams {
         return RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -74,6 +76,7 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
                     top = height - remainHeight.toFloat()
                     right = left + childWidth
                     bottom = top + childHeight
+                    this.page = page
                 })
                 // 计算本层使用的最大高度
                 maxHeight = max(maxHeight, childHeight)
@@ -99,6 +102,7 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
                     top = height - remainHeight.toFloat()
                     right = left + childWidth
                     bottom = top + childHeight
+                    this.page = page
                 })
                 // 计算本层使用的最大高度，因为是新使用的一层，所以从0开始计算
                 maxHeight = max(0, childHeight)
@@ -128,6 +132,37 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
         // 回收所有不可见的child
         recycleViewsOutOfBounds(recycler)
         return distance
+    }
+
+    /**
+     * 根据目标位置，计算滚动向量
+     * 我们这里完全可以在这里完成对滚动量的计算
+     */
+    override fun computeScrollVectorForPosition(targetPosition: Int): PointF? {
+        val frame = frames[targetPosition]
+        // 如果目标frame在可见区域，不需要,否则，计算frame左边距和当前滚动距离的差值
+        return if (frame.visible) PointF(0f, 0f) else PointF(frame.left - scrollDistance, 0f)
+    }
+
+    /**
+     * 获取下一页的第一个item
+     */
+    fun nextPageItemPosition(): Int {
+        for ((i, frame) in frames.withIndex()) {
+            if (frame.page == scrollDistance / width + 1) return i
+        }
+        return 0
+    }
+
+    /**
+     * 获取上一页的第一个item
+     * 这里scrollDistance会比静止情况下下，所以就不在scrollDistance / width - 1了
+     */
+    fun prePageItemPosition(): Int {
+        for ((i, frame) in frames.withIndex()) {
+            if (frame.page == scrollDistance / width) return i
+        }
+        return 0
     }
 
     /**
@@ -202,9 +237,11 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
 
     /**
      * 因为Rect是final类型的，这里只能继承RectF
+     * 额外添加page，用于记录frame位于哪一页
      */
-    private class VisibleRect : RectF() {
+    class VisibleRect : RectF() {
         var visible: Boolean = false
+        var page = 0
         fun rect(): Rect {
             return Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
         }
