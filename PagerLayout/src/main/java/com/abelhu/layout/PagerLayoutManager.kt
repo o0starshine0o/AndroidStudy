@@ -13,20 +13,14 @@ import kotlin.math.max
 
 
 class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLookup: (position: Int) -> Int = { _ -> 12 }) : RecyclerView.LayoutManager() {
-//    /**
-//     * 记录每一个child的边界
-//     * 第i个child的起始位置{@link #cachedBorders}[i-1] + 1， 结束位置为{@link #cachedBorders}[i]
-//     */
-//    private var cachedBorders: IntArray? = null
-
-//    init {
-//        // 根据spanCount计算cachedBorders，记录每个child的边界
-//        cachedBorders = IntArray(spanCount + 1){i -> i * width / spanCount}
-//    }
     /**
      * 记录滚动的距离
      */
     private var scrollDistance = 0
+    /**
+     * 记录最大的滚动距离
+     */
+    private var maxScrollDistance = width
     /**
      * 记录每种span对应的高度
      */
@@ -94,6 +88,8 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
                     page += 1
                     // 重置可用宽高
                     remainHeight = height
+                    // 最大滚动区域加一个屏幕宽度
+                    maxScrollDistance += width
                 }
                 // 重置剩余空间的宽度
                 remainWidth = width
@@ -119,6 +115,7 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
     }
 
     override fun scrollHorizontallyBy(dx: Int, recycler: RecyclerView.Recycler, state: RecyclerView.State): Int {
+        if (scrollDistance <= 0 && dx <= 0 || scrollDistance >= maxScrollDistance && dx >= 0) return 0
         // 填充所有可见child
         fill(recycler, state)
         // 设置所有children的水平偏移
@@ -142,7 +139,6 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
      * 填充所有可见的child
      */
     private fun fill(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
-//        Log.i("PagerLayoutManager", "fill with scrollDistance: $scrollDistance")
         if (itemCount <= 0 || state.isPreLayout) return
         // 根据滑动距离，计算显示区域
         val displayRect = Rect().apply {
