@@ -13,8 +13,11 @@ import kotlin.random.Random
 
 class SlideAdapter : RecyclerView.Adapter<SlideAdapter.SlideHolder>() {
     companion object {
+        const val TYPE_6 = 2
         const val TYPE_4 = 3
+        const val TYPE_3 = 4
         const val TYPE_2 = 6
+        const val TYPE_1 = 12
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SlideHolder {
@@ -24,7 +27,11 @@ class SlideAdapter : RecyclerView.Adapter<SlideAdapter.SlideHolder>() {
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
+            in 56..58 -> TYPE_3
+            in 46..51 -> TYPE_6
+            37 -> TYPE_1
             0, 1 -> TYPE_2
+            18, 19, 20 -> TYPE_3
             else -> TYPE_4
         }
     }

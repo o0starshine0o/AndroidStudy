@@ -131,6 +131,7 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
         scrollDistance += distance
         // 回收所有不可见的child
         recycleViewsOutOfBounds(recycler)
+        // 返回消耗的距离
         return distance
     }
 
@@ -240,10 +241,8 @@ class PagerLayoutManager(private val spanCount: Int = 12, private val spanSizeLo
      * 额外添加page，用于记录frame位于哪一页
      */
     class VisibleRect : RectF() {
-        var visible: Boolean = false
+        var visible = false
         var page = 0
-        fun rect(): Rect {
-            return Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
-        }
+        fun rect() = Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
     }
 }

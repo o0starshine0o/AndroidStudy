@@ -21,43 +21,21 @@ class SlideFragment : Fragment() {
         // 离屏缓存，并不会放入回收池，在反向滑动的时候保证item**不会**经过onBindViewHolder过程直接显示出来
         recyclerView.setItemViewCacheSize(0)
         // 根据每屏最多显示的item数量，设置其缓存阈值
+        recyclerView.recycledViewPool.setMaxRecycledViews(SlideAdapter.TYPE_6, 20)
         recyclerView.recycledViewPool.setMaxRecycledViews(SlideAdapter.TYPE_4, 20)
+        recyclerView.recycledViewPool.setMaxRecycledViews(SlideAdapter.TYPE_3, 4)
         recyclerView.recycledViewPool.setMaxRecycledViews(SlideAdapter.TYPE_2, 4)
-//        recyclerView.layoutManager = LinearLayoutManager(context)
-//        recyclerView.layoutManager = PagerLinearLayoutManager(context)
-//        recyclerView.layoutManager = GridLayoutManager(context, 12, RecyclerView.HORIZONTAL, false)
-//        (recyclerView.layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-//            override fun getSpanSize(position: Int): Int {
-//                return when (position) {
-//                    0, 1 -> 6
-//                    else -> 3
-//                }
-//            }
-//        }
-//        recyclerView.layoutManager = PagerGridLayoutManager(context, 12, RecyclerView.HORIZONTAL, false)
-//        (recyclerView.layoutManager as PagerGridLayoutManager).spanSizeLookup = object : PagerGridLayoutManager.SpanSizeLookup() {
-//            override fun getSpanSize(position: Int): Int {
-//                return when (position) {
-//                    0, 1 -> 6
-//                    else -> 3
-//                }
-//            }
-//        }
+        recyclerView.recycledViewPool.setMaxRecycledViews(SlideAdapter.TYPE_1, 4)
         recyclerView.layoutManager = PagerLayoutManager(12) {
             when (it) {
-                0, 1 -> SlideAdapter.TYPE_2
+                37 -> SlideAdapter.TYPE_1
+                in 0..1 -> SlideAdapter.TYPE_2
+                in 18..20 -> SlideAdapter.TYPE_3
+                in 46..51 -> SlideAdapter.TYPE_6
+                in 56..58 -> SlideAdapter.TYPE_3
                 else -> SlideAdapter.TYPE_4
             }
         }
-//        (recyclerView.layoutManager as PagerLayoutManager).spanSizeLookup = object : SpanSizeLookup() {
-//            override fun getSpanSize(position: Int): Int {
-//                return when (position) {
-//                    0, 1 -> 3
-//                    else -> 3
-//                }
-//            }
-//        }
-//        PagerSnapHelper().attachToRecyclerView(recyclerView)
         PagerSnapHelper().attachToRecyclerView(recyclerView)
     }
 }
