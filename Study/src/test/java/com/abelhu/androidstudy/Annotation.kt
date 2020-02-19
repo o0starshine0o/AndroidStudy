@@ -1,6 +1,5 @@
 package com.abelhu.androidstudy
 
-//import com.abelhu.androidstudy.application.Generated_Greet
 import com.abelhu.annotation.GreetingGenerator
 import org.junit.Test
 

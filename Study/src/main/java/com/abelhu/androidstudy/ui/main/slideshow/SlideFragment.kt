@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.abelhu.androidstudy.R
-import com.abelhu.layout.PagerLayoutManager
-import com.abelhu.layout.PagerSnapHelper
+import com.abelhu.pagerlayout.PagerLayoutManager
+import com.abelhu.pagerlayout.PagerSnapHelper
 import kotlinx.android.synthetic.main.fragment_slideshow.*
 
 class SlideFragment : Fragment() {

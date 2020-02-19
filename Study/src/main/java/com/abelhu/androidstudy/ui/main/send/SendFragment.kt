@@ -5,10 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.abelhu.androidstudy.R
 import com.abelhu.androidstudy.message.SendMessage
 import com.google.android.material.snackbar.Snackbar
@@ -19,14 +17,14 @@ import org.greenrobot.eventbus.ThreadMode
 
 class SendFragment : EventBusBaseFragment() {
 
-    companion object{
+    companion object {
         val Tag = SendFragment::class.simpleName
     }
 
     private lateinit var sendViewModel: SendViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        sendViewModel = ViewModelProviders.of(this).get(SendViewModel::class.java)
+        sendViewModel = ViewModelProvider(this).get(SendViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_send, container, false)
         sendViewModel.text.observe(this, Observer { textSend.text = it })
         return root
@@ -43,7 +41,7 @@ class SendFragment : EventBusBaseFragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.POSTING)
-    override fun subscribeMessage0(message:SendMessage){
+    override fun subscribeMessage0(message: SendMessage) {
         Snackbar.make(rootView, "get message from main", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         Log.d(Tag, "subscribeMessage0")
     }

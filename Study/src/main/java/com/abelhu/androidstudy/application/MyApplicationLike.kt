@@ -1,0 +1,100 @@
+package com.abelhu.androidstudy.application
+
+import android.annotation.SuppressLint
+import android.annotation.TargetApi
+import android.app.Application
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import android.util.Log
+import androidx.multidex.MultiDex
+import com.abelhu.androidstudy.instrumentation.MyInstrumentation
+import com.qicode.extension.TAG
+import com.tencent.tinker.anno.DefaultLifeCycle
+import com.tencent.tinker.lib.tinker.Tinker
+import com.tencent.tinker.lib.tinker.TinkerInstaller
+import com.tencent.tinker.loader.app.DefaultApplicationLike
+import com.tencent.tinker.loader.shareutil.ShareConstants
+import io.reactivex.Single
+import io.reactivex.SingleSource
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+
+
+/**
+ * because you can not use any other class in your application, we need to
+ * move your implement of Application to {@link ApplicationLifeCycle}
+ * As Application, all its direct reference class should be in the main dex.
+ *
+ * We use tinker-android-anno to make sure all your classes can be patched.
+ *
+ * application: if it is start with '.', we will add SampleApplicationLifeCycle's package name
+ *
+ * flags:
+ * TINKER_ENABLE_ALL: support dex, lib and resource
+ * TINKER_DEX_MASK: just support dex
+ * TINKER_NATIVE_LIBRARY_MASK: just support lib
+ * TINKER_RESOURCE_MASK: just support resource
+ *
+ * loaderClass: define the tinker loader class, we can just use the default TinkerLoader
+ *
+ * loadVerifyFlag: whether check files' md5 on the load time, default it is false.
+ */
+
+@DefaultLifeCycle(
+    application = ".MyApplication",             //application name to generate
+    flags = ShareConstants.TINKER_ENABLE_ALL    //tinkerFlags above
+)
+class MyApplicationLike(app: Application, tinkerFlags: Int, verifyFlag: Boolean, startElapsedTime: Long, startMillisTime: Long, resultIntent: Intent) :
+    DefaultApplicationLike(app, tinkerFlags, verifyFlag, startElapsedTime, startMillisTime, resultIntent) {
+    @SuppressLint("CheckResult")
+    override fun onCreate() {
+        super.onCreate()
+        // set custom instrumentation, for UI test , temporarily remove this instrumentation
+        setCustomInstrumentation()
+        // set custom looper
+        setCustomLooper()
+
+        Single.just(true).subscribeOn(Schedulers.single()).flatMap { asyncNoRelySdk() }.observeOn(AndroidSchedulers.mainThread())
+            .subscribe { e -> asyncRelySdk(e) }
+    }
+
+
+    /**
+     * install multiDex before install tinker
+     * so we don't need to put the tinker lib classes in the main dex
+     *
+     * @param base
+     */
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    override fun onBaseContextAttached(base: Context?) {
+        super.onBaseContextAttached(base)
+        //you must install multiDex whatever tinker is installed!
+        MultiDex.install(base)
+        val tinker = Tinker.with(application)
+    }
+
+    @SuppressLint("PrivateApi", "DiscouragedPrivateApi")
+    private fun setCustomInstrumentation() {
+        val clazz = Class.forName("android.app.ActivityThread")
+        val method = clazz.getDeclaredMethod("currentActivityThread")
+        val currentActivityThread = method.invoke(null)
+        val mInstrumentation = currentActivityThread.javaClass.getDeclaredField("mInstrumentation")
+        mInstrumentation.isAccessible = true
+        mInstrumentation.set(currentActivityThread, MyInstrumentation())
+    }
+
+    private fun setCustomLooper() {
+        application.mainLooper.setMessageLogging { Log.i(TAG(), it) }
+        Log.i(TAG(), application.applicationContext.filesDir.absolutePath)
+    }
+
+    private fun asyncNoRelySdk(): SingleSource<Boolean> {
+        Log.i(TAG(), "asyncNoRelySdk in thread:${Thread.currentThread().name}")
+        return Single.just(true)
+    }
+
+    private fun asyncRelySdk(e: Boolean) {
+        Log.i(TAG(), "asyncRelySdk in thread[${Thread.currentThread().name}]:$e")
+    }
+}

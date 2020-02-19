@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.abelhu.androidstudy.R
-import com.abelhu.androidstudy.extension.tag
+import com.qicode.extension.TAG
 import kotlinx.android.synthetic.main.fragment_share.view.*
 
 class ShareFragment : Fragment() {
@@ -22,7 +22,7 @@ class ShareFragment : Fragment() {
 
     @SuppressLint("ShowToast")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        shareViewModel = ViewModelProviders.of(this).get(ShareViewModel::class.java)
+        shareViewModel = ViewModelProvider(this).get(ShareViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_share, container, false)
         shareViewModel.text.observe(this, Observer { root.text_share.text = it })
 
@@ -33,7 +33,7 @@ class ShareFragment : Fragment() {
                 toast?.setText("toast test crash")
             }
             toast?.show()
-            Log.i(tag(), "toast show: ${System.currentTimeMillis()}")
+            Log.i(TAG(), "toast show: ${System.currentTimeMillis()}")
             Thread.sleep(1980)
         }
         return root

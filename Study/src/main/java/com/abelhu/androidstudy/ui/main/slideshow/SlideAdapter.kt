@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.abelhu.androidstudy.R
-import com.abelhu.androidstudy.extension.tag
+import com.qicode.extension.TAG
 import kotlinx.android.synthetic.main.item_icon.view.*
 import kotlin.random.Random
 
@@ -21,7 +21,7 @@ class SlideAdapter : RecyclerView.Adapter<SlideAdapter.SlideHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SlideHolder {
-        Log.i(tag(), "onCreateViewHolder with type: $viewType")
+        Log.i(TAG(), "onCreateViewHolder with type: $viewType")
         return SlideHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_icon, parent, false))
     }
 
@@ -41,13 +41,13 @@ class SlideAdapter : RecyclerView.Adapter<SlideAdapter.SlideHolder>() {
     }
 
     override fun onBindViewHolder(holder: SlideHolder, position: Int) {
-        Log.i(tag(), "onBindViewHolder with position: $position")
+        Log.i(TAG(), "onBindViewHolder with position: $position")
         holder.initHolder(position)
     }
 
     override fun onViewRecycled(holder: SlideHolder) {
         super.onViewRecycled(holder)
-        Log.i(tag(), "onViewRecycled with position: ${holder.recycleHolder()}")
+        Log.i(TAG(), "onViewRecycled with position: ${holder.recycleHolder()}")
     }
 
     class SlideHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -57,7 +57,7 @@ class SlideAdapter : RecyclerView.Adapter<SlideAdapter.SlideHolder>() {
             itemView.iconView.setBackgroundColor(Color.rgb(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256)))
             itemView.nameView.text = position.toString()
             itemView.tag = position
-            Log.i(tag(), "init holder: $position")
+            Log.i(TAG(), "init holder: $position")
         }
 
         fun recycleHolder() = index

@@ -5,6 +5,7 @@ import com.google.auto.service.AutoService
 import java.io.File
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
+import javax.lang.model.element.ElementKind
 import javax.lang.model.element.TypeElement
 
 @AutoService(Processor::class) // for registering the service
@@ -25,9 +26,11 @@ class FileGenerator: AbstractProcessor(){
 
     override fun process(set: MutableSet<out TypeElement>?, environment: RoundEnvironment?): Boolean {
         environment?.getElementsAnnotatedWith(GreetingGenerator::class.java)?.forEach {
-            val name = it.simpleName.toString()
-            val pack = processingEnv.elementUtils.getPackageOf(it).toString()
-            generateClass(name, pack)
+            if (it.kind == ElementKind.CLASS) {
+                val name = it.simpleName.toString()
+                val pack = processingEnv.elementUtils.getPackageOf(it).toString()
+                generateClass(name, pack)
+            }
         }
         return true
     }
@@ -36,8 +39,9 @@ class FileGenerator: AbstractProcessor(){
         val fileName = "Generated_$className"
         val fileContent = KotlinClassBuilder(fileName,pack).getContent()
 
-        val kaptKotlinGeneratedDir = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME]
-        val file = File(kaptKotlinGeneratedDir, "$fileName.kt")
+        val kaptKotlinGeneratedDir = "${processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME].orEmpty()}/${pack.replace(".", "/")}"
+        val file = File(File(kaptKotlinGeneratedDir).apply { mkdirs() }, "$fileName.kt")
+
 
         file.writeText(fileContent)
     }

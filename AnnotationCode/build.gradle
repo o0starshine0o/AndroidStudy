@@ -5,18 +5,18 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    compileOnly project(':Annotation')
-    kapt project(':Annotation')
-
     implementation 'com.google.auto.service:auto-service:1.0-rc6'
     kapt "com.google.auto.service:auto-service:1.0-rc6"
+    // generate .kt file :https://github.com/square/kotlinpoet
+//    implementation 'com.squareup:kotlinpoet:1.5.0'
 
+    implementation project(':Annotation')
 }
 
 sourceSets {
     main{
         java{
-            srcDir "${buildDir.absolutePath}/tmp/kapt/main/kotlinGenerated/"
+            srcDir "${buildDir.absolutePath}/generated/source/kapt/"
         }
     }
 }
