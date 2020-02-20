@@ -9,17 +9,16 @@ import android.os.Build
 import android.util.Log
 import androidx.multidex.MultiDex
 import com.abelhu.androidstudy.instrumentation.MyInstrumentation
+import com.abelhu.androidstudy.utils.TinkerManager
 import com.qicode.extension.TAG
 import com.tencent.tinker.anno.DefaultLifeCycle
+import com.tencent.tinker.entry.DefaultApplicationLike
 import com.tencent.tinker.lib.tinker.Tinker
-import com.tencent.tinker.lib.tinker.TinkerInstaller
-import com.tencent.tinker.loader.app.DefaultApplicationLike
 import com.tencent.tinker.loader.shareutil.ShareConstants
 import io.reactivex.Single
 import io.reactivex.SingleSource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-
 
 /**
  * because you can not use any other class in your application, we need to
@@ -63,15 +62,21 @@ class MyApplicationLike(app: Application, tinkerFlags: Int, verifyFlag: Boolean,
     /**
      * install multiDex before install tinker
      * so we don't need to put the tinker lib classes in the main dex
-     *
-     * @param base
      */
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    override fun onBaseContextAttached(base: Context?) {
-        super.onBaseContextAttached(base)
+    override fun onBaseContextAttached(context: Context) {
+        super.onBaseContextAttached(context)
         //you must install multiDex whatever tinker is installed!
-        MultiDex.install(base)
-        val tinker = Tinker.with(application)
+        MultiDex.install(context)
+        // init TinkerManager
+        TinkerManager.appLike = this
+        // should set before tinker is installed
+        TinkerManager.initFastCrashProtect()
+        TinkerManager.setUpgradeRetryEnable(true)
+        //installTinker after load multiDex or you can put com.tencent.tinker.** to main dex
+        TinkerManager.installTinker(this)
+        // for safer, you must use @{link TinkerInstaller.install} first!
+        Tinker.with(application)
     }
 
     @SuppressLint("PrivateApi", "DiscouragedPrivateApi")
