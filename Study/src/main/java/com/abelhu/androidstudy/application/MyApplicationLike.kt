@@ -43,6 +43,7 @@ import io.reactivex.schedulers.Schedulers
 @DefaultLifeCycle(
     application = ".MyApplication",             //application name to generate
     flags = ShareConstants.TINKER_ENABLE_ALL    //tinkerFlags above
+//    flags = ShareConstants.TINKER_DISABLE    // 如果上架GOOGLE PLAY，必须解除tinker
 )
 class MyApplicationLike(app: Application, tinkerFlags: Int, verifyFlag: Boolean, startElapsedTime: Long, startMillisTime: Long, resultIntent: Intent) :
     DefaultApplicationLike(app, tinkerFlags, verifyFlag, startElapsedTime, startMillisTime, resultIntent) {

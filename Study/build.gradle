@@ -35,9 +35,13 @@ android {
             buildConfigField("String", "Host", "\"https://www.qq.com/\"")
         }
     }
-//    dexOptions {
-//        jumboMode = true
-//    }
+    aaptOptions{
+        // 关闭png的优化，保证热更新
+        cruncherEnabled false
+    }
+    dexOptions {
+        jumboMode = true
+    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
