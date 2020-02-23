@@ -1,4 +1,4 @@
-package com.reflection;
+package com.innerclass;
 
 public class InnerClassReference {
     private InnerClass clazz = new InnerClass();
