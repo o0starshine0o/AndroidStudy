@@ -1,4 +1,4 @@
-package com.abelhu.instance;
+package com.designpattern.instance;
 
 public interface EnumInterface {
     void doing();

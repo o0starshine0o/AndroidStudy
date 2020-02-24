@@ -1,4 +1,4 @@
-package com.abelhu.instance
+package com.designpattern.instance
 
 class LazyKt private constructor() {
     companion object {

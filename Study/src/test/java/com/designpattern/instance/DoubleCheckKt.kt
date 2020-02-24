@@ -1,4 +1,4 @@
-package com.abelhu.instance
+package com.designpattern.instance
 
 class DoubleCheckKt private constructor() {
     companion object {
