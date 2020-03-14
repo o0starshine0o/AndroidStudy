@@ -12,6 +12,6 @@ class Test {
         // 把命令交给调用者,这个命令可能是1，2，3...
         val invoker = Invoker().apply { this.command = command }
         // 调用者直接调用命令就可以了
-        invoker.command?.doCommand()
+        invoker.action()
     }
 }
