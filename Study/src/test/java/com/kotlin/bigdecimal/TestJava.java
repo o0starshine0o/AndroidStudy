@@ -9,7 +9,7 @@ public class TestJava {
     void test() {
         BigDecimal a = new BigDecimal(1);
         BigDecimal b = new BigDecimal(2);
-        BigDecimal c = b - a;
-        System.out.println(c);
+//        BigDecimal c = b - a;
+//        System.out.println(c);
     }
 }
