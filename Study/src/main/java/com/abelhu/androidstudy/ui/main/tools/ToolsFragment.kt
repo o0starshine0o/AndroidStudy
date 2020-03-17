@@ -14,6 +14,7 @@ import com.abelhu.androidstudy.R
 import com.qicode.extension.TAG
 import com.tbruyelle.rxpermissions2.RxPermissions
 import com.tencent.tinker.lib.tinker.TinkerInstaller
+import com.tinkerpatch.sdk.TinkerPatch
 import kotlinx.android.synthetic.main.fragment_tools.*
 
 class ToolsFragment : Fragment() {
@@ -43,5 +44,6 @@ class ToolsFragment : Fragment() {
                 Environment.getExternalStorageDirectory().absolutePath + "/Download/patch_signed.apk"
             )
         }
+        downloadPatch.setOnClickListener { TinkerPatch.with().fetchPatchUpdate(true) }
     }
 }

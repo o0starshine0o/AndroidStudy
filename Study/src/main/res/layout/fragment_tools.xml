@@ -25,4 +25,13 @@
         app:layout_constraintTop_toBottomOf="@id/text_tools"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/downloadPatch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/download_patch"
+        app:layout_constraintTop_toBottomOf="@id/applyPatch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
