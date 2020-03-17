@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class ToolsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is RIGHT Fragment"
+        value = "This is BUG Fragment"
     }
     val text: LiveData<String> = _text
 }

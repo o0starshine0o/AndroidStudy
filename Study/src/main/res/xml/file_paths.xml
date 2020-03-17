@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ *************************************************************
+  ~ file:file_paths.xml  module:app  project:ArtSignPro
+  ~ modify time:2019-07-03 16:46:59
+  ~ author：Abelhu
+  ~ Beijing QiCode Technology Co., Ltd.
+  ~ Copyright (c) 2016-2019
+  ~ *************************************************************
+  ~
+  -->
+
+<paths>
+    <!--        xml文件是唯一设置分享的目录 ，不能用代码设置:
+                参考链接：http://yifeng.studio/2017/05/03/android-7-0-compat-fileprovider/
+
+        1.<files-path>            Context.getFilesDir()                      目录: /data/data//files
+        2.<cache-path>            Context.getCacheDir()                      目录: /data/data//cache 目录
+        3.<external-path>         Environment.getExternalStorageDirectory()  目录: SDCard/Android/data/你的应用的包名
+        4.<external-files-path>   Context.getExternalFilesDir(null)          目录: SDCard/Android/data/你的应用的包名/files/
+        4.<external-files-path>   Context.getExternalFilesDir(String)        目录: SDCard/Android/data/你的应用的包名/files/String/
+        5.<external-cache-path>   Context.getExternalCacheDir()              目录: SDCard/Android/data/你的应用的包名/cache/
+
+    -->
+
+    <!--
+
+            path :代表设置的目录下一级目录 eg：
+                <external-path path="images/" name="images"/>     整个目录为Environment.getExternalStorageDirectory()+"/images/"
+            name: 代表定义在Content中的字段 eg：
+                <external-path path="images/" name="images"/>
+                并且请求的内容的文件名为default_image.jpg
+                则 返回一个URI   content://${PACKAGE}.provider/images/default_image.jpg
+
+    -->
+    <root-path
+        name="name"
+        path=""/>
+    <files-path
+        name="files"
+        path="files/"/>
+    <cache-path
+        name="caches"
+        path="caches/"/>
+    <external-path
+        name="external"
+        path="external/"/>
+    <external-files-path
+        name="external_files"
+        path="external_files/"/>
+    <external-cache-path
+        name="external_cache"
+        path="external_cache/"/>
+    <!-- 这个下载路径不可以修改，必须是 GDTDOWNLOAD -->
+    <external-path
+        name="gdt_sdk_download_path"
+        path="GDTDOWNLOAD"/>
+</paths>

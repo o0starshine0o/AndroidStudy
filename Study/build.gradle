@@ -5,7 +5,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 // 如果不使用tinker，直接注释掉就好了
-apply from: 'tinkerpatch.gradle'
+//apply from: 'tinker.gradle'
+// 进阶为tinkerPatch，全套解决方案
+apply from: 'tinkerPatch.gradle'
 
 android {
     compileSdkVersion 29

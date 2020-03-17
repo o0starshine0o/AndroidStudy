@@ -66,12 +66,13 @@ if (buildWithTinker()) {
     dependencies {
         //tinker的核心库
         implementation('com.tencent.tinker:tinker-android-lib:1.9.14.5')
-        //可选，用于生成application类
+        // 可选，用于生成application类
         implementation('com.tencent.tinker:tinker-android-anno:1.9.14.5')
     }
 
     /**
      * 更多配置一定要参考源代码，文档很多内容都过时了
+     * ../tinker/tinker-build/tinker-patch-lib/src/main/java/com/tencent/tinker/build/patch/InputParam.java
      */
     tinkerPatch {
         /**
@@ -357,6 +358,7 @@ if (buildWithTinker()) {
             }
         }
     }
+
     project.afterEvaluate {
         //sample use for build all flavor for one time
         if (hasFlavors) {

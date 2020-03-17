@@ -15,6 +15,7 @@ import com.tencent.tinker.anno.DefaultLifeCycle
 import com.tencent.tinker.entry.DefaultApplicationLike
 import com.tencent.tinker.lib.tinker.Tinker
 import com.tencent.tinker.loader.shareutil.ShareConstants
+import com.tinkerpatch.sdk.TinkerPatch
 import io.reactivex.Single
 import io.reactivex.SingleSource
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -45,7 +46,7 @@ import io.reactivex.schedulers.Schedulers
     flags = ShareConstants.TINKER_ENABLE_ALL    //tinkerFlags above
 //    flags = ShareConstants.TINKER_DISABLE    // 如果上架GOOGLE PLAY，必须解除tinker
 )
-class MyApplicationLike(app: Application, tinkerFlags: Int, verifyFlag: Boolean, startElapsedTime: Long, startMillisTime: Long, resultIntent: Intent) :
+class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Boolean, startElapsedTime: Long, startMillisTime: Long, resultIntent: Intent) :
     DefaultApplicationLike(app, tinkerFlags, verifyFlag, startElapsedTime, startMillisTime, resultIntent) {
     @SuppressLint("CheckResult")
     override fun onCreate() {
@@ -54,11 +55,10 @@ class MyApplicationLike(app: Application, tinkerFlags: Int, verifyFlag: Boolean,
         setCustomInstrumentation()
         // set custom looper
         setCustomLooper()
-
+        // init other sdk
         Single.just(true).subscribeOn(Schedulers.single()).flatMap { asyncNoRelySdk() }.observeOn(AndroidSchedulers.mainThread())
             .subscribe { e -> asyncRelySdk(e) }
     }
-
 
     /**
      * install multiDex before install tinker
@@ -80,6 +80,9 @@ class MyApplicationLike(app: Application, tinkerFlags: Int, verifyFlag: Boolean,
         Tinker.with(application)
     }
 
+    /**
+     * change instrumentation to listener activity life-cycle
+     */
     @SuppressLint("PrivateApi", "DiscouragedPrivateApi")
     private fun setCustomInstrumentation() {
         val clazz = Class.forName("android.app.ActivityThread")
@@ -90,17 +93,40 @@ class MyApplicationLike(app: Application, tinkerFlags: Int, verifyFlag: Boolean,
         mInstrumentation.set(currentActivityThread, MyInstrumentation())
     }
 
+    /**
+     * listener what happened to main thread
+     */
     private fun setCustomLooper() {
         application.mainLooper.setMessageLogging { Log.i(TAG(), it) }
         Log.i(TAG(), application.applicationContext.filesDir.absolutePath)
     }
 
+    /**
+     * init sdk which not rely to main thread
+     */
     private fun asyncNoRelySdk(): SingleSource<Boolean> {
         Log.i(TAG(), "asyncNoRelySdk in thread:${Thread.currentThread().name}")
+        // init tinker patch
+        initTinkerPatch()
         return Single.just(true)
     }
-
+    /**
+     * init sdk which rely to main thread
+     */
     private fun asyncRelySdk(e: Boolean) {
         Log.i(TAG(), "asyncRelySdk in thread[${Thread.currentThread().name}]:$e")
+    }
+
+    private fun initTinkerPatch(){
+        // 初始化TinkerPatch SDK, 更多配置可参照API章节中的,初始化 SDK
+        TinkerPatch.init(this)
+            .reflectPatchLibrary()
+            .setPatchRollbackOnScreenOff(true)
+            .setPatchRestartOnSrceenOff(true)
+            .setFetchPatchIntervalByHours(3);
+
+        // 每隔3个小时（通过setFetchPatchIntervalByHours设置）去访问后台时候有更新,通过handler实现轮训的效果
+        TinkerPatch.with().fetchPatchUpdateAndPollWithInterval();
+
     }
 }
