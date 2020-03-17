@@ -141,9 +141,11 @@ class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Bool
             .setFetchDynamicConfigIntervalByHours(3)
             //若参数为true,即每次调用都会真正的访问后台配置
             .fetchDynamicConfig(object : ConfigRequestCallback {
-                override fun onSuccess(map: HashMap<String, String>?) {
+                override fun onSuccess(map: HashMap<String, String>) {
                     Log.i(TAG(), "fetchDynamicConfig onSuccess")
-                    map?.forEach { key, value -> Log.i(TAG(), "$key : $value") }
+                    for ((key, value) in map) {
+                        Log.i(TAG(), "$key : $value")
+                    }
                 }
 
                 override fun onFail(e: Exception?) {
