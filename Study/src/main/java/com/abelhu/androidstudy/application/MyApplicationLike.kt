@@ -12,9 +12,12 @@ import com.abelhu.androidstudy.instrumentation.MyInstrumentation
 import com.qicode.extension.TAG
 import com.tencent.tinker.anno.DefaultLifeCycle
 import com.tencent.tinker.entry.DefaultApplicationLike
+import com.tencent.tinker.lib.service.PatchResult
 import com.tencent.tinker.loader.shareutil.ShareConstants
 import com.tinkerpatch.sdk.TinkerPatch
 import com.tinkerpatch.sdk.server.callback.ConfigRequestCallback
+import com.tinkerpatch.sdk.server.callback.RollbackCallBack
+import com.tinkerpatch.sdk.tinker.callback.ResultCallBack
 import io.reactivex.Single
 import io.reactivex.SingleSource
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -157,15 +160,21 @@ class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Bool
             .setPatchRestartOnSrceenOff(true)
             //我们可以通过ResultCallBack设置对合成后的回调,例如弹框什么
             //注意，setPatchResultCallback 的回调是运行在 intentService 的线程中
-            .setPatchResultCallback {
-                Log.i(TAG(), "onPatchResultCallback: $it")
-            }
+            // tinker 不能使用lambda
+            .setPatchResultCallback(object : ResultCallBack {
+                override fun onPatchResult(result: PatchResult?) {
+                    Log.i(TAG(), "onPatchResultCallback: $result")
+                }
+            })
             //设置收到后台回退要求时,锁屏清除补丁,默认是等主进程重启时自动清除
             .setPatchRollbackOnScreenOff(true)
             //我们可以通过RollbackCallBack设置对回退时的回调
-            .setPatchRollBackCallback {
-                Log.i(TAG(), "onPatchRollBackCallback")
-            }
+            // tinker 不能使用lambda
+            .setPatchRollBackCallback(object : RollbackCallBack {
+                override fun onPatchRollback() {
+                    Log.i(TAG(), "onPatchRollBackCallback")
+                }
+            })
 
         // 每隔3个小时（通过setFetchPatchIntervalByHours设置）去访问后台时候有更新,通过handler实现轮训的效果
         TinkerPatch.with().fetchPatchUpdateAndPollWithInterval()
