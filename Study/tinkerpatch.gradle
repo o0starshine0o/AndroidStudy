@@ -6,7 +6,7 @@
 def bakPath = file("${buildDir}/backApk/")
 ext {
     //for some reason, you may want to ignore tinkerBuild, such as instant run debug build?
-    tinkerEnabled = false
+    tinkerEnabled = true
     //for normal build
     //old apk file to build patch apk
     tinkerOldApkPath = "${bakPath}/Study-debug-${TINKER_BASE_APK_DATE}.apk"
@@ -70,6 +70,9 @@ if (buildWithTinker()) {
         implementation('com.tencent.tinker:tinker-android-anno:1.9.14.5')
     }
 
+    /**
+     * 更多配置一定要参考源代码，文档很多内容都过时了
+     */
     tinkerPatch {
         /**
          * necessary，default 'null'
@@ -114,8 +117,17 @@ if (buildWithTinker()) {
 
         /**
          * 选填，设置编译输出路径。默认在build/outputs/tinkerPatch中
+         *
+         * 这是代码更新过了，源码应该是`outFolder`而不是`outputFolder`
          */
-//        outputFolder = "build/outputs/tinkerPatch"
+//        outFolder = "build/outputs/tinkerPatch"
+
+        /**
+         * error: loader classes are found in old secondary dex
+         * 参考：https://github.com/Tencent/tinker/issues/1309
+         */
+        allowLoaderInAnyDex = true
+        removeLoaderForAllDex = true
 
         /**
          * Warning, applyMapping will affect the normal android build!

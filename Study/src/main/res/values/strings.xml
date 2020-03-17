@@ -16,4 +16,5 @@
     <string name="title_activity_screen">ScreenActivity</string>
 
     <string name="show_toast">show toast</string>
+    <string name="apply_patch">apply patch</string>
 </resources>
