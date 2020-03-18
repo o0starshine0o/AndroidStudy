@@ -133,7 +133,7 @@ class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Bool
             .reflectPatchLibrary()
             // 向后台获取是否有补丁包更新,默认的访问间隔为3个小时，若参数为true,即每次调用都会真正的访问后台配置
             // 你也可以在用户登录或者APP启动等一些关键路径，使用fetchPatchUpdate(true)强制检查更新
-            .fetchPatchUpdate(true)
+            .fetchPatchUpdate(false)
             // 设置访问后台补丁包更新配置的时间间隔,默认为3个小时
             .setFetchPatchIntervalByHours(3)
 
