@@ -56,6 +56,8 @@ class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Bool
     @SuppressLint("CheckResult")
     override fun onCreate() {
         super.onCreate()
+        // 我们需要确保至少对主进程跟patch进程初始化 TinkerPatch, 需要紧跟super.onCreate()，否则容易出错
+        initTinkerPatch(app.baseContext)
 //        // set custom instrumentation, for UI test , temporarily remove this instrumentation
 //        setCustomInstrumentation()
 //        // set custom looper
@@ -119,15 +121,16 @@ class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Bool
      */
     private fun asyncRelySdk(context: Context) {
         Log.i(TAG(), "asyncRelySdk in thread[${Thread.currentThread().name}]")
-        // uncaught exception
+        // uncaught exception in main thread
         Thread.setDefaultUncaughtExceptionHandler(TinkerExceptionHandler())
-        // 我们需要确保至少对主进程跟patch进程初始化 TinkerPatch
-        initTinkerPatch(context)
     }
 
     /**
      * 初始化TinkerPatch SDK, 更多配置可参照API章节中的,初始化 SDK
      * http://www.tinkerpatch.com/Docs/api
+     *
+     * 初始化的代码建议紧跟 super.onCreate(),并且所有进程都需要初始化，已达到所有进程都可以被 patch 的目的
+     * 如果你确定只想在主进程中初始化 tinkerPatch，那也请至少在 :patch 进程中初始化，否则会有造成 :patch 进程crash，无法使补丁生效
      */
     private fun initTinkerPatch(context: Context) {
         // 允许重试
