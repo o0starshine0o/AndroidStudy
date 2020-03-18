@@ -1,18 +1,17 @@
-package com.abelhu.androidstudy.reporter
+package com.abelhu.androidstudy.tinker
 
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Environment
 import android.os.StatFs
 import com.abelhu.androidstudy.BuildConfig
-import com.abelhu.androidstudy.crash.UncaughtExceptionHandler
-import com.abelhu.androidstudy.utils.TinkerManager.ERROR_PATCH_CONDITION_NOT_SATISFIED
-import com.abelhu.androidstudy.utils.TinkerManager.ERROR_PATCH_CRASH_LIMIT
-import com.abelhu.androidstudy.utils.TinkerManager.ERROR_PATCH_GOOGLE_PLAY_CHANNEL
-import com.abelhu.androidstudy.utils.TinkerManager.ERROR_PATCH_MEMORY_LIMIT
-import com.abelhu.androidstudy.utils.TinkerManager.ERROR_PATCH_ROM_SPACE
-import com.abelhu.androidstudy.utils.TinkerManager.MIN_MEMORY_HEAP_SIZE
-import com.abelhu.androidstudy.utils.TinkerManager.PLATFORM
+import com.abelhu.androidstudy.tinker.TinkerManager.ERROR_PATCH_CONDITION_NOT_SATISFIED
+import com.abelhu.androidstudy.tinker.TinkerManager.ERROR_PATCH_CRASH_LIMIT
+import com.abelhu.androidstudy.tinker.TinkerManager.ERROR_PATCH_GOOGLE_PLAY_CHANNEL
+import com.abelhu.androidstudy.tinker.TinkerManager.ERROR_PATCH_MEMORY_LIMIT
+import com.abelhu.androidstudy.tinker.TinkerManager.ERROR_PATCH_ROM_SPACE
+import com.abelhu.androidstudy.tinker.TinkerManager.MIN_MEMORY_HEAP_SIZE
+import com.abelhu.androidstudy.tinker.TinkerManager.PLATFORM
 import com.qicode.extension.TAG
 import com.tencent.tinker.lib.listener.DefaultPatchListener
 import com.tencent.tinker.lib.util.TinkerLog
@@ -26,6 +25,13 @@ import java.io.File
  * optional, you can just use DefaultPatchListener
  * we can check whatever you want whether we actually send a patch request
  * such as we can check rom space or apk channel
+ *
+ * PatchListener类是用来过滤Tinker收到的补丁包的修复、升级请求，也就是决定我们是不是真的要唤起:patch进程去尝试补丁合成。
+ * 我们为你提供了默认实现DefaultPatchListener.java。
+ * 一般来说, 你可以继承DefaultPatchListener并且加上自己的检查逻辑，例如SamplePatchListener.java。
+ * 若检查成功，我们会调用TinkerPatchService.runPatchService唤起:patch进程，去尝试完成补丁合成操作。
+ * 反之，会回调检验失败的接口。事实上，你只需要复写patchCheck函数即可。
+ * 若检查失败，会在LoadReporter的onLoadPatchListenerReceiveFail中回调。
  */
 class TinkerPatchListener(context: Context) : DefaultPatchListener(context) {
     private val maxMemory = (context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager).memoryClass
@@ -52,7 +58,7 @@ class TinkerPatchListener(context: Context) : DefaultPatchListener(context) {
             val sp = context.getSharedPreferences(ShareConstants.TINKER_SHARE_PREFERENCE_CONFIG, Context.MODE_MULTI_PROCESS)
             //optional, only disable this patch file with md5
             val fastCrashCount = sp.getInt(patchMd5, 0)
-            if (fastCrashCount >= UncaughtExceptionHandler.MAX_CRASH_COUNT) {
+            if (fastCrashCount >= TinkerExceptionHandler.MAX_CRASH_COUNT) {
                 returnCode = ERROR_PATCH_CRASH_LIMIT
             }
         }

@@ -45,5 +45,6 @@ class ToolsFragment : Fragment() {
             )
         }
         downloadPatch.setOnClickListener { TinkerPatch.with().fetchPatchUpdate(true) }
+        deletePatch.setOnClickListener { TinkerPatch.with().cleanAll() }
     }
 }

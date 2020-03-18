@@ -18,4 +18,5 @@
     <string name="show_toast">show toast</string>
     <string name="apply_patch">apply patch</string>
     <string name="download_patch">download tinker patch</string>
+    <string name="delete_patch">delete tinker patch</string>
 </resources>

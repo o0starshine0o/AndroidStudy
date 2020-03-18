@@ -9,10 +9,12 @@ import android.os.Build
 import android.util.Log
 import androidx.multidex.MultiDex
 import com.abelhu.androidstudy.instrumentation.MyInstrumentation
+import com.abelhu.androidstudy.tinker.*
 import com.qicode.extension.TAG
 import com.tencent.tinker.anno.DefaultLifeCycle
 import com.tencent.tinker.entry.DefaultApplicationLike
 import com.tencent.tinker.lib.service.PatchResult
+import com.tencent.tinker.lib.util.UpgradePatchRetry
 import com.tencent.tinker.loader.shareutil.ShareConstants
 import com.tinkerpatch.sdk.TinkerPatch
 import com.tinkerpatch.sdk.server.callback.ConfigRequestCallback
@@ -59,8 +61,8 @@ class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Bool
 //        // set custom looper
 //        setCustomLooper()
         // init other sdk
-        Single.just(true).subscribeOn(Schedulers.single()).flatMap { asyncNoRelySdk() }.observeOn(AndroidSchedulers.mainThread())
-            .subscribe { e -> asyncRelySdk(e) }
+        Single.just(true).subscribeOn(Schedulers.single()).flatMap { asyncNoRelySdk(app.baseContext) }.observeOn(AndroidSchedulers.mainThread())
+            .subscribe { context -> asyncRelySdk(context) }
     }
 
     /**
@@ -107,28 +109,40 @@ class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Bool
     /**
      * init sdk which not rely to main thread
      */
-    private fun asyncNoRelySdk(): SingleSource<Boolean> {
+    private fun asyncNoRelySdk(context: Context): SingleSource<Context> {
         Log.i(TAG(), "asyncNoRelySdk in thread:${Thread.currentThread().name}")
-        return Single.just(true)
+        return Single.just(context)
     }
 
     /**
      * init sdk which rely to main thread
      */
-    private fun asyncRelySdk(e: Boolean) {
-        /**
-         * 我们需要确保至少对主进程跟patch进程初始化 TinkerPatch
-         */
-        initTinkerPatch()
-        Log.i(TAG(), "asyncRelySdk in thread[${Thread.currentThread().name}]:$e")
+    private fun asyncRelySdk(context: Context) {
+        Log.i(TAG(), "asyncRelySdk in thread[${Thread.currentThread().name}]")
+        // uncaught exception
+        Thread.setDefaultUncaughtExceptionHandler(TinkerExceptionHandler())
+        // 我们需要确保至少对主进程跟patch进程初始化 TinkerPatch
+        initTinkerPatch(context)
     }
 
     /**
      * 初始化TinkerPatch SDK, 更多配置可参照API章节中的,初始化 SDK
      * http://www.tinkerpatch.com/Docs/api
      */
-    private fun initTinkerPatch() {
-        TinkerPatch.init(this)
+    private fun initTinkerPatch(context: Context) {
+        // 允许重试
+        UpgradePatchRetry.getInstance(context).setRetryEnable(true)
+        // 所有tinker相关的模块都增加断点，方便查询哪里有问题
+        val builder = TinkerPatch.Builder(this)
+            .loadReporter(TinkerLoadReporter(context))
+            .patchReporter(TinkerPatchReporter(context))
+            .listener(TinkerPatchListener(context))
+            .patchRequestCallback(TinkerRequestCallback())
+            .upgradePatch(TinkerUpgradePatch())
+            .resultServiceClass(TinkerResultService::class.java)
+            .build()
+
+        TinkerPatch.init(builder)
             // /是否自动反射Library路径,无须手动加载补丁中的So文件 注意,调用在反射接口之后才能生效,你也可以使用Tinker的方式加载Library
             .reflectPatchLibrary()
             // 向后台获取是否有补丁包更新,默认的访问间隔为3个小时，若参数为true,即每次调用都会真正的访问后台配置
@@ -136,7 +150,6 @@ class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Bool
             .fetchPatchUpdate(false)
             // 设置访问后台补丁包更新配置的时间间隔,默认为3个小时
             .setFetchPatchIntervalByHours(3)
-
             //设置访问后台动态配置的时间间隔,默认为3个小时
             .setFetchDynamicConfigIntervalByHours(3)
             //若参数为true,即每次调用都会真正的访问后台配置

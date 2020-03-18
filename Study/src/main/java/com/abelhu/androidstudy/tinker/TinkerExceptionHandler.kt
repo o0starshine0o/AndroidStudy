@@ -1,9 +1,7 @@
-package com.abelhu.androidstudy.crash
+package com.abelhu.androidstudy.tinker
 
 import android.content.Context
 import android.os.SystemClock
-import com.abelhu.androidstudy.reporter.TinkerReport
-import com.abelhu.androidstudy.utils.TinkerManager
 import com.abelhu.androidstudy.utils.Xposed
 import com.qicode.extension.TAG
 import com.tencent.tinker.lib.tinker.TinkerApplicationHelper
@@ -18,7 +16,7 @@ import com.tencent.tinker.loader.shareutil.ShareTinkerInternals
  * tinker's crash is caught by `LoadReporter.onLoadException`
  * use `TinkerApplicationHelper` api, no need to install tinker!
  */
-class UncaughtExceptionHandler : Thread.UncaughtExceptionHandler {
+class TinkerExceptionHandler : Thread.UncaughtExceptionHandler {
     companion object {
         private const val QUICK_CRASH_ELAPSE = 10 * 1000.toLong()
         const val MAX_CRASH_COUNT = 3

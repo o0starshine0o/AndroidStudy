@@ -1,10 +1,5 @@
-package com.abelhu.androidstudy.utils
+package com.abelhu.androidstudy.tinker
 
-import com.abelhu.androidstudy.crash.UncaughtExceptionHandler
-import com.abelhu.androidstudy.reporter.ThinkPatchReporter
-import com.abelhu.androidstudy.reporter.TinkerLoadReporter
-import com.abelhu.androidstudy.reporter.TinkerPatchListener
-import com.abelhu.androidstudy.service.TinkerResultService
 import com.qicode.extension.TAG
 import com.tencent.tinker.entry.ApplicationLike
 import com.tencent.tinker.lib.patch.AbstractPatch
@@ -28,12 +23,12 @@ object TinkerManager {
     const val MIN_MEMORY_HEAP_SIZE = 45
 
     var appLike: ApplicationLike? = null
-    private var uncaughtExceptionHandler: UncaughtExceptionHandler? = null
+    private var uncaughtExceptionHandler: TinkerExceptionHandler? = null
     private var isInstalled = false
 
     fun initFastCrashProtect() {
         if (uncaughtExceptionHandler == null) {
-            uncaughtExceptionHandler = UncaughtExceptionHandler()
+            uncaughtExceptionHandler = TinkerExceptionHandler()
             Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler)
         }
     }
@@ -63,7 +58,7 @@ object TinkerManager {
             //or you can just use DefaultLoadReporter
             val loadReporter = TinkerLoadReporter(appLike.application)
             //or you can just use DefaultPatchReporter
-            val patchReporter = ThinkPatchReporter(appLike.application)
+            val patchReporter = TinkerPatchReporter(appLike.application)
             //or you can just use DefaultPatchListener
             val patchListener = TinkerPatchListener(appLike.application)
             //you can set your own upgrade patch if you need
