@@ -122,9 +122,9 @@ object TinkerReportHelper {
     var reporter: Reporter? = TinkerReporter()
 
     fun onTryApply(success: Boolean) {
-        reporter?.onReport(KEY_TRY_APPLY)
-        reporter?.onReport(KEY_TRY_APPLY_UPGRADE)
-        if (success) reporter?.onReport(KEY_TRY_APPLY_SUCCESS)
+        reporter?.onReport(KEY_TRY_APPLY, "onTryApply")
+        reporter?.onReport(KEY_TRY_APPLY_UPGRADE, "onTryApply")
+        if (success) reporter?.onReport(KEY_TRY_APPLY_SUCCESS, "onTryApply, start :patch process")
     }
 
     fun onLoadPatchListenerReceiveFail(patchFile: File, errorCode: Int) {

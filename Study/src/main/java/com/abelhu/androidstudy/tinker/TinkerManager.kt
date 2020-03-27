@@ -52,11 +52,11 @@ object TinkerManager {
      */
     fun installTinker(appLike: ApplicationLike) {
         if (isInstalled) return TinkerLog.w(TAG(), "install tinker, but has installed, ignore")
-        //or you can just use DefaultLoadReporter
+        //or you can just use DefaultLoadReporter， 主要报告patch包的加载过程
         val loadReporter = TinkerLoadReporter(appLike.application)
         //or you can just use DefaultPatchReporter
         val patchReporter = TinkerPatchReporter(appLike.application)
-        //or you can just use DefaultPatchListener
+        //or you can just use DefaultPatchListener， 主要是检测是否需要调起：patch进程进行合并操作， 设置自己的条件过滤（rom大小，崩溃次数，渠道配置等）
         val patchListener = TinkerPatchListener(appLike.application)
         //you can set your own upgrade patch if you need
         val upgradePatchProcessor = UpgradePatch()
