@@ -76,7 +76,7 @@ class TinkerPatchListener(context: Context) : DefaultPatchListener(context) {
                 }
             }
         }
-        TinkerReport.onTryApply(returnCode == ShareConstants.ERROR_PATCH_OK)
+        TinkerReportHelper.onTryApply(returnCode == ShareConstants.ERROR_PATCH_OK)
         return returnCode
     }
 

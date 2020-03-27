@@ -16,7 +16,7 @@ class TinkerPatchReporter(context: Context?) : DefaultPatchReporter(context) {
      */
     override fun onPatchServiceStart(intent: Intent) {
         super.onPatchServiceStart(intent)
-        TinkerReport.onApplyPatchServiceStart()
+        TinkerReportHelper.onApplyPatchServiceStart()
     }
 
     /**
@@ -24,7 +24,7 @@ class TinkerPatchReporter(context: Context?) : DefaultPatchReporter(context) {
      */
     override fun onPatchDexOptFail(patchFile: File, dexFiles: List<File>, t: Throwable) {
         super.onPatchDexOptFail(patchFile, dexFiles, t)
-        TinkerReport.onApplyDexOptFail(t)
+        TinkerReportHelper.onApplyDexOptFail(t)
     }
 
     /**
@@ -32,7 +32,7 @@ class TinkerPatchReporter(context: Context?) : DefaultPatchReporter(context) {
      */
     override fun onPatchException(patchFile: File, e: Throwable) {
         super.onPatchException(patchFile, e)
-        TinkerReport.onApplyCrash(e)
+        TinkerReportHelper.onApplyCrash(e)
     }
 
     /**
@@ -40,7 +40,7 @@ class TinkerPatchReporter(context: Context?) : DefaultPatchReporter(context) {
      */
     override fun onPatchInfoCorrupted(patchFile: File, oldVersion: String, newVersion: String) {
         super.onPatchInfoCorrupted(patchFile, oldVersion, newVersion)
-        TinkerReport.onApplyInfoCorrupted()
+        TinkerReportHelper.onApplyInfoCorrupted()
     }
 
     /**
@@ -48,7 +48,7 @@ class TinkerPatchReporter(context: Context?) : DefaultPatchReporter(context) {
      */
     override fun onPatchPackageCheckFail(patchFile: File, errorCode: Int) {
         super.onPatchPackageCheckFail(patchFile, errorCode)
-        TinkerReport.onApplyPackageCheckFail(errorCode)
+        TinkerReportHelper.onApplyPackageCheckFail(errorCode)
     }
 
     /**
@@ -57,7 +57,7 @@ class TinkerPatchReporter(context: Context?) : DefaultPatchReporter(context) {
      */
     override fun onPatchResult(patchFile: File, success: Boolean, cost: Long) {
         super.onPatchResult(patchFile, success, cost)
-        TinkerReport.onApplied(cost, success)
+        TinkerReportHelper.onApplied(cost, success)
     }
 
     /**
@@ -65,7 +65,7 @@ class TinkerPatchReporter(context: Context?) : DefaultPatchReporter(context) {
      */
     override fun onPatchTypeExtractFail(patchFile: File, extractTo: File, filename: String, fileType: Int) {
         super.onPatchTypeExtractFail(patchFile, extractTo, filename, fileType)
-        TinkerReport.onApplyExtractFail(fileType)
+        TinkerReportHelper.onApplyExtractFail(fileType)
     }
 
     /**
@@ -73,6 +73,6 @@ class TinkerPatchReporter(context: Context?) : DefaultPatchReporter(context) {
      */
     override fun onPatchVersionCheckFail(patchFile: File, oldPatchInfo: SharePatchInfo, patchFileVersion: String) {
         super.onPatchVersionCheckFail(patchFile, oldPatchInfo, patchFileVersion)
-        TinkerReport.onApplyVersionCheckFail()
+        TinkerReportHelper.onApplyVersionCheckFail()
     }
 }

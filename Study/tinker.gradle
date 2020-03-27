@@ -58,6 +58,7 @@ if (buildWithTinker()) {
             buildConfigField "String", "MESSAGE", "\"I am the base apk\""
             buildConfigField "String", "TINKER_ID", "\"${getTinkerIdValue()}\""
             buildConfigField "String", "PLATFORM", "\"all\""
+            buildConfigField("Integer", "TINKER_TYPE", "${TINKER_TYPE}")
             // 有些库里面既包含了注解，也包含了注解处理，目前用这种变通的方法，今后可以删除
             javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
         }

@@ -9,6 +9,8 @@ import java.io.File
 
 /**
  * optional, you can just use DefaultLoadReporter
+ *
+ * 加载patch文件报告
  */
 class TinkerLoadReporter(context: Context?) : DefaultLoadReporter(context) {
     /**
@@ -17,21 +19,25 @@ class TinkerLoadReporter(context: Context?) : DefaultLoadReporter(context) {
      */
     override fun onLoadPatchListenerReceiveFail(patchFile: File, errorCode: Int) {
         super.onLoadPatchListenerReceiveFail(patchFile, errorCode)
-        TinkerReport.onTryApplyFail(errorCode)
+        TinkerReportHelper.onLoadPatchListenerReceiveFail(patchFile, errorCode)
     }
 
     /**
      * 这个是无论加载失败或者成功都会回调的接口，它返回了本次加载所用的时间、返回码等信息。
      * 默认我们只是简单的输出这个信息，你可以在这里加上监控上报逻辑。
+     *
+     * 在线程空闲的时候进行重试，但是有几个前提：
+     * 1、允许重试
+     * 2、在主进程中
+     * 3、TinkerService存在
+     * 4、重试文件存在
      */
     override fun onLoadResult(patchDirectory: File, loadCode: Int, cost: Long) {
         super.onLoadResult(patchDirectory, loadCode, cost)
-        when (loadCode) {
-            ShareConstants.ERROR_LOAD_OK -> TinkerReport.onLoaded(cost)
-        }
+        if (loadCode == ShareConstants.ERROR_LOAD_OK) TinkerReportHelper.onLoaded(cost)
         Looper.myQueue().addIdleHandler {
             if (UpgradePatchRetry.getInstance(context).onPatchRetryLoad()) {
-                TinkerReport.onReportRetryPatch()
+                TinkerReportHelper.onReportRetryPatch()
             }
             false
         }
@@ -42,7 +48,7 @@ class TinkerLoadReporter(context: Context?) : DefaultLoadReporter(context) {
      */
     override fun onLoadException(e: Throwable, errorCode: Int) {
         super.onLoadException(e, errorCode)
-        TinkerReport.onLoadException(e, errorCode)
+        TinkerReportHelper.onLoadException(e, errorCode)
     }
 
     /**
@@ -50,7 +56,7 @@ class TinkerLoadReporter(context: Context?) : DefaultLoadReporter(context) {
      */
     override fun onLoadFileMd5Mismatch(file: File, fileType: Int) {
         super.onLoadFileMd5Mismatch(file, fileType)
-        TinkerReport.onLoadFileMisMatch(fileType)
+        TinkerReportHelper.onLoadFileMisMatch(file, fileType)
     }
 
     /**
@@ -61,7 +67,7 @@ class TinkerLoadReporter(context: Context?) : DefaultLoadReporter(context) {
      */
     override fun onLoadFileNotFound(file: File, fileType: Int, isDirectory: Boolean) {
         super.onLoadFileNotFound(file, fileType, isDirectory)
-        TinkerReport.onLoadFileNotFound(fileType)
+        TinkerReportHelper.onLoadFileNotFound(file, fileType, isDirectory)
     }
 
     /**
@@ -69,7 +75,7 @@ class TinkerLoadReporter(context: Context?) : DefaultLoadReporter(context) {
      */
     override fun onLoadPackageCheckFail(patchFile: File, errorCode: Int) {
         super.onLoadPackageCheckFail(patchFile, errorCode)
-        TinkerReport.onLoadPackageCheckFail(errorCode)
+        TinkerReportHelper.onLoadPackageCheckFail(patchFile, errorCode)
     }
 
     /**
@@ -77,7 +83,7 @@ class TinkerLoadReporter(context: Context?) : DefaultLoadReporter(context) {
      */
     override fun onLoadPatchInfoCorrupted(oldVersion: String, newVersion: String, patchInfoFile: File) {
         super.onLoadPatchInfoCorrupted(oldVersion, newVersion, patchInfoFile)
-        TinkerReport.onLoadInfoCorrupted()
+        TinkerReportHelper.onLoadInfoCorrupted(oldVersion, newVersion, patchInfoFile)
     }
 
     /**
@@ -85,7 +91,7 @@ class TinkerLoadReporter(context: Context?) : DefaultLoadReporter(context) {
      */
     override fun onLoadInterpret(type: Int, e: Throwable) {
         super.onLoadInterpret(type, e)
-        TinkerReport.onLoadInterpretReport(type, e)
+        TinkerReportHelper.onLoadInterpretReport(type, e)
     }
 
 }

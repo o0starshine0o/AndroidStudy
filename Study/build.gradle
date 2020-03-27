@@ -6,7 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 // 如果不使用tinker，直接注释掉就好了
 //apply from: 'tinker.gradle'
-// 进阶为tinkerPatch，全套解决方案
+// 进阶为tinkerPatch，全套解决方案，包含了tinker.gradle的所有内容，所以就不需要在再apply tinker.gradle了
 apply from: 'tinkerPatch.gradle'
 
 android {
@@ -20,6 +20,9 @@ android {
         versionName PROJ_VERSION
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // 关闭自定义的Instrumentation和Looper检查
+        buildConfigField("Boolean", "CustomInstrumentation", "false")
+        buildConfigField("Boolean", "CustomLooper", "false")
     }
     buildTypes {
         debug {
@@ -37,7 +40,7 @@ android {
             buildConfigField("String", "Host", "\"https://www.qq.com/\"")
         }
     }
-    aaptOptions{
+    aaptOptions {
         // 关闭png的优化，保证热更新
         cruncherEnabled false
     }

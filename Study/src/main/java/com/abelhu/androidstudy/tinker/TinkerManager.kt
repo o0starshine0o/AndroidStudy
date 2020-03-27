@@ -2,7 +2,6 @@ package com.abelhu.androidstudy.tinker
 
 import com.qicode.extension.TAG
 import com.tencent.tinker.entry.ApplicationLike
-import com.tencent.tinker.lib.patch.AbstractPatch
 import com.tencent.tinker.lib.patch.UpgradePatch
 import com.tencent.tinker.lib.tinker.TinkerInstaller
 import com.tencent.tinker.lib.util.TinkerLog
@@ -28,6 +27,7 @@ object TinkerManager {
 
     fun initFastCrashProtect() {
         if (uncaughtExceptionHandler == null) {
+            // 因为TinkerExceptionHandler保存了默认的ExceptionHandler，所以这里其实是插入了一个TinkerExceptionHandler，而非直接替换
             uncaughtExceptionHandler = TinkerExceptionHandler()
             Thread.setDefaultUncaughtExceptionHandler(uncaughtExceptionHandler)
         }
@@ -49,22 +49,20 @@ object TinkerManager {
     /**
      * you can specify all class you want.
      * sometimes, you can only install tinker in some process you want!
-     *
-     * @param appLike
      */
     fun installTinker(appLike: ApplicationLike) {
-        if (isInstalled) TinkerLog.w(TAG(), "install tinker, but has installed, ignore")
-        else {
-            //or you can just use DefaultLoadReporter
-            val loadReporter = TinkerLoadReporter(appLike.application)
-            //or you can just use DefaultPatchReporter
-            val patchReporter = TinkerPatchReporter(appLike.application)
-            //or you can just use DefaultPatchListener
-            val patchListener = TinkerPatchListener(appLike.application)
-            //you can set your own upgrade patch if you need
-            val upgradePatchProcessor: AbstractPatch = UpgradePatch()
-            TinkerInstaller.install(appLike, loadReporter, patchReporter, patchListener, TinkerResultService::class.java, upgradePatchProcessor)
-            isInstalled = true
-        }
+        if (isInstalled) return TinkerLog.w(TAG(), "install tinker, but has installed, ignore")
+        //or you can just use DefaultLoadReporter
+        val loadReporter = TinkerLoadReporter(appLike.application)
+        //or you can just use DefaultPatchReporter
+        val patchReporter = TinkerPatchReporter(appLike.application)
+        //or you can just use DefaultPatchListener
+        val patchListener = TinkerPatchListener(appLike.application)
+        //you can set your own upgrade patch if you need
+        val upgradePatchProcessor = UpgradePatch()
+        // install tinker
+        TinkerInstaller.install(appLike, loadReporter, patchReporter, patchListener, TinkerResultService::class.java, upgradePatchProcessor)
+        // set flag
+        isInstalled = true
     }
 }

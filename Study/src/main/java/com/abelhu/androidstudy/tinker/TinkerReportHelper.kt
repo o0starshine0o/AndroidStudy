@@ -8,15 +8,17 @@ import com.abelhu.androidstudy.tinker.TinkerManager.ERROR_PATCH_ROM_SPACE
 import com.qicode.extension.TAG
 import com.tencent.tinker.lib.util.TinkerLog
 import com.tencent.tinker.loader.shareutil.ShareConstants
+import com.tencent.tinker.loader.shareutil.ShareConstants.*
 import com.tencent.tinker.loader.shareutil.ShareTinkerInternals
+import java.io.File
 
 
 /**
  * a simple tinker data tinker
  */
-object TinkerReport {
+object TinkerReportHelper {
     interface Reporter {
-        fun onReport(key: Int)
+        fun onReport(key: Int, message: String? = null)
         fun onReport(message: String?)
     }
 
@@ -117,7 +119,7 @@ object TinkerReport {
     private const val KEY_LOADED_INTERPRET_INTERPRET_COMMAND_ERROR = 451
     private const val KEY_LOADED_INTERPRET_TYPE_INTERPRET_OK = 452
 
-    var reporter: Reporter? = null
+    var reporter: Reporter? = TinkerReporter()
 
     fun onTryApply(success: Boolean) {
         reporter?.onReport(KEY_TRY_APPLY)
@@ -125,100 +127,132 @@ object TinkerReport {
         if (success) reporter?.onReport(KEY_TRY_APPLY_SUCCESS)
     }
 
-    fun onTryApplyFail(errorCode: Int) {
+    fun onLoadPatchListenerReceiveFail(patchFile: File, errorCode: Int) {
+        val message = "patch loadReporter onLoadPatchListenerReceiveFail: patch receive fail: ${patchFile.absolutePath}, code: "
         when (errorCode) {
             // 输入的临时补丁包文件不存在。
-            ShareConstants.ERROR_PATCH_NOTEXIST -> reporter?.onReport(KEY_TRY_APPLY_NOT_EXIST)
+            ERROR_PATCH_NOTEXIST -> reporter?.onReport(KEY_TRY_APPLY_NOT_EXIST, "$message KEY_TRY_APPLY_NOT_EXIST")
             // 当前tinkerFlag为不可用状态。
-            ShareConstants.ERROR_PATCH_DISABLE -> reporter?.onReport(KEY_TRY_APPLY_DISABLE)
+            ERROR_PATCH_DISABLE -> reporter?.onReport(KEY_TRY_APPLY_DISABLE, "$message KEY_TRY_APPLY_DISABLE")
             // 不能在:patch补丁合成进程，发起补丁的合成请求。
-            ShareConstants.ERROR_PATCH_INSERVICE -> reporter?.onReport(KEY_TRY_APPLY_IN_SERVICE)
+            ERROR_PATCH_INSERVICE -> reporter?.onReport(KEY_TRY_APPLY_IN_SERVICE, "$message KEY_TRY_APPLY_IN_SERVICE")
             // 当前:patch补丁合成进程正在运行。
-            ShareConstants.ERROR_PATCH_RUNNING -> reporter?.onReport(KEY_TRY_APPLY_RUNNING)
+            ERROR_PATCH_RUNNING -> reporter?.onReport(KEY_TRY_APPLY_RUNNING, "$message KEY_TRY_APPLY_RUNNING")
             // 补丁不支持 N 之前的 JIT 模式。
-            ShareConstants.ERROR_PATCH_JIT -> reporter?.onReport(KEY_TRY_APPLY_JIT)
+            ERROR_PATCH_JIT -> reporter?.onReport(KEY_TRY_APPLY_JIT, "$message KEY_TRY_APPLY_JIT")
             // 补丁已经应用。
-            ShareConstants.ERROR_PATCH_ALREADY_APPLY -> reporter?.onReport(KEY_TRY_APPLY_ALREADY_APPLY)
-            ERROR_PATCH_ROM_SPACE -> reporter?.onReport(KEY_TRY_APPLY_ROM_SPACE)
-            ERROR_PATCH_GOOGLE_PLAY_CHANNEL -> reporter?.onReport(KEY_TRY_APPLY_GOOGLE_PLAY)
-            ERROR_PATCH_CRASH_LIMIT -> reporter?.onReport(KEY_TRY_APPLY_CRASH_LIMIT)
-            ERROR_PATCH_MEMORY_LIMIT -> reporter?.onReport(KEY_TRY_APPLY_MEMORY_LIMIT)
-            ERROR_PATCH_CONDITION_NOT_SATISFIED -> reporter?.onReport(KEY_TRY_APPLY_CONDITION_NOT_SATISFIED)
+            ERROR_PATCH_ALREADY_APPLY -> reporter?.onReport(KEY_TRY_APPLY_ALREADY_APPLY, "$message KEY_TRY_APPLY_ALREADY_APPLY")
+            // ROM空间不够
+            ERROR_PATCH_ROM_SPACE -> reporter?.onReport(KEY_TRY_APPLY_ROM_SPACE, "$message KEY_TRY_APPLY_ROM_SPACE")
+            // GP渠道
+            ERROR_PATCH_GOOGLE_PLAY_CHANNEL -> reporter?.onReport(KEY_TRY_APPLY_GOOGLE_PLAY, "$message KEY_TRY_APPLY_GOOGLE_PLAY")
+            // 崩溃限制
+            ERROR_PATCH_CRASH_LIMIT -> reporter?.onReport(KEY_TRY_APPLY_CRASH_LIMIT, "$message KEY_TRY_APPLY_CRASH_LIMIT")
+            // 内存限制
+            ERROR_PATCH_MEMORY_LIMIT -> reporter?.onReport(KEY_TRY_APPLY_MEMORY_LIMIT, "$message KEY_TRY_APPLY_MEMORY_LIMIT")
+            // 天剑不满足
+            ERROR_PATCH_CONDITION_NOT_SATISFIED -> reporter?.onReport(KEY_TRY_APPLY_CONDITION_NOT_SATISFIED, "$message KEY_TRY_APPLY_CONDITION_NOT_SATISFIED")
         }
     }
 
-    fun onLoadPackageCheckFail(errorCode: Int) {
+    fun onLoadPackageCheckFail(patchFile: File, errorCode: Int) {
+        val message = "patch loadReporter onLoadPackageCheckFail: load patch package check fail file path: ${patchFile.absolutePath}, errorCode: "
         when (errorCode) {
             // 签名校验失败
-            ShareConstants.ERROR_PACKAGE_CHECK_SIGNATURE_FAIL -> reporter?.onReport(KEY_LOADED_PACKAGE_CHECK_SIGNATURE)
-            ShareConstants.ERROR_PACKAGE_CHECK_DEX_META_CORRUPTED -> reporter?.onReport(KEY_LOADED_PACKAGE_CHECK_DEX_META)
-            ShareConstants.ERROR_PACKAGE_CHECK_LIB_META_CORRUPTED -> reporter?.onReport(KEY_LOADED_PACKAGE_CHECK_LIB_META)
-            ShareConstants.ERROR_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND -> reporter?.onReport(KEY_LOADED_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND)
+            ERROR_PACKAGE_CHECK_SIGNATURE_FAIL -> reporter?.onReport(KEY_LOADED_PACKAGE_CHECK_SIGNATURE, "$message KEY_LOADED_PACKAGE_CHECK_SIGNATURE")
+            ERROR_PACKAGE_CHECK_DEX_META_CORRUPTED -> reporter?.onReport(KEY_LOADED_PACKAGE_CHECK_DEX_META, "$message KEY_LOADED_PACKAGE_CHECK_DEX_META")
+            ERROR_PACKAGE_CHECK_LIB_META_CORRUPTED -> reporter?.onReport(KEY_LOADED_PACKAGE_CHECK_LIB_META, "$message KEY_LOADED_PACKAGE_CHECK_LIB_META")
+            ERROR_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND -> reporter?.onReport(
+                KEY_LOADED_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND,
+                "$message KEY_LOADED_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND"
+            )
             // 找不到基准apk AndroidManifest中的TINKER_ID
-            ShareConstants.ERROR_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND -> reporter?.onReport(KEY_LOADED_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND)
+            ERROR_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND -> reporter?.onReport(
+                KEY_LOADED_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND,
+                "$message KEY_LOADED_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND"
+            )
             // 基准版本与补丁定义的TINKER_ID不相等
-            ShareConstants.ERROR_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL -> reporter?.onReport(KEY_LOADED_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL)
+            ERROR_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL -> reporter?.onReport(
+                KEY_LOADED_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL,
+                "$message KEY_LOADED_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL"
+            )
             // 找不到"assets/package_meta.txt"文件
-            ShareConstants.ERROR_PACKAGE_CHECK_PACKAGE_META_NOT_FOUND -> reporter?.onReport(KEY_LOADED_PACKAGE_CHECK_PACKAGE_META_NOT_FOUND)
+            ERROR_PACKAGE_CHECK_PACKAGE_META_NOT_FOUND -> reporter?.onReport(
+                KEY_LOADED_PACKAGE_CHECK_PACKAGE_META_NOT_FOUND,
+                "$message KEY_LOADED_PACKAGE_CHECK_PACKAGE_META_NOT_FOUND"
+            )
             // "assets/res_meta.txt"信息损坏
-            ShareConstants.ERROR_PACKAGE_CHECK_RESOURCE_META_CORRUPTED -> reporter?.onReport(KEY_LOADED_PACKAGE_CHECK_RES_META)
+            ERROR_PACKAGE_CHECK_RESOURCE_META_CORRUPTED -> reporter?.onReport(KEY_LOADED_PACKAGE_CHECK_RES_META, "$message KEY_LOADED_PACKAGE_CHECK_RES_META")
             // tinkerFlag不支持补丁中的某些类型的更改，例如补丁中存在资源更新，但是使用者指定不支持资源类型更新。
-            ShareConstants.ERROR_PACKAGE_CHECK_TINKERFLAG_NOT_SUPPORT -> reporter?.onReport(KEY_LOADED_PACKAGE_CHECK_TINKER_FLAG_NOT_SUPPORT)
+            ERROR_PACKAGE_CHECK_TINKERFLAG_NOT_SUPPORT -> reporter?.onReport(
+                KEY_LOADED_PACKAGE_CHECK_TINKER_FLAG_NOT_SUPPORT,
+                "$message KEY_LOADED_PACKAGE_CHECK_TINKER_FLAG_NOT_SUPPORT"
+            )
         }
     }
 
     fun onLoaded(cost: Long) {
-        reporter?.onReport(KEY_LOADED)
+        val message = "tinker onLoaded with cost: $cost"
+        reporter?.onReport(KEY_LOADED, message)
         if (cost < 0L) {
             TinkerLog.e(TAG(), "hp_report report load cost failed, invalid cost")
             return
         }
         when {
-            cost <= 500 -> reporter?.onReport(KEY_LOADED_SUCCESS_COST_500_LESS)
-            cost <= 1000 -> reporter?.onReport(KEY_LOADED_SUCCESS_COST_1000_LESS)
-            cost <= 3000 -> reporter?.onReport(KEY_LOADED_SUCCESS_COST_3000_LESS)
-            cost <= 5000 -> reporter?.onReport(KEY_LOADED_SUCCESS_COST_5000_LESS)
-            else -> reporter?.onReport(KEY_LOADED_SUCCESS_COST_OTHER)
+            cost <= 500 -> reporter?.onReport(KEY_LOADED_SUCCESS_COST_500_LESS, message)
+            cost <= 1000 -> reporter?.onReport(KEY_LOADED_SUCCESS_COST_1000_LESS, message)
+            cost <= 3000 -> reporter?.onReport(KEY_LOADED_SUCCESS_COST_3000_LESS, message)
+            cost <= 5000 -> reporter?.onReport(KEY_LOADED_SUCCESS_COST_5000_LESS, message)
+            else -> reporter?.onReport(KEY_LOADED_SUCCESS_COST_OTHER, message)
         }
     }
 
-    fun onLoadInfoCorrupted() = reporter?.onReport(KEY_LOADED_INFO_CORRUPTED)
+    fun onLoadInfoCorrupted(old: String, new: String, file: File) {
+        val message = "patch loadReporter onLoadPatchInfoCorrupted: patch info file damage: ${file.absolutePath}, from version: $old to version: $new"
+        reporter?.onReport(KEY_LOADED_INFO_CORRUPTED, message)
+    }
 
-    fun onLoadFileNotFound(fileType: Int) {
+    fun onLoadFileNotFound(file: File, fileType: Int, isDirectory: Boolean) {
+        val message = "patch loadReporter onLoadFileNotFound: patch file not found: ${file.absolutePath}, isDirectory: $isDirectory, fileType: "
         when (fileType) {
             // odex文件
-            ShareConstants.TYPE_DEX_OPT -> reporter?.onReport(KEY_LOADED_MISSING_DEX_OPT)
-            ShareConstants.TYPE_DEX -> reporter?.onReport(KEY_LOADED_MISSING_DEX)
+            TYPE_DEX_OPT -> reporter?.onReport(KEY_LOADED_MISSING_DEX_OPT, "$message KEY_LOADED_MISSING_DEX_OPT")
+            TYPE_DEX -> reporter?.onReport(KEY_LOADED_MISSING_DEX, "$message KEY_LOADED_MISSING_DEX")
             // library文件
-            ShareConstants.TYPE_LIBRARY -> reporter?.onReport(KEY_LOADED_MISSING_LIB)
-            ShareConstants.TYPE_PATCH_FILE -> reporter?.onReport(KEY_LOADED_MISSING_PATCH_FILE)
+            TYPE_LIBRARY -> reporter?.onReport(KEY_LOADED_MISSING_LIB, "$message KEY_LOADED_MISSING_LIB")
+            TYPE_PATCH_FILE -> reporter?.onReport(KEY_LOADED_MISSING_PATCH_FILE, "$message KEY_LOADED_MISSING_PATCH_FILE")
             // "patch.info"补丁版本配置文件
-            ShareConstants.TYPE_PATCH_INFO -> reporter?.onReport(KEY_LOADED_MISSING_PATCH_INFO)
+            TYPE_PATCH_INFO -> reporter?.onReport(KEY_LOADED_MISSING_PATCH_INFO, "$message KEY_LOADED_MISSING_PATCH_INFO")
             // 资源文件
-            ShareConstants.TYPE_RESOURCE -> reporter?.onReport(KEY_LOADED_MISSING_RES)
+            TYPE_RESOURCE -> reporter?.onReport(KEY_LOADED_MISSING_RES, "$message KEY_LOADED_MISSING_RES")
         }
     }
 
     fun onLoadInterpretReport(type: Int, e: Throwable?) {
         when (type) {
-            ShareConstants.TYPE_INTERPRET_GET_INSTRUCTION_SET_ERROR -> {
-                reporter?.onReport(KEY_LOADED_INTERPRET_GET_INSTRUCTION_SET_ERROR)
-                reporter?.onReport("Tinker Exception:interpret occur exception ${e?.message}")
+            TYPE_INTERPRET_GET_INSTRUCTION_SET_ERROR -> {
+                reporter?.onReport(
+                    KEY_LOADED_INTERPRET_GET_INSTRUCTION_SET_ERROR,
+                    "patch loadReporter onLoadInterpret fail, can get instruction set from existed oat file"
+                )
             }
-            ShareConstants.TYPE_INTERPRET_COMMAND_ERROR -> {
-                reporter?.onReport(KEY_LOADED_INTERPRET_INTERPRET_COMMAND_ERROR)
-                reporter?.onReport("Tinker Exception:interpret occur exception ${e?.message}")
+            TYPE_INTERPRET_COMMAND_ERROR -> {
+                reporter?.onReport(
+                    KEY_LOADED_INTERPRET_INTERPRET_COMMAND_ERROR,
+                    "patch loadReporter onLoadInterpret fail, command line to interpret return error"
+                )
             }
-            ShareConstants.TYPE_INTERPRET_OK -> reporter?.onReport(KEY_LOADED_INTERPRET_TYPE_INTERPRET_OK)
+            TYPE_INTERPRET_OK -> reporter?.onReport(KEY_LOADED_INTERPRET_TYPE_INTERPRET_OK, "patch loadReporter onLoadInterpret ok")
         }
     }
 
-    fun onLoadFileMisMatch(fileType: Int) {
+    fun onLoadFileMisMatch(file: File, fileType: Int) {
+        val message = "patch load Reporter onLoadFileMd5Mismatch: patch file md5 mismatch file: ${file.absolutePath}, fileType: "
         when (fileType) {
             // 在Dalvik合成全量的Dex文件
-            ShareConstants.TYPE_DEX -> reporter?.onReport(KEY_LOADED_MISMATCH_DEX)
-            ShareConstants.TYPE_LIBRARY -> reporter?.onReport(KEY_LOADED_MISMATCH_LIB)
-            ShareConstants.TYPE_RESOURCE -> reporter?.onReport(KEY_LOADED_MISMATCH_RESOURCE)
+            TYPE_DEX -> reporter?.onReport(KEY_LOADED_MISMATCH_DEX, "$message KEY_LOADED_MISMATCH_DEX")
+            TYPE_LIBRARY -> reporter?.onReport(KEY_LOADED_MISMATCH_LIB, "$message KEY_LOADED_MISMATCH_LIB")
+            TYPE_RESOURCE -> reporter?.onReport(KEY_LOADED_MISMATCH_RESOURCE, "$message KEY_LOADED_MISMATCH_RESOURCE")
         }
     }
 
@@ -227,26 +261,30 @@ object TinkerReport {
         when (errorCode) {
             // 在加载dex过程中捕获到的crash
             ShareConstants.ERROR_LOAD_EXCEPTION_DEX -> if (throwable.message!!.contains(ShareConstants.CHECK_DEX_INSTALL_FAIL)) {
-                reporter?.onReport(KEY_LOADED_EXCEPTION_DEX_CHECK)
                 isCheckFail = true
-                TinkerLog.e(TAG(), "tinker dex check fail:" + throwable.message)
+                val message = "tinker dex check fail: ${throwable.message}"
+                reporter?.onReport(KEY_LOADED_EXCEPTION_DEX_CHECK, message)
+                TinkerLog.e(TAG(), message)
             } else {
-                reporter?.onReport(KEY_LOADED_EXCEPTION_DEX)
-                TinkerLog.e(TAG(), "tinker dex reflect fail:" + throwable.message)
+                val message = "tinker dex reflect fail: ${throwable.message}"
+                reporter?.onReport(KEY_LOADED_EXCEPTION_DEX, message)
+                TinkerLog.e(TAG(), message)
             }
             // 在加载res过程中捕获到的crash
             ShareConstants.ERROR_LOAD_EXCEPTION_RESOURCE -> if (throwable.message!!.contains(ShareConstants.CHECK_RES_INSTALL_FAIL)) {
-                reporter?.onReport(KEY_LOADED_EXCEPTION_RESOURCE_CHECK)
                 isCheckFail = true
-                TinkerLog.e(TAG(), "tinker res check fail:" + throwable.message)
+                val message = "tinker res check fail: ${throwable.message}"
+                reporter?.onReport(KEY_LOADED_EXCEPTION_RESOURCE_CHECK, message)
+                TinkerLog.e(TAG(), message)
             } else {
-                reporter?.onReport(KEY_LOADED_EXCEPTION_RESOURCE)
-                TinkerLog.e(TAG(), "tinker res reflect fail:" + throwable.message)
+                val message = "tinker res reflect fail: ${throwable.message}"
+                reporter?.onReport(KEY_LOADED_EXCEPTION_RESOURCE, message)
+                TinkerLog.e(TAG(), message)
             }
             // 没有捕获到的非java crash,这个是补丁机制的安全模式
-            ShareConstants.ERROR_LOAD_EXCEPTION_UNCAUGHT -> reporter?.onReport(KEY_LOADED_UNCAUGHT_EXCEPTION)
+            ShareConstants.ERROR_LOAD_EXCEPTION_UNCAUGHT -> reporter?.onReport(KEY_LOADED_UNCAUGHT_EXCEPTION, "KEY_LOADED_UNCAUGHT_EXCEPTION")
             // 没有捕获到的java crash
-            ShareConstants.ERROR_LOAD_EXCEPTION_UNKNOWN -> reporter?.onReport(KEY_LOADED_UNKNOWN_EXCEPTION)
+            ShareConstants.ERROR_LOAD_EXCEPTION_UNKNOWN -> reporter?.onReport(KEY_LOADED_UNKNOWN_EXCEPTION, "KEY_LOADED_UNKNOWN_EXCEPTION")
         }
         //tinker exception, for dex check fail, we don't need to report stacktrace
         if (!isCheckFail) reporter?.onReport("Tinker Exception:load tinker occur exception ")
@@ -268,11 +306,11 @@ object TinkerReport {
 
     fun onApplyExtractFail(fileType: Int) {
         when (fileType) {
-            ShareConstants.TYPE_DEX -> reporter?.onReport(KEY_APPLIED_DEX_EXTRACT)
-            ShareConstants.TYPE_LIBRARY -> reporter?.onReport(KEY_APPLIED_LIB_EXTRACT)
+            TYPE_DEX -> reporter?.onReport(KEY_APPLIED_DEX_EXTRACT)
+            TYPE_LIBRARY -> reporter?.onReport(KEY_APPLIED_LIB_EXTRACT)
             // 补丁文件
-            ShareConstants.TYPE_PATCH_FILE -> reporter?.onReport(KEY_APPLIED_PATCH_FILE_EXTRACT)
-            ShareConstants.TYPE_RESOURCE -> reporter?.onReport(KEY_APPLIED_RESOURCE_EXTRACT)
+            TYPE_PATCH_FILE -> reporter?.onReport(KEY_APPLIED_PATCH_FILE_EXTRACT)
+            TYPE_RESOURCE -> reporter?.onReport(KEY_APPLIED_RESOURCE_EXTRACT)
         }
     }
 
@@ -326,26 +364,28 @@ object TinkerReport {
     fun onApplyPackageCheckFail(errorCode: Int) {
         TinkerLog.i(TAG(), "hp_report package check failed, error = %d", errorCode)
         when (errorCode) {
-            ShareConstants.ERROR_PACKAGE_CHECK_SIGNATURE_FAIL -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_SIGNATURE)
+            ERROR_PACKAGE_CHECK_SIGNATURE_FAIL -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_SIGNATURE)
             // "assets/dex_meta.txt"信息损坏
-            ShareConstants.ERROR_PACKAGE_CHECK_DEX_META_CORRUPTED -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_DEX_META)
+            ERROR_PACKAGE_CHECK_DEX_META_CORRUPTED -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_DEX_META)
             // "assets/so_meta.txt"信息损坏
-            ShareConstants.ERROR_PACKAGE_CHECK_LIB_META_CORRUPTED -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_LIB_META)
+            ERROR_PACKAGE_CHECK_LIB_META_CORRUPTED -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_LIB_META)
             // 找不到补丁中"assets/package_meta.txt"中的TINKER_ID
-            ShareConstants.ERROR_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND)
-            ShareConstants.ERROR_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND)
-            ShareConstants.ERROR_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL)
-            ShareConstants.ERROR_PACKAGE_CHECK_PACKAGE_META_NOT_FOUND -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_META_NOT_FOUND)
-            ShareConstants.ERROR_PACKAGE_CHECK_RESOURCE_META_CORRUPTED -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_RES_META)
-            ShareConstants.ERROR_PACKAGE_CHECK_TINKERFLAG_NOT_SUPPORT -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_TINKER_FLAG_NOT_SUPPORT)
+            ERROR_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND)
+            ERROR_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND)
+            ERROR_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL)
+            ERROR_PACKAGE_CHECK_PACKAGE_META_NOT_FOUND -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_META_NOT_FOUND)
+            ERROR_PACKAGE_CHECK_RESOURCE_META_CORRUPTED -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_RES_META)
+            ERROR_PACKAGE_CHECK_TINKERFLAG_NOT_SUPPORT -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_TINKER_FLAG_NOT_SUPPORT)
         }
     }
 
     fun onApplyCrash(throwable: Throwable?) = reporter?.onReport(KEY_APPLIED_EXCEPTION)
 
-    fun onFastCrashProtect() = reporter?.onReport(KEY_CRASH_FAST_PROTECT)
+    fun onFastCrashProtect(message: String? = null) = reporter?.onReport(KEY_CRASH_FAST_PROTECT, message)
 
-    fun onXposedCrash() = reporter?.onReport(if (ShareTinkerInternals.isVmArt()) KEY_CRASH_CAUSE_XPOSED_ART else KEY_CRASH_CAUSE_XPOSED_DALVIK)
+    fun onXposedCrash(message: String? = null) {
+        reporter?.onReport(if (ShareTinkerInternals.isVmArt()) KEY_CRASH_CAUSE_XPOSED_ART else KEY_CRASH_CAUSE_XPOSED_DALVIK, message)
+    }
 
-    fun onReportRetryPatch() = reporter?.onReport(KEY_APPLY_WITH_RETRY)
+    fun onReportRetryPatch() = reporter?.onReport(KEY_APPLY_WITH_RETRY, "KEY_APPLY_WITH_RETRY")
 }

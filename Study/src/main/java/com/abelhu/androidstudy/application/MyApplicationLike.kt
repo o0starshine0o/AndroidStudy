@@ -8,12 +8,14 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.multidex.MultiDex
+import com.abelhu.androidstudy.BuildConfig
 import com.abelhu.androidstudy.instrumentation.MyInstrumentation
 import com.abelhu.androidstudy.tinker.*
 import com.qicode.extension.TAG
 import com.tencent.tinker.anno.DefaultLifeCycle
 import com.tencent.tinker.entry.DefaultApplicationLike
 import com.tencent.tinker.lib.service.PatchResult
+import com.tencent.tinker.lib.tinker.Tinker
 import com.tencent.tinker.lib.util.UpgradePatchRetry
 import com.tencent.tinker.loader.shareutil.ShareConstants
 import com.tinkerpatch.sdk.TinkerPatch
@@ -56,12 +58,16 @@ class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Bool
     @SuppressLint("CheckResult")
     override fun onCreate() {
         super.onCreate()
-        // 我们需要确保至少对主进程跟patch进程初始化 TinkerPatch, 需要紧跟super.onCreate()，否则容易出错
-        initTinkerPatch(app.baseContext)
-//        // set custom instrumentation, for UI test , temporarily remove this instrumentation
-//        setCustomInstrumentation()
-//        // set custom looper
-//        setCustomLooper()
+        when (BuildConfig.TINKER_TYPE) {
+            // 初始化Tinker
+            1 -> initTinker()
+            // 我们需要确保至少对主进程跟patch进程初始化 TinkerPatch, 需要紧跟super.onCreate()，否则容易出错
+            2 -> initTinkerPatch(app.baseContext)
+        }
+        // set custom instrumentation, for UI test , temporarily remove this instrumentation
+        if (BuildConfig.CustomInstrumentation) setCustomInstrumentation()
+        // set custom looper
+        if (BuildConfig.CustomLooper) setCustomLooper()
         // init other sdk
         Single.just(true).subscribeOn(Schedulers.single()).flatMap { asyncNoRelySdk(app.baseContext) }.observeOn(AndroidSchedulers.mainThread())
             .subscribe { context -> asyncRelySdk(context) }
@@ -76,15 +82,6 @@ class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Bool
         super.onBaseContextAttached(context)
         //you must install multiDex whatever tinker is installed!
         MultiDex.install(context)
-//        // init TinkerManager
-//        TinkerManager.appLike = this
-//        // should set before tinker is installed
-//        TinkerManager.initFastCrashProtect()
-//        TinkerManager.setUpgradeRetryEnable(true)
-//        //installTinker after load multiDex or you can put com.tencent.tinker.** to main dex
-//        TinkerManager.installTinker(this)
-//        // for safer, you must use @{link TinkerInstaller.install} first!
-//        Tinker.with(application)
     }
 
     /**
@@ -123,6 +120,26 @@ class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Bool
         Log.i(TAG(), "asyncRelySdk in thread[${Thread.currentThread().name}]")
         // uncaught exception in main thread
         Thread.setDefaultUncaughtExceptionHandler(TinkerExceptionHandler())
+    }
+
+    /**
+     * TinkerManager做成了静态类
+     * 1、TinkerLog有默认的静态实现，所以如果没有特殊要求，默认的log是直接开启的
+     * 2、initFastCrashProtect主要保护10秒内的快速崩溃，包括：Xposed提前加载类，3次快速崩溃限制
+     * 3、TinkerReporter报告所有的Tinker信息，是TinkerReportHelper的默认实现，可以考虑要不要在这里面上报服务器
+     */
+    private fun initTinker() {
+        // init TinkerManager
+        TinkerManager.appLike = this
+        // should set before tinker is installed
+        TinkerManager.initFastCrashProtect()
+        // 在PatchServiceStart的时候，创建retry.patch文件
+        // 在线程空闲的时候尝试使用retry.patch文件进行重试补丁
+        TinkerManager.setUpgradeRetryEnable(true)
+        //installTinker after load multiDex or you can put com.tencent.tinker.** to main dex
+        TinkerManager.installTinker(this)
+        // for safer, you must use @{link TinkerInstaller.install} first!
+        Tinker.with(application)
     }
 
     /**

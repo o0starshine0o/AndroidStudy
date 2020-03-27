@@ -23,6 +23,7 @@ class TinkerExceptionHandler : Thread.UncaughtExceptionHandler {
         private const val DALVIK_XPOSED_CRASH = "Class ref in pre-verified class resolved to unexpected implementation"
     }
 
+    // 保留系统默认的异常处理
     private val handler = Thread.getDefaultUncaughtExceptionHandler()
 
     override fun uncaughtException(thread: Thread, ex: Throwable) {
@@ -53,8 +54,9 @@ class TinkerExceptionHandler : Thread.UncaughtExceptionHandler {
                 //for dalvik, we know the actual crash type
                 val isCausedByXposed = throwable is IllegalAccessError && throwable.message!!.contains(DALVIK_XPOSED_CRASH)
                 if (isCausedByXposed) {
-                    TinkerReport.onXposedCrash()
-                    TinkerLog.e(TAG(), "have xposed: just clean tinker")
+                    val message = "have xposed: just clean tinker"
+                    TinkerReportHelper.onXposedCrash(message)
+                    TinkerLog.e(TAG(), message)
                     //kill all other process to ensure that all process's code is the same.
                     ShareTinkerInternals.killAllOtherProcess(applicationLike.application)
                     TinkerApplicationHelper.cleanPatch(applicationLike)
@@ -82,9 +84,10 @@ class TinkerExceptionHandler : Thread.UncaughtExceptionHandler {
             val sp = appLike.application.getSharedPreferences(ShareConstants.TINKER_SHARE_PREFERENCE_CONFIG, Context.MODE_MULTI_PROCESS)
             val fastCrashCount = sp.getInt(currentVersion, 0) + 1
             if (fastCrashCount >= MAX_CRASH_COUNT) {
-                TinkerReport.onFastCrashProtect()
                 TinkerApplicationHelper.cleanPatch(appLike)
-                TinkerLog.e(TAG(), "tinker has fast crash more than %d, we just clean patch!", fastCrashCount)
+                val message = "tinker has fast crash more than $fastCrashCount, we just clean patch!"
+                TinkerReportHelper.onFastCrashProtect(message)
+                TinkerLog.e(TAG(), message)
                 return true
             } else {
                 sp.edit().putInt(currentVersion, fastCrashCount).apply()
