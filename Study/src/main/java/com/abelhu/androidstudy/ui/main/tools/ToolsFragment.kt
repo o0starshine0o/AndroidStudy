@@ -1,8 +1,8 @@
 package com.abelhu.androidstudy.ui.main.tools
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +21,7 @@ class ToolsFragment : Fragment() {
 
     private lateinit var toolsViewModel: ToolsViewModel
 
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         RxPermissions(this).request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe { granted ->
@@ -36,14 +37,10 @@ class ToolsFragment : Fragment() {
         return root
     }
 
+    @SuppressLint("SdCardPath")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        applyPatch.setOnClickListener {
-            TinkerInstaller.onReceiveUpgradePatch(
-                this@ToolsFragment.activity?.applicationContext,
-                Environment.getExternalStorageDirectory().absolutePath + "/Download/patch_signed.apk"
-            )
-        }
+        applyPatch.setOnClickListener { TinkerInstaller.onReceiveUpgradePatch(context, "/sdcard/Download/patch_signed.apk") }
         downloadPatch.setOnClickListener { TinkerPatch.with().fetchPatchUpdate(true) }
         deletePatch.setOnClickListener { TinkerPatch.with().cleanAll() }
     }

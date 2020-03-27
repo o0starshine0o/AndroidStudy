@@ -1,4 +1,4 @@
-package com.abelhu.androidstudy.utils
+package com.abelhu.androidstudy.tinker
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -7,11 +7,17 @@ import android.content.IntentFilter
 import com.qicode.extension.TAG
 import com.tencent.tinker.lib.util.TinkerLog
 
+
 typealias OnScreenOff = () -> Unit
 
-class AppUtils {
+class TinkerUtils {
     companion object {
         var background = false
+
+        fun isXposedExists(throwable: Throwable): Boolean {
+            for (stackTrace in throwable.stackTrace) if (stackTrace.className.contains("de.robv.android.xposed.XposedBridge")) return true
+            return false
+        }
     }
 
     class ScreenState(context: Context, onScreenOffInterface: OnScreenOff?) {

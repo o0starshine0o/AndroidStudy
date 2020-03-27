@@ -58,10 +58,14 @@ object TinkerManager {
         val patchReporter = TinkerPatchReporter(appLike.application)
         //or you can just use DefaultPatchListener， 主要是检测是否需要调起：patch进程进行合并操作， 设置自己的条件过滤（rom大小，崩溃次数，渠道配置等）
         val patchListener = TinkerPatchListener(appLike.application)
+        // 打补丁的结果, tinker默认提供的是清理补丁文件，直接kill进程
+        // 这里优化为app进入后台或者锁屏时重新启动app
+        val resultService = TinkerResultService::class.java
         //you can set your own upgrade patch if you need
+        // 检测是否启用tinker， 补丁是否合法，tinkerID检测，设置result的md5， 新旧版本判断， 复制patch（原始文件可能被删除），适配方舟编译器， 恢复一些文件
         val upgradePatchProcessor = UpgradePatch()
         // install tinker
-        TinkerInstaller.install(appLike, loadReporter, patchReporter, patchListener, TinkerResultService::class.java, upgradePatchProcessor)
+        TinkerInstaller.install(appLike, loadReporter, patchReporter, patchListener, resultService, upgradePatchProcessor)
         // set flag
         isInstalled = true
     }

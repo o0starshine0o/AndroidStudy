@@ -70,8 +70,6 @@ tinkerpatchSupport {
  */
 android {
     defaultConfig {
-        buildConfigField "boolean", "TINKER_PATCH_ENABLE", "${tinkerpatchSupport.tinkerEnable}"
-        buildConfigField "String", "PLATFORM", "\"all\""
         buildConfigField("Integer", "TINKER_TYPE", "${TINKER_TYPE}")
         // 有些库里面既包含了注解，也包含了注解处理，目前用这种变通的方法，今后可以删除
         javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
@@ -219,7 +217,7 @@ tinkerPatch {
          * optional，default '7za'
          * the 7zip artifact path, it will use the right 7za with your platform
          */
-//            zipArtifact = "com.tencent.mm:SevenZip:1.1.10"
+        zipArtifact = "com.tencent.mm:SevenZip:1.1.10"
         /**
          * optional，default '7za'
          * you can specify the 7za path yourself, it will overwrite the zipArtifact value

@@ -4,7 +4,7 @@ import android.app.ActivityManager
 import android.content.Context
 import android.os.Environment
 import android.os.StatFs
-import com.abelhu.androidstudy.BuildConfig
+import androidx.annotation.Nullable
 import com.abelhu.androidstudy.tinker.TinkerManager.ERROR_PATCH_CONDITION_NOT_SATISFIED
 import com.abelhu.androidstudy.tinker.TinkerManager.ERROR_PATCH_CRASH_LIMIT
 import com.abelhu.androidstudy.tinker.TinkerManager.ERROR_PATCH_GOOGLE_PLAY_CHANNEL
@@ -49,7 +49,7 @@ class TinkerPatchListener(context: Context) : DefaultPatchListener(context) {
     ` *
      */
     @Suppress("DEPRECATION")
-    public override fun patchCheck(path: String, patchMd5: String): Int {
+    public override fun patchCheck(path: String, @Nullable patchMd5: String?): Int {
         val patchFile = File(path)
         TinkerLog.i(TAG(), "receive a patch file: %s, file size:%d", path, SharePatchFileUtil.getFileOrDirectorySize(patchFile))
         var returnCode = super.patchCheck(path, patchMd5)
@@ -71,9 +71,10 @@ class TinkerPatchListener(context: Context) : DefaultPatchListener(context) {
                 val platform = properties.getProperty(PLATFORM)
                 TinkerLog.i(TAG(), "get platform:$platform")
                 // check patch platform require
-                if (platform == null || platform != BuildConfig.PLATFORM) {
-                    returnCode = ERROR_PATCH_CONDITION_NOT_SATISFIED
-                }
+                // 不对patch的meta信息进行检测
+//                if (platform == null || platform != BuildConfig.PLATFORM) {
+//                    returnCode = ERROR_PATCH_CONDITION_NOT_SATISFIED
+//                }
             }
         }
         TinkerReportHelper.onTryApply(returnCode == ShareConstants.ERROR_PATCH_OK)

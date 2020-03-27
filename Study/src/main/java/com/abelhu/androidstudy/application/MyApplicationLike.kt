@@ -16,6 +16,7 @@ import com.tencent.tinker.anno.DefaultLifeCycle
 import com.tencent.tinker.entry.DefaultApplicationLike
 import com.tencent.tinker.lib.service.PatchResult
 import com.tencent.tinker.lib.tinker.Tinker
+import com.tencent.tinker.lib.util.TinkerServiceInternals
 import com.tencent.tinker.lib.util.UpgradePatchRetry
 import com.tencent.tinker.loader.shareutil.ShareConstants
 import com.tinkerpatch.sdk.TinkerPatch
@@ -58,19 +59,27 @@ class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Bool
     @SuppressLint("CheckResult")
     override fun onCreate() {
         super.onCreate()
-        when (BuildConfig.TINKER_TYPE) {
-            // 初始化Tinker
-            1 -> initTinker()
-            // 我们需要确保至少对主进程跟patch进程初始化 TinkerPatch, 需要紧跟super.onCreate()，否则容易出错
-            2 -> initTinkerPatch(app.baseContext)
+        // 我们需要确保至少对主进程跟patch进程初始化 TinkerPatch
+        if (TinkerServiceInternals.isInMainProcess(app.baseContext) || TinkerServiceInternals.isInPatchProcess(app.baseContext)) {
+            // 根据创建参数选择使用哪种tinker, 需要紧跟super.onCreate()，否则容易出错
+            when (BuildConfig.TINKER_TYPE) {
+                // 初始化Tinker
+                1 -> initTinker()
+                // 初始化TinkerPatch
+                2 -> initTinkerPatch(app.baseContext)
+            }
         }
-        // set custom instrumentation, for UI test , temporarily remove this instrumentation
-        if (BuildConfig.CustomInstrumentation) setCustomInstrumentation()
-        // set custom looper
-        if (BuildConfig.CustomLooper) setCustomLooper()
-        // init other sdk
-        Single.just(true).subscribeOn(Schedulers.single()).flatMap { asyncNoRelySdk(app.baseContext) }.observeOn(AndroidSchedulers.mainThread())
-            .subscribe { context -> asyncRelySdk(context) }
+        if (TinkerServiceInternals.isInMainProcess(app.baseContext)) {
+            // set custom instrumentation, for UI test , temporarily remove this instrumentation
+            if (BuildConfig.CustomInstrumentation) setCustomInstrumentation()
+            // set custom looper
+            if (BuildConfig.CustomLooper) setCustomLooper()
+            // listener activity life cycle
+            app.registerActivityLifecycleCallbacks(MyApplicationLife())
+            // init other sdk
+            Single.just(true).subscribeOn(Schedulers.single()).flatMap { asyncNoRelySdk(app.baseContext) }.observeOn(AndroidSchedulers.mainThread())
+                .subscribe { context -> asyncRelySdk(context) }
+        }
     }
 
     /**
@@ -80,8 +89,10 @@ class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Bool
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     override fun onBaseContextAttached(context: Context) {
         super.onBaseContextAttached(context)
-        //you must install multiDex whatever tinker is installed!
-        MultiDex.install(context)
+        if (TinkerServiceInternals.isInMainProcess(app.baseContext)) {
+            //you must install multiDex whatever tinker is installed!
+            MultiDex.install(context)
+        }
     }
 
     /**
@@ -118,8 +129,6 @@ class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Bool
      */
     private fun asyncRelySdk(context: Context) {
         Log.i(TAG(), "asyncRelySdk in thread[${Thread.currentThread().name}]")
-        // uncaught exception in main thread
-        Thread.setDefaultUncaughtExceptionHandler(TinkerExceptionHandler())
     }
 
     /**

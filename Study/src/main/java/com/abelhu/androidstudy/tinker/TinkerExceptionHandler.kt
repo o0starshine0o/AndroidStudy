@@ -2,7 +2,6 @@ package com.abelhu.androidstudy.tinker
 
 import android.content.Context
 import android.os.SystemClock
-import com.abelhu.androidstudy.utils.Xposed
 import com.qicode.extension.TAG
 import com.tencent.tinker.lib.tinker.TinkerApplicationHelper
 import com.tencent.tinker.lib.util.TinkerLog
@@ -47,7 +46,7 @@ class TinkerExceptionHandler : Thread.UncaughtExceptionHandler {
         var isXposed = false
         var throwable = e
         while (throwable != null) {
-            if (!isXposed) isXposed = Xposed.isXposedExists(throwable)
+            if (!isXposed) isXposed = TinkerUtils.isXposedExists(throwable)
             // xposed?
             if (isXposed) {
                 //for art, we can't know the actually crash type just ignore art
@@ -71,6 +70,7 @@ class TinkerExceptionHandler : Thread.UncaughtExceptionHandler {
     /**
      * if tinker is load, and it crash more than MAX_CRASH_COUNT, then we just clean patch.
      */
+    @Suppress("DEPRECATION")
     private fun tinkerFastCrashProtect(): Boolean {
         val appLike = TinkerManager.appLike
         if (appLike == null || appLike.application == null) return false

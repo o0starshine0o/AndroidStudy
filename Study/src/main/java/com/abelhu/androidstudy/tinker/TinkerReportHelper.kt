@@ -9,6 +9,7 @@ import com.qicode.extension.TAG
 import com.tencent.tinker.lib.util.TinkerLog
 import com.tencent.tinker.loader.shareutil.ShareConstants
 import com.tencent.tinker.loader.shareutil.ShareConstants.*
+import com.tencent.tinker.loader.shareutil.SharePatchInfo
 import com.tencent.tinker.loader.shareutil.ShareTinkerInternals
 import java.io.File
 
@@ -233,16 +234,16 @@ object TinkerReportHelper {
             TYPE_INTERPRET_GET_INSTRUCTION_SET_ERROR -> {
                 reporter?.onReport(
                     KEY_LOADED_INTERPRET_GET_INSTRUCTION_SET_ERROR,
-                    "patch loadReporter onLoadInterpret fail, can get instruction set from existed oat file"
+                    "patch loadReporter onLoadInterpret fail, can get instruction set from existed oat file ${e?.message}"
                 )
             }
             TYPE_INTERPRET_COMMAND_ERROR -> {
                 reporter?.onReport(
                     KEY_LOADED_INTERPRET_INTERPRET_COMMAND_ERROR,
-                    "patch loadReporter onLoadInterpret fail, command line to interpret return error"
+                    "patch loadReporter onLoadInterpret fail, command line to interpret return error ${e?.message}"
                 )
             }
-            TYPE_INTERPRET_OK -> reporter?.onReport(KEY_LOADED_INTERPRET_TYPE_INTERPRET_OK, "patch loadReporter onLoadInterpret ok")
+            TYPE_INTERPRET_OK -> reporter?.onReport(KEY_LOADED_INTERPRET_TYPE_INTERPRET_OK, "patch loadReporter onLoadInterpret ok ${e?.message}")
         }
     }
 
@@ -290,96 +291,108 @@ object TinkerReportHelper {
         if (!isCheckFail) reporter?.onReport("Tinker Exception:load tinker occur exception ")
     }
 
-    fun onApplyPatchServiceStart() = reporter?.onReport(KEY_APPLIED_START)
+    fun onApplyPatchServiceStart() = reporter?.onReport(KEY_APPLIED_START, "patchReporter onPatchServiceStart: patch service start")
 
-    fun onApplyDexOptFail(throwable: Throwable) {
+    fun onApplyDexOptFail(patchFile: File, dexFiles: List<File>, throwable: Throwable) {
+        val message = "patchReporter onPatchDexOptFail: dex opt fail path: ${patchFile.absolutePath}, dex size: ${dexFiles.size}, extra: "
         when {
-            throwable.message!!.contains(ShareConstants.CHECK_DEX_OAT_EXIST_FAIL) -> reporter?.onReport(KEY_APPLIED_DEX_OPT_EXIST)
-            throwable.message!!.contains(ShareConstants.CHECK_DEX_OAT_FORMAT_FAIL) -> reporter?.onReport(KEY_APPLIED_DEX_OPT_FORMAT)
-            else -> reporter?.onReport(KEY_APPLIED_DEX_OPT_OTHER)
+            throwable.message!!.contains(CHECK_DEX_OAT_EXIST_FAIL) -> reporter?.onReport(KEY_APPLIED_DEX_OPT_EXIST, "$message KEY_APPLIED_DEX_OPT_EXIST")
+            throwable.message!!.contains(CHECK_DEX_OAT_FORMAT_FAIL) -> reporter?.onReport(KEY_APPLIED_DEX_OPT_FORMAT, "$message KEY_APPLIED_DEX_OPT_FORMAT")
+            else -> reporter?.onReport(KEY_APPLIED_DEX_OPT_OTHER, "$message OTHER")
         }
     }
 
-    fun onApplyInfoCorrupted() = reporter?.onReport(KEY_APPLIED_INFO_CORRUPTED)
+    fun onApplyInfoCorrupted(patchFile: File, oldVersion: String, newVersion: String) {
+        val message = "patchReporter onPatchInfoCorrupted: patch info is corrupted.File(${patchFile.absolutePath}) old: $oldVersion, new: $newVersion"
+        reporter?.onReport(KEY_APPLIED_INFO_CORRUPTED, message)
+    }
 
-    fun onApplyVersionCheckFail() = reporter?.onReport(KEY_APPLIED_VERSION_CHECK)
+    fun onApplyVersionCheckFail(patchFile: File, oldPatchInfo: SharePatchInfo, patchFileVersion: String) {
+        val message =
+            "patchReporter onPatchVersionCheckFail: patch version exist. path: ${patchFile.absolutePath}, version: $patchFileVersion, patch: $oldPatchInfo"
+        reporter?.onReport(KEY_APPLIED_VERSION_CHECK, message)
+    }
 
-    fun onApplyExtractFail(fileType: Int) {
+    fun onApplyExtractFail(patchFile: File, extractTo: File, filename: String, fileType: Int) {
+        val type = ShareTinkerInternals.getTypeString(fileType)
+        val message =
+            "patchReporter onPatchTypeExtractFail: file extract fail type: $type, path: ${patchFile.path}, extractTo: ${extractTo.path}, filename: $filename"
         when (fileType) {
-            TYPE_DEX -> reporter?.onReport(KEY_APPLIED_DEX_EXTRACT)
-            TYPE_LIBRARY -> reporter?.onReport(KEY_APPLIED_LIB_EXTRACT)
+            TYPE_DEX -> reporter?.onReport(KEY_APPLIED_DEX_EXTRACT, message)
+            TYPE_LIBRARY -> reporter?.onReport(KEY_APPLIED_LIB_EXTRACT, message)
             // 补丁文件
-            TYPE_PATCH_FILE -> reporter?.onReport(KEY_APPLIED_PATCH_FILE_EXTRACT)
-            TYPE_RESOURCE -> reporter?.onReport(KEY_APPLIED_RESOURCE_EXTRACT)
+            TYPE_PATCH_FILE -> reporter?.onReport(KEY_APPLIED_PATCH_FILE_EXTRACT, message)
+            TYPE_RESOURCE -> reporter?.onReport(KEY_APPLIED_RESOURCE_EXTRACT, message)
         }
     }
 
-    fun onApplied(cost: Long, success: Boolean) {
+    fun onApplied(patchFile: File, success: Boolean, cost: Long) {
+        val message = "patchReporter onPatchResult: patch all result path: ${patchFile.absolutePath}, success: $success, cost: $cost"
         if (success) {
-            reporter?.onReport(KEY_APPLIED)
+            reporter?.onReport(KEY_APPLIED, message)
         }
         if (success) {
-            reporter?.onReport(KEY_APPLIED_UPGRADE)
+            reporter?.onReport(KEY_APPLIED_UPGRADE, message)
         } else {
-            reporter?.onReport(KEY_APPLIED_UPGRADE_FAIL)
+            reporter?.onReport(KEY_APPLIED_UPGRADE_FAIL, message)
         }
         TinkerLog.i(TAG(), "hp_report report apply cost = %d", cost)
         if (cost < 0L) {
             TinkerLog.e(TAG(), "hp_report report apply cost failed, invalid cost")
             return
         }
-        if (cost <= 5000) {
-            if (success) {
-                reporter?.onReport(KEY_APPLIED_SUCC_COST_5S_LESS)
-            } else {
-                reporter?.onReport(KEY_APPLIED_FAIL_COST_5S_LESS)
-            }
-        } else if (cost <= 10 * 1000) {
-            if (success) {
-                reporter?.onReport(KEY_APPLIED_SUCC_COST_10S_LESS)
-            } else {
-                reporter?.onReport(KEY_APPLIED_FAIL_COST_10S_LESS)
-            }
-        } else if (cost <= 30 * 1000) {
-            if (success) {
-                reporter?.onReport(KEY_APPLIED_SUCC_COST_30S_LESS)
-            } else {
-                reporter?.onReport(KEY_APPLIED_FAIL_COST_30S_LESS)
-            }
-        } else if (cost <= 60 * 1000) {
-            if (success) {
-                reporter?.onReport(KEY_APPLIED_SUCC_COST_60S_LESS)
-            } else {
-                reporter?.onReport(KEY_APPLIED_FAIL_COST_60S_LESS)
-            }
-        } else {
-            if (success) {
-                reporter?.onReport(KEY_APPLIED_SUCC_COST_OTHER)
-            } else {
-                reporter?.onReport(KEY_APPLIED_FAIL_COST_OTHER)
-            }
+
+        when {
+            cost <= 5000 -> reporter?.onReport(if (success) KEY_APPLIED_SUCC_COST_5S_LESS else KEY_APPLIED_FAIL_COST_5S_LESS, message)
+            cost <= 10 * 1000 -> reporter?.onReport(if (success) KEY_APPLIED_SUCC_COST_10S_LESS else KEY_APPLIED_FAIL_COST_10S_LESS, message)
+            cost <= 30 * 1000 -> reporter?.onReport(if (success) KEY_APPLIED_SUCC_COST_30S_LESS else KEY_APPLIED_FAIL_COST_30S_LESS, message)
+            cost <= 60 * 1000 -> reporter?.onReport(if (success) KEY_APPLIED_SUCC_COST_60S_LESS else KEY_APPLIED_FAIL_COST_60S_LESS, message)
+            else -> reporter?.onReport(if (success) KEY_APPLIED_SUCC_COST_OTHER else KEY_APPLIED_FAIL_COST_OTHER, message)
         }
     }
 
-    fun onApplyPackageCheckFail(errorCode: Int) {
-        TinkerLog.i(TAG(), "hp_report package check failed, error = %d", errorCode)
+    fun onApplyPackageCheckFail(patchFile: File, errorCode: Int) {
+        val message = "patchReporter onPatchPackageCheckFail: package check failed. path: ${patchFile.absolutePath}, code: "
         when (errorCode) {
-            ERROR_PACKAGE_CHECK_SIGNATURE_FAIL -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_SIGNATURE)
+            ERROR_PACKAGE_CHECK_SIGNATURE_FAIL -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_SIGNATURE, "$message KEY_APPLIED_PACKAGE_CHECK_SIGNATURE")
             // "assets/dex_meta.txt"信息损坏
-            ERROR_PACKAGE_CHECK_DEX_META_CORRUPTED -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_DEX_META)
+            ERROR_PACKAGE_CHECK_DEX_META_CORRUPTED -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_DEX_META, "$message KEY_APPLIED_PACKAGE_CHECK_DEX_META")
             // "assets/so_meta.txt"信息损坏
-            ERROR_PACKAGE_CHECK_LIB_META_CORRUPTED -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_LIB_META)
-            // 找不到补丁中"assets/package_meta.txt"中的TINKER_ID
-            ERROR_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND)
-            ERROR_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND)
-            ERROR_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL)
-            ERROR_PACKAGE_CHECK_PACKAGE_META_NOT_FOUND -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_META_NOT_FOUND)
-            ERROR_PACKAGE_CHECK_RESOURCE_META_CORRUPTED -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_RES_META)
-            ERROR_PACKAGE_CHECK_TINKERFLAG_NOT_SUPPORT -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_TINKER_FLAG_NOT_SUPPORT)
+            ERROR_PACKAGE_CHECK_LIB_META_CORRUPTED -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_LIB_META, "$message KEY_APPLIED_PACKAGE_CHECK_LIB_META")
+            // 找不到补丁中"assets/package_meta.txt"中的TINKER_ID, can't find TINKER_PATCH in patch meta file
+            ERROR_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND -> reporter?.onReport(
+                KEY_APPLIED_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND,
+                "$message KEY_APPLIED_PACKAGE_CHECK_PATCH_TINKER_ID_NOT_FOUND"
+            )
+            // can't find TINKER_PATCH in old apk manifest
+            ERROR_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND -> reporter?.onReport(
+                KEY_APPLIED_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND,
+                "$message KEY_APPLIED_PACKAGE_CHECK_APK_TINKER_ID_NOT_FOUND"
+            )
+            // apk and patch's TINKER_PATCH value is not equal
+            ERROR_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL -> reporter?.onReport(
+                KEY_APPLIED_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL,
+                "$message KEY_APPLIED_PACKAGE_CHECK_TINKER_ID_NOT_EQUAL"
+            )
+            // package meta: "assets/package_meta.txt" is not found
+            ERROR_PACKAGE_CHECK_PACKAGE_META_NOT_FOUND -> reporter?.onReport(
+                KEY_APPLIED_PACKAGE_CHECK_META_NOT_FOUND,
+                "$message KEY_APPLIED_PACKAGE_CHECK_META_NOT_FOUND"
+            )
+            // resource meta file's format check fail
+            ERROR_PACKAGE_CHECK_RESOURCE_META_CORRUPTED -> reporter?.onReport(KEY_APPLIED_PACKAGE_CHECK_RES_META, "$message KEY_APPLIED_PACKAGE_CHECK_RES_META")
+            // some patch file type is not supported for current tinkerFlag
+            ERROR_PACKAGE_CHECK_TINKERFLAG_NOT_SUPPORT -> reporter?.onReport(
+                KEY_APPLIED_PACKAGE_CHECK_TINKER_FLAG_NOT_SUPPORT,
+                "$message KEY_APPLIED_PACKAGE_CHECK_TINKER_FLAG_NOT_SUPPORT"
+            )
         }
     }
 
-    fun onApplyCrash(throwable: Throwable?) = reporter?.onReport(KEY_APPLIED_EXCEPTION)
+    fun onApplyCrash(patchFile: File, throwable: Throwable) {
+        val message = "patchReporter onPatchException: patch exception path:${patchFile.absolutePath}, throwable: ${throwable.message}"
+        reporter?.onReport(KEY_APPLIED_EXCEPTION, message)
+    }
 
     fun onFastCrashProtect(message: String? = null) = reporter?.onReport(KEY_CRASH_FAST_PROTECT, message)
 
