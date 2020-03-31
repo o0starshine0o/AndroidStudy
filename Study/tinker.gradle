@@ -297,13 +297,16 @@ if (Boolean.parseBoolean(TINKER_ENABLE)) {
                     // 复制任务
                     copy {
                         // 获取到apk文件， eg： ./build/outputs/apk/mi/debug/Study-mi-debug.apk
-                        from "${buildDir}/outputs/apk/${variant.dirName}/${project.name}-${variant.baseName}.apk"
-                        rename { String fileName -> fileName.replace("-${variant.baseName}", '') }
+                        from "${buildDir}/outputs/apk/${variant.dirName}/"
                         // 获取mapping文件, eg: ./build/outputs/mapping/mi/debug/mapping.txt
                         from "${buildDir}/outputs/mapping/${variant.dirName}/mapping.txt"
                         // 获取R文件, eg: ./build/intermediates/[symbols|symbol_list]/mi/debug/R.txt
                         from "${buildDir}/intermediates/symbols/${variant.dirName}/R.txt"
                         from "${buildDir}/intermediates/symbol_list/${variant.dirName}/R.txt"
+                        // 只复制apk和txt文件
+                        include '*.apk', 'mapping.txt', 'R.txt'
+                        // 对apk文件重命名
+                        rename '.*\\.apk', "${project.name}.apk"
                         // 放入目标目录， eg: ./build/backApk/app-mi-debug/0330-19-28-55
                         into "${backPath}/${project.name}-${variant.baseName}/${date}"
                     }
@@ -318,8 +321,7 @@ if (Boolean.parseBoolean(TINKER_ENABLE)) {
                         // 获取到apk文件， eg： ./build/outputs/apk/mi/debug/Study-mi-debug.apk
                         from "${buildDir}/outputs/apk/${variant.flavorName}/tinkerPatch/${variant.dirName}/"
                         // 只复制apk和txt文件
-                        include '*.apk'
-                        include '*.txt'
+                        include '*.apk', '*.txt'
                         // 放入目标目录， eg: ./build/backApk/app-mi-debug/0330-19-28-55/patch/0
                         def target = new File("${backPath}/${project.name}-${variant.baseName}/${TINKER_DATE}/patch")
                         target.mkdirs()
