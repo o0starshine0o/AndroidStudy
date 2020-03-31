@@ -1,6 +1,6 @@
 apply plugin: 'tinkerpatch-support'
 
-def backPath = file("${buildDir}/backApk/")
+def backPath = file("${buildDir}/backApk2/")
 def name = "${project.name}-${TINKER_VARIANT}"
 def pathPrefix = "${backPath}/${project.name}-${PROJ_VERSION}-${TINKER_BASE_APK_DATE}/${TINKER_VARIANT}/"
 
@@ -147,6 +147,14 @@ tinkerPatch {
          */
         loader = [
                 //use sample, let BaseBuildInfo unchangeable with tinker
+                "tinker.sample.android.app.BaseBuildInfo"
+        ]
+        /**
+         * 这个官网没有写
+         * 如果更改了AppLike类，就会有几个类（com.tencent.tinker.loader.*）提示被修改了但是不在忽略列表里面，导致打patch包失败
+         */
+        ignoreWarningLoader = [
+                "com.tencent.tinker.loader.*",
                 "tinker.sample.android.app.BaseBuildInfo"
         ]
     }

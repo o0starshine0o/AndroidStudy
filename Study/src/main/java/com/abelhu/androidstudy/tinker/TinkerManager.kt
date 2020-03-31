@@ -2,7 +2,6 @@ package com.abelhu.androidstudy.tinker
 
 import com.qicode.extension.TAG
 import com.tencent.tinker.entry.ApplicationLike
-import com.tencent.tinker.lib.patch.UpgradePatch
 import com.tencent.tinker.lib.tinker.TinkerInstaller
 import com.tencent.tinker.lib.util.TinkerLog
 import com.tencent.tinker.lib.util.UpgradePatchRetry
@@ -63,7 +62,7 @@ object TinkerManager {
         val resultService = TinkerResultService::class.java
         //you can set your own upgrade patch if you need
         // 检测是否启用tinker， 补丁是否合法，tinkerID检测，设置result的md5， 新旧版本判断， 复制patch（原始文件可能被删除），适配方舟编译器， 恢复一些文件
-        val upgradePatchProcessor = UpgradePatch()
+        val upgradePatchProcessor = TinkerUpgradePatch()
         // install tinker
         TinkerInstaller.install(appLike, loadReporter, patchReporter, patchListener, resultService, upgradePatchProcessor)
         // set flag

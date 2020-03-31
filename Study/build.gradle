@@ -5,9 +5,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 // 如果不使用tinker，直接注释掉就好了
-//apply from: 'tinker.gradle'
+apply from: 'tinker.gradle'
 // 进阶为tinkerPatch，全套解决方案，包含了tinker.gradle的所有内容，所以就不需要在再apply tinker.gradle了
-apply from: 'tinkerPatch.gradle'
+//apply from: 'tinkerPatch.gradle'
 
 android {
     compileSdkVersion 29
@@ -31,6 +31,8 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "Host", "\"https://www.baidu.com/\"")
+            renderscriptDebuggable = true
+            multiDexEnabled = true
         }
         release {
             debuggable false
@@ -51,8 +53,14 @@ android {
         jvmTarget = "1.8"
     }
     compileOptions {
-        sourceCompatibility = 1.7
-        targetCompatibility = 1.7
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    flavorDimensions "market"
+    // 多渠道打包
+    productFlavors {
+        tencent { dimension "market" }
+//        mi { dimension "market" }
     }
 }
 
