@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import com.qicode.extension.TAG
+import com.tencent.tinker.lib.tinker.Tinker
 import com.tencent.tinker.lib.util.TinkerLog
 
 
@@ -18,6 +19,7 @@ class TinkerUtils {
             for (stackTrace in throwable.stackTrace) if (stackTrace.className.contains("de.robv.android.xposed.XposedBridge")) return true
             return false
         }
+
     }
 
     class ScreenState(context: Context, onScreenOffInterface: OnScreenOff?) {
@@ -33,4 +35,11 @@ class TinkerUtils {
             }, IntentFilter().apply { addAction(Intent.ACTION_SCREEN_OFF) })
         }
     }
+}
+
+/**
+ * 访问服务器，查询是否有补丁
+ */
+fun Tinker.fetchPatchUpdate(): String {
+    return "name"
 }

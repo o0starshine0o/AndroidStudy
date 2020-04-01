@@ -148,7 +148,7 @@ class MyApplicationLike(val app: Application, tinkerFlags: Int, verifyFlag: Bool
         //installTinker after load multiDex or you can put com.tencent.tinker.** to main dex
         TinkerManager.installTinker(this)
         // for safer, you must use @{link TinkerInstaller.install} first!
-        Tinker.with(application)
+        Tinker.with(application).fetchPatchUpdate()
     }
 
     /**

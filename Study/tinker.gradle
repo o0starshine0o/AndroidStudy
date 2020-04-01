@@ -27,7 +27,7 @@ dependencies {
 // 默认备份路径
 def backPath = hasProperty("TINKER_BACK_DIR") ? file(TINKER_BACK_DIR) : file("${buildDir}/backApk/")
 // 存放apk、R、mapping的路径
-def apkPath = file "${backPath}/${project.name}-${TINKER_VARIANT}/${TINKER_PATCH_VERSION}"
+def apkPath = file "${backPath}/${project.name}-${TINKER_VARIANT}/${TINKER_GIT_VERSION}"
 // apk路径
 def oldApkFile = file "${apkPath}/${project.name}.apk"
 // mapping路径
@@ -45,7 +45,7 @@ def assemblePatch(String flavor, String type, Object backPath) {
     // 在执行`processMiDebugManifest`任务前先设置`tinkerPatch`中的apk,mapping,R这3个文件的路径
     def preAssembleTask = tasks.getByName("process${flavor.capitalize()}${type.capitalize()}Manifest")
     preAssembleTask.doFirst {
-        def oldPath = "${backPath}/${project.name}-${flavor}-${type}/${TINKER_PATCH_VERSION}"
+        def oldPath = "${backPath}/${project.name}-${flavor}-${type}/${TINKER_GIT_VERSION}"
         project.tinkerPatch.oldApk = "${oldPath}/${project.name}.apk"
         project.tinkerPatch.buildConfig.applyMapping = "${oldPath}/mapping.txt"
         project.tinkerPatch.buildConfig.applyResourceMapping = "${oldPath}/R.txt"
@@ -281,7 +281,7 @@ tinkerPatch {
         /**
          * patch version via packageConfig
          */
-        configField("patchVersion", "1.0.0")
+        configField("patchVersion", "${TINKER_PATCH_VERSION}")
     }
     //or you can add config filed outside, or get meta value from old apk
     //project.tinkerPatch.packageConfig.configField("test1", project.tinkerPatch.packageConfig.getMetaDataFromOldApk("Test"))
@@ -330,10 +330,8 @@ android.applicationVariants.all { variant ->
                         from "${buildDir}/outputs/apk/${variant.flavorName}/tinkerPatch/${variant.dirName}/"
                         // 只复制apk和txt文件
                         include '*.apk', '*.txt'
-                        // 放入目标目录， eg: ./build/backApk/app-mi-debug/0330-19-28-55/patch/0
-                        def target = new File("${backPath}/${project.name}-${variant.baseName}/${TINKER_PATCH_VERSION}/patch")
-                        target.mkdirs()
-                        target = new File(target, target.listFiles().length.toString())
+                        // 放入目标目录， eg: ./build/backApk/app-mi-debug/7a33c1c/patch/0
+                        def target = new File("${backPath}/${project.name}-${variant.baseName}/${TINKER_GIT_VERSION}/patch/${TINKER_PATCH_VERSION}")
                         target.mkdirs()
                         into target
                     }
