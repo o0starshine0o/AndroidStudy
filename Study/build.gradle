@@ -4,8 +4,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-// tinker
-apply from: 'tinker.gradle'
 // 进阶为tinkerPatch，全套解决方案，包含了tinker.gradle的所有内容，所以就不需要在再apply tinker.gradle了
 //apply from: 'tinkerPatch.gradle'
 
@@ -127,3 +125,5 @@ dependencies {
     implementation project(":Annotation")
     kapt project(":AnnotationCode")
 }
+// tinker， 因为依赖project.android.defaultConfig，所以需要放在配置文件的最后
+apply from: 'tinker.gradle'

@@ -7,8 +7,12 @@ apply plugin: 'com.tencent.tinker.patch'
 
 android {
     defaultConfig {
-        buildConfigField "String", "TINKER_ID", "\"${PROJ_VERSION}\""
+        // app的id必须和patch包的id相同
+        buildConfigField "String", "TINKER_ID", "\"${it.versionName}\""
+        // 控制使用tinker还是tinkerPatch
         buildConfigField("Integer", "TINKER_TYPE", "${TINKER_TYPE}")
+        // 正常assemble时设置为0.0.0，打补丁包是设置为对应的patchVersion
+        buildConfigField "String", "patchVersion", "\"${TINKER_PATCH_VERSION}\""
         // 有些库里面既包含了注解，也包含了注解处理，目前用这种变通的方法，今后可以删除
         javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
     }
@@ -156,7 +160,7 @@ tinkerPatch {
          *
          * 这个tinkerId会被放入patch包的meta信息中，之后和apk中buildConfig中的TINKER_ID字段进行对比
          */
-        tinkerId = PROJ_VERSION
+        tinkerId = project.android.defaultConfig.versionName
 
         /**
          * if keepDexApply is true, class in which dex refer to the old apk.
@@ -388,3 +392,4 @@ project.afterEvaluate {
         }
     }
 }
+
