@@ -8,7 +8,6 @@ import android.os.Parcel
 
 class MyClient : ServiceConnection {
     override fun onServiceDisconnected(name: ComponentName?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {

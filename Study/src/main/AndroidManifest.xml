@@ -33,6 +33,15 @@
         <service
             android:name=".binder.service.MyBinderService"
             android:exported="false" />
+        <!--    用于aidl的服务    -->
+        <service
+            android:name=".aidl.AidlService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.abelhu.androidstudy.aidl" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
 
         <activity
             android:name=".ui.main.MainActivity"

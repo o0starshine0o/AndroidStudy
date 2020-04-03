@@ -63,7 +63,7 @@ def assemblePatch(String flavor, String type, Object backPath) {
  */
 def gitSha() {
     try {
-        String gitRev = 'git rev-parse --short HEAD'.execute(null, project.rootDir).text.trim()
+        String gitRev = 'git rev-parse HEAD'.execute(null, project.rootDir).text.trim().substring(0, 16)
         if (gitRev == null) {
             throw new GradleException("can't get git rev, you should add git to system path")
         }

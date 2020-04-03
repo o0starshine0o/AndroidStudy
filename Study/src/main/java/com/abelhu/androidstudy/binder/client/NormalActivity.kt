@@ -1,7 +1,9 @@
 package com.abelhu.androidstudy.binder.client
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import com.abelhu.androidstudy.aidl.AidlClient
 
 
 /**
@@ -15,5 +17,8 @@ class NormalActivity : Activity() {
         // 需要和这个名字的Service绑定
         val intent = Intent("com.abelhu.androidstudy.binder.service.MyBinderService")
         bindService(intent, MyClient(), BIND_AUTO_CREATE)
+        // 都是bindService，就一些小细节问题
+        val aidlIntent = Intent().setAction("com.abelhu.androidstudy.aidl").setPackage("com.abelhu.androidstudy")
+        bindService(aidlIntent, AidlClient.Instance, Context.BIND_AUTO_CREATE)
     }
 }

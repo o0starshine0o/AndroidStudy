@@ -40,6 +40,12 @@ android {
             buildConfigField("String", "Host", "\"https://www.qq.com/\"")
         }
     }
+    sourceSets {
+        main {
+            // 为了方便移植，把java文件和aidl文件放在一起，但是由于gradle可能找不到位于aidl目录下的java文件，所以这边直接把设置java的查找路径也包含aidl目录
+            java.srcDirs = ['src/main/java', 'src/main/aidl']
+        }
+    }
     aaptOptions {
         // 关闭png的优化，保证热更新
         cruncherEnabled false
