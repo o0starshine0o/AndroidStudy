@@ -12,7 +12,7 @@ android {
         // 控制使用tinker还是tinkerPatch
         buildConfigField("Integer", "TINKER_TYPE", "${TINKER_TYPE}")
         // 正常assemble时设置为0.0.0，打补丁包是设置为对应的patchVersion
-        buildConfigField "String", "patchVersion", "\"${TINKER_PATCH_VERSION}\""
+        buildConfigField "String", "patchVersion", "\"${Boolean.parseBoolean(TINKER_PATCH_ENABLE) ? TINKER_PATCH_VERSION: "0.0.0"}\""
         // 有些库里面既包含了注解，也包含了注解处理，目前用这种变通的方法，今后可以删除
         javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
     }
@@ -29,7 +29,7 @@ dependencies {
 }
 
 // 默认备份路径
-def backPath = hasProperty("TINKER_BACK_DIR") ? file(TINKER_BACK_DIR) : file("${buildDir}/backApk/")
+def backPath = project.hasProperty("TINKER_BACK_DIR") ? file(TINKER_BACK_DIR) : file("${buildDir}/backApk/")
 // 存放apk、R、mapping的路径
 def apkPath = file "${backPath}/${project.name}-${TINKER_VARIANT}/${TINKER_GIT_VERSION}"
 // apk路径
@@ -88,11 +88,11 @@ tinkerPatch {
      * the old apk path, use to diff with the new apk to build
      * add apk from the build/backApk
      */
-    oldApk = hasProperty("TINKER_OLD_APK") ? TINKER_OLD_APK : oldApkFile
+    oldApk = project.hasProperty("TINKER_OLD_APK") ? TINKER_OLD_APK : oldApkFile
     /**
      * 选填，用于编译补丁apk路径。如果路径合法，即不再编译新的安装包，使用oldApk与newApk直接编译。
      */
-    newApk = hasProperty("TINKER_NEW_APK") ? TINKER_NEW_APK : null
+    newApk = project.hasProperty("TINKER_NEW_APK") ? TINKER_NEW_APK : null
     /**
      * optional，default 'false'
      * there are some cases we may get some warnings
@@ -144,12 +144,12 @@ tinkerPatch {
          * Warning:
          * you must be careful that it will affect the normal assemble build!
          */
-        applyMapping = hasProperty("TINKER_OLD_MAPPING") ? TINKER_OLD_MAPPING : oldMapping
+        applyMapping = project.hasProperty("TINKER_OLD_MAPPING") ? TINKER_OLD_MAPPING : oldMapping
         /**
          * optional，default 'null'
          * It is nice to keep the resource id from R.txt file to reduce java changes
          */
-        applyResourceMapping = hasProperty("TINKER_OLD_R") ? TINKER_OLD_R : oldR
+        applyResourceMapping = project.hasProperty("TINKER_OLD_R") ? TINKER_OLD_R : oldR
 
         /**
          * necessary，default 'null'
@@ -285,7 +285,7 @@ tinkerPatch {
         /**
          * patch version via packageConfig
          */
-        configField("patchVersion", "${TINKER_PATCH_VERSION}")
+        configField("patchVersion", "${Boolean.parseBoolean(TINKER_PATCH_ENABLE) ? TINKER_PATCH_VERSION: "0.0.0"}")
     }
     //or you can add config filed outside, or get meta value from old apk
     //project.tinkerPatch.packageConfig.configField("test1", project.tinkerPatch.packageConfig.getMetaDataFromOldApk("Test"))
@@ -328,17 +328,18 @@ android.applicationVariants.all { variant ->
             if ("tinkerPatch${variant.name.capitalize()}".equalsIgnoreCase(it.name)) {
                 // 在任务完成之后添加额外内容
                 it.doLast {
+                    // 放入目标目录， eg: ./build/backApk/app-mi-debug/7a33c1c/patch/0
+                    def target = new File("${backPath}/${project.name}-${variant.baseName}/${TINKER_GIT_VERSION}/patch/${TINKER_PATCH_VERSION}")
+                    target.mkdirs()
                     // 复制任务
                     copy {
                         // 获取到apk文件， eg： ./build/outputs/apk/mi/debug/Study-mi-debug.apk
                         from "${buildDir}/outputs/apk/${variant.flavorName}/tinkerPatch/${variant.dirName}/"
                         // 只复制apk和txt文件
                         include '*.apk', '*.txt'
-                        // 放入目标目录， eg: ./build/backApk/app-mi-debug/7a33c1c/patch/0
-                        def target = new File("${backPath}/${project.name}-${variant.baseName}/${TINKER_GIT_VERSION}/patch/${TINKER_PATCH_VERSION}")
-                        target.mkdirs()
                         into target
                     }
+                    println("copy apk and txt files into ${target}")
                 }
             }
         } else {
@@ -346,6 +347,9 @@ android.applicationVariants.all { variant ->
             if ("assemble${variant.name.capitalize()}".equalsIgnoreCase(it.name)) {
                 // 在任务完成之后添加额外内容
                 it.doLast {
+                    // 放入目标目录， eg: ./build/backApk/app-mi-debug/7a33c1c/patch/0
+                    def target = new File("${backPath}/${project.name}-${variant.baseName}/${gitSha()}")
+                    target.mkdirs()
                     // 复制任务
                     copy {
                         // 获取到apk文件， eg： ./build/outputs/apk/mi/debug/Study-mi-debug.apk
@@ -360,8 +364,9 @@ android.applicationVariants.all { variant ->
                         // 对apk文件重命名
                         rename '.*\\.apk', "${project.name}.apk"
                         // 放入目标目录， eg: ./build/backApk/app-mi-debug/7a33c1c
-                        into "${backPath}/${project.name}-${variant.baseName}/${gitSha()}"
+                        into target
                     }
+                    println("copy apk and txt files into ${target}")
                 }
             }
         }
@@ -392,4 +397,3 @@ project.afterEvaluate {
         }
     }
 }
-
