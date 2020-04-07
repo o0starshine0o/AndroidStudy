@@ -1,0 +1,158 @@
+@startuml
+title App的冷启动流程
+autonumber
+legend right
+  作者：星
+  github：https://github.com/o0starshine0o
+endlegend
+
+box "第一部分，Client端：启动APP" #LightBlue
+participant LauncherActivity
+participant Activity
+participant Instrumentation
+note over Instrumentation:实际上acitivty的启动分为应用进程端的启动和SystemServer服务进程端的启动的
+note over Instrumentation:Activity在应用进程端的启动实际上就是Instrumentation执行的
+participant IActivityTaskManager
+note over IActivityTaskManager: 这是一个aidl，需要到源码里找，编译后生成对应文件
+end box
+
+box "第二部分，Service端：执行各种检查" #fbb034
+participant ActivityTaskManagerService
+note over ActivityTaskManagerService: 实现了IActivityTaskManager.Stub接口
+participant ActivityStarter
+participant ActivityStack
+participant ActivityRecord
+participant ActivityStackSupervisor
+participant ClientLifecycleManager
+participant ClientTransaction
+participant IApplicationThread
+end box
+
+box "第三部分，Client端：开始启动APP了" #7ac143
+participant ApplicationThread
+participant ClientTransactionHandler
+participant ActivityThread
+participant TransactionExecutor
+participant LaunchActivityItem
+participant Instrumentation as Instrumentation2
+participant AppComponentFactory
+participant LoadedApk
+participant Activity as Activity2
+end box
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+
+/''
+ ' 这一部分主要是Launcher的启动流程，最终调用aidl交给ActivityTaskManagerService
+ '/
+LauncherActivity-> LauncherActivity: onClick
+LauncherActivity -> Activity: startActivity(intent:Intent)
+Activity -> Activity: startActivity(intent:Intent)
+Activity -> Activity: startActivity(intent:Intent, options:Bundle)
+Activity -> Activity: startActivityForResult(intent:Intent, requestCode:int, options:Bundle)
+Activity -> Instrumentation: execStartActivity(who:Context, contextThread:IBinder, token:IBinder,\n target:Activity, intent:Intent, requestCode:int, options:Bundle)
+Instrumentation -> Instrumentation: execStartActivity(who:Context, contextThread:IBinder, token:IBinder,\n target:Activity, intent:Intent, requestCode:int, options:Bundle）
+Instrumentation -> IActivityTaskManager: ActivityTaskManager.getService().startActivity(whoThread:IApplicationThread, packageName:String,\n intent:Intent, resolvedType:String, token:IBinder, mEmbeddedID:String,\n requestCode:int, flag:int, profilerInfo:profilerInfo, options:Bundle)
+IActivityTaskManager -[#0000FF]-> ActivityTaskManagerService: startActivity(IApplicationThread caller, String callingPackage,\n Intent intent, String resolvedType, IBinder resultTo, String resultWho,\n int requestCode, int startFlags, ProfilerInfo profilerInfo, Bundle bOptions)
+
+
+/''
+ ' 这一部分主要是Service处理APP启动所需要的各种检查
+ '/
+ActivityTaskManagerService -> ActivityTaskManagerService: startActivity(参数基本没啥变化）
+ActivityTaskManagerService -> ActivityTaskManagerService: startActivityAsUser（调用了好几次默认参数的）
+ActivityTaskManagerService -> ActivityStarter: getActivityStartController().obtainStarter(建造者模式，还是上面哪些参数).execute()
+ActivityStarter -> ActivityStarter: execute()
+ActivityStarter -> ActivityStarter: startActivityMayWait()
+ActivityStarter -> ActivityStarter: startActivity()
+note right
+这个方法调了好几个重载的方法，包括了几个关键点:
+1、ActivityRecord
+2、launchFlags
+3、checkStartAnyActivityPermission
+4、restrictedBgActivity
+5、checkedOptions
+6、mInterceptor
+7、ActivityStack
+end note
+ActivityStarter -> ActivityStarter: startActivityUnchecked()
+note left
+几个关键点：
+1、mLaunchParams
+2、clearTopAndResetStandardLaunchMode
+3、reusedActivity查找到的可重用的Activity(getReusableIntentActivity)
+end note
+ActivityStarter -> ActivityStack: mTargetStack.ensureActivitiesVisibleLocked(mStartActivity, 0, !PRESERVE_WINDOWS)
+ActivityStack -> ActivityRecord: r.makeClientVisible()
+ActivityRecord -> ActivityRecord: makeClientVisible()
+ActivityRecord --> ActivityStack
+ActivityStack -> ActivityRecord: ensureActivitiesVisibleLocked(ActivityRecord starting,\n int configChanges, boolean preserveWindows, boolean notifyClients)
+ActivityRecord -> ActivityRecord:r.makeVisibleIfNeeded(ActivityRecord starting, boolean reportToClient)
+ActivityRecord -> ActivityStack: resumeTopActivityUncheckedLocked(activeActivity, null)
+ActivityStack -> ActivityStack: resumeTopActivityInnerLocked(ActivityRecord prev, ActivityOptions options)
+ActivityStack -> ActivityStackSupervisor: mStackSupervisor.startSpecificActivityLocked(next, true, true)
+ActivityStackSupervisor -> ActivityStackSupervisor:startSpecificActivityLocked(ActivityRecord r,\n boolean andResume, boolean checkConfig)
+ActivityStackSupervisor -> ActivityStackSupervisor:realStartActivityLocked(ActivityRecord r,\n WindowProcessController proc, boolean andResume, boolean checkConfig)
+ActivityStackSupervisor -> ClientLifecycleManager: mService.getLifecycleManager().scheduleTransaction(clientTransaction)
+ClientLifecycleManager -> ClientTransaction: transaction.schedule()
+ClientTransaction -> IApplicationThread: mClient.scheduleTransaction(this)
+note right
+IApplicationThread又是一个aidl，这里又要进行IPC了
+end note
+IApplicationThread  -[#0000FF]-> ApplicationThread: scheduleTransaction()
+
+
+/''
+ ' 这一部分主要是开始启动APP
+ '/
+ApplicationThread -> ClientTransactionHandler: ActivityThread.this.scheduleTransaction(transaction)
+note right
+ClientTransactionHandler是个抽象类，ActivityThread继承了这个类
+end note
+ClientTransactionHandler -> ActivityThread: sendMessage(ActivityThread.H.EXECUTE_TRANSACTION, transaction)
+ActivityThread -> ActivityThread:handleMessage(meg:Message)
+ActivityThread -> TransactionExecutor:mTransactionExecutor.execute(transaction)
+TransactionExecutor -> TransactionExecutor:executeCallbacks(transaction)
+TransactionExecutor -> LaunchActivityItem: item.execute(mTransactionHandler, token, mPendingActions)
+note over LaunchActivityItem
+继承了ClientTransactionItem，实现了BaseClientRequest接口的execute方法
+end note
+note over LaunchActivityItem
+这里主要就是Trace.traceBegin和Trace.traceEnd
+end note
+LaunchActivityItem -> ClientTransactionHandler:client.handleLaunchActivity(r, pendingActions, null)
+ClientTransactionHandler -> ActivityThread: handleLaunchActivity(ActivityClientRecord r,\n PendingTransactionActions pendingActions, Intent customIntent)
+ActivityThread -> ActivityThread: performLaunchActivity(r, customIntent)
+ActivityThread -> Instrumentation2: mInstrumentation.newActivity(cl, component.getClassName(), r.intent)
+Instrumentation2 -> AppComponentFactory: getFactory(pkg).instantiateActivity(cl, className, intent)
+note over AppComponentFactory
+这里额外说明下，这个类很牛X
+通过反射的方式构造了Application和4大组件：
+Activity，Service，BroadcastReceive, ContentProvider
+end note
+AppComponentFactory -> AppComponentFactory: instantiateActivity(classLoader, className, intent)
+note over AppComponentFactory
+(Activity) cl.loadClass(className).newInstance()
+通过反射的方式构造了一个Activity实例,并强制类型转换
+end note
+AppComponentFactory -> Instrumentation2: 这里返回了Activity实例
+Instrumentation2 -> ActivityThread: 这里返回了Activity实例
+ActivityThread -> LoadedApk: r.packageInfo.makeApplication(false, mInstrumentation)
+LoadedApk -> Instrumentation2: mActivityThread.mInstrumentation.newApplication(cl, appClass, appContext)
+Instrumentation2 -> AppComponentFactory:getFactory(context.getPackageName()).instantiateApplication(cl, className)
+AppComponentFactory -> AppComponentFactory:instantiateApplication(ClassLoader cl,  String className)
+note over AppComponentFactory
+(Application) cl.loadClass(className).newInstance()
+通过反射的方式构造了一个Activity实例,并强制类型转换
+end note
+AppComponentFactory -> Instrumentation2: 这里返回Application实例
+Instrumentation2 -> ActivityThread: 这里返回Application实例
+note over ActivityThread
+这里需要注意的是Activity是优先于Application创建出来的
+end note
+ActivityThread -> Instrumentation2: mInstrumentation.callActivityOnCreate(activity, r.state, r.persistentState)
+Instrumentation2 -> Activity2: activity.performCreate(icicle)
+Activity2 -> Activity2: onCreate(icicle, persistentState)
+
+@enduml
