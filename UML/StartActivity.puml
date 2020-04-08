@@ -1,40 +1,62 @@
 @startuml
+/''
+ ' 使用插件PlantUML查看
+ ' 如果显示不完整需要修改AndroidStudio的配置：
+ ' /Applications/Android\ Studio.app/Contents/bin/studio.vmoptions
+ ' 添加：-DPLANTUML_LIMIT_SIZE=24384
+ '/
 title App的冷启动流程
 autonumber
 legend right
   作者：星
   github：https://github.com/o0starshine0o
-endlegend
+end legend
 
 box "第一部分，Client端：启动APP" #LightBlue
 participant LauncherActivity
 participant Activity
+'' 仪表盘，负责调用Activity和Application生命周期。测试用到这个类比较多.该类用于具体操作某个Activity的功能----单向(oneway)调用AMS以及统计、测量该应用程序的所有开销
 participant Instrumentation
-note over Instrumentation:实际上acitivty的启动分为应用进程端的启动和SystemServer服务进程端的启动的
-note over Instrumentation:Activity在应用进程端的启动实际上就是Instrumentation执行的
+'' IInterface接口，抽象出跨进程通信需要实现的功能
 participant IActivityTaskManager
-note over IActivityTaskManager: 这是一个aidl，需要到源码里找，编译后生成对应文件
+'' 实现了IInterface接口，用来实现AMS和ActivityThread之间的交互, 是ActivityThread的内部类
+participant ApplicationThread
+participant ClientTransactionHandler
+'' ActivityThread 运行在UI线程（主线程），App的真正入口, 每个应用程序的入口是该类中的static main()函数， 开启looper循环
+participant ActivityThread
+participant TransactionExecutor
 end box
 
 box "第二部分，Service端：执行各种检查" #fbb034
+'' 实现IInterface接口，完成跨进程通信
 participant ActivityTaskManagerService
-note over ActivityTaskManagerService: 实现了IActivityTaskManager.Stub接口
+'' 建造者模式， 主要用于用来将Intent和flags转换成activity和相关任务栈
 participant ActivityStarter
+participant RootActivityContainer
+'' Activity在AMS的栈管理，用来记录已经启动的Activity的先后关系，状态信息等。通过ActivityStack决定是否需要启动新的进程
+'' 源码中（resumeTopActivityInnerLocked方法）可以看到是先执行上一个Activity的onPause再去执行当前activity的onResume方法
 participant ActivityStack
+'' ActivityStatck的管理对象，每个Activity在AMS对应的一个ActivityRecord，来记录Activity的状态以及其他信息。可以理解为Activity在服务端的Activity对象的映射
 participant ActivityRecord
+'' 责所有Activity栈的管理。内部管理了mHomeStack、mFocusedStack和mLastFocusedStack三个Activity栈。
+'' 其中，mHomeStack管理的是Launcher相关的Activity栈；mFocusedStack管理的是当前显示在前台Activity的Activity栈；mLastFocusedStack管理的是上一次显示在前台Activity的Activity栈
 participant ActivityStackSupervisor
 participant ClientLifecycleManager
 participant ClientTransaction
+'' IInterface接口，抽象出跨进程通信需要实现的功能
 participant IApplicationThread
 end box
 
 box "第三部分，Client端：开始启动APP了" #7ac143
-participant ApplicationThread
-participant ClientTransactionHandler
-participant ActivityThread
-participant TransactionExecutor
+'' 实现了IInterface接口，用来实现AMS和ActivityThread之间的交互, 是ActivityThread的内部类
+participant ApplicationThread as ApplicationThread2
+participant ClientTransactionHandler as ClientTransactionHandler2
+'' ActivityThread 运行在UI线程（主线程），App的真正入口, 每个应用程序的入口是该类中的static main()函数， 开启looper循环
+participant ActivityThread as ActivityThread2
+participant TransactionExecutor as TransactionExecutor2
 participant LaunchActivityItem
 participant Instrumentation as Instrumentation2
+'' 通过反射创建了Application和四大组件
 participant AppComponentFactory
 participant LoadedApk
 participant Activity as Activity2
@@ -51,11 +73,15 @@ LauncherActivity -> Activity: startActivity(intent:Intent)
 Activity -> Activity: startActivity(intent:Intent)
 Activity -> Activity: startActivity(intent:Intent, options:Bundle)
 Activity -> Activity: startActivityForResult(intent:Intent, requestCode:int, options:Bundle)
-Activity -> Instrumentation: execStartActivity(who:Context, contextThread:IBinder, token:IBinder,\n target:Activity, intent:Intent, requestCode:int, options:Bundle)
-Instrumentation -> Instrumentation: execStartActivity(who:Context, contextThread:IBinder, token:IBinder,\n target:Activity, intent:Intent, requestCode:int, options:Bundle）
+Activity -> Instrumentation: mInstrumentation.execStartActivity(who:Context, contextThread:IBinder, token:IBinder,\n target:Activity, intent:Intent, requestCode:int, options:Bundle)
 Instrumentation -> IActivityTaskManager: ActivityTaskManager.getService().startActivity(whoThread:IApplicationThread, packageName:String,\n intent:Intent, resolvedType:String, token:IBinder, mEmbeddedID:String,\n requestCode:int, flag:int, profilerInfo:profilerInfo, options:Bundle)
+note right
+这是一个aidl，需要到源码里找，编译后生成对应文件
+end note
 IActivityTaskManager -[#0000FF]-> ActivityTaskManagerService: startActivity(IApplicationThread caller, String callingPackage,\n Intent intent, String resolvedType, IBinder resultTo, String resultWho,\n int requestCode, int startFlags, ProfilerInfo profilerInfo, Bundle bOptions)
-
+note right
+实现了IActivityTaskManager.Stub接口
+end note
 
 /''
  ' 这一部分主要是Service处理APP启动所需要的各种检查
@@ -63,7 +89,6 @@ IActivityTaskManager -[#0000FF]-> ActivityTaskManagerService: startActivity(IApp
 ActivityTaskManagerService -> ActivityTaskManagerService: startActivity(参数基本没啥变化）
 ActivityTaskManagerService -> ActivityTaskManagerService: startActivityAsUser（调用了好几次默认参数的）
 ActivityTaskManagerService -> ActivityStarter: getActivityStartController().obtainStarter(建造者模式，还是上面哪些参数).execute()
-ActivityStarter -> ActivityStarter: execute()
 ActivityStarter -> ActivityStarter: startActivityMayWait()
 ActivityStarter -> ActivityStarter: startActivity()
 note right
@@ -83,6 +108,30 @@ note left
 2、clearTopAndResetStandardLaunchMode
 3、reusedActivity查找到的可重用的Activity(getReusableIntentActivity)
 end note
+ActivityStarter -> RootActivityContainer: mRootActivityContainer.resumeFocusedStacksTopActivities()
+RootActivityContainer -> RootActivityContainer: resumeFocusedStacksTopActivities(null, null, null)
+RootActivityContainer -> ActivityStack: targetStack.resumeTopActivityUncheckedLocked()
+ActivityStack -> ActivityStack: resumeTopActivityInnerLocked()
+ActivityStack -> ActivityStack: startPausingLocked()
+ActivityStack -> ClientLifecycleManager: mService.getLifecycleManager().scheduleTransaction()
+ClientLifecycleManager -> ClientLifecycleManager :scheduleTransaction(clientTransaction)
+ClientLifecycleManager -> ClientTransaction:transaction.schedule()
+ClientTransaction -> IApplicationThread: mClient.scheduleTransaction(this)
+note right
+IApplicationThread又是一个aidl，这里又要进行IPC了
+这里执行的是同步等待
+end note
+IApplicationThread  -[#0000FF]-> ApplicationThread: scheduleTransaction()
+ApplicationThread -> ClientTransactionHandler: ActivityThread.this.scheduleTransaction(transaction)
+ClientTransactionHandler -> ActivityThread: sendMessage(ActivityThread.H.EXECUTE_TRANSACTION, transaction)
+ActivityThread -> ActivityThread:handleMessage(meg:Message)
+ActivityThread -> TransactionExecutor:mTransactionExecutor.execute(transaction)
+TransactionExecutor -> TransactionExecutor: handlePauseActivity()
+TransactionExecutor -> ActivityThread: performPauseActivity()
+ActivityThread -> Instrumentation: mInstrumentation.callActivityOnPause(r.activity)
+Instrumentation -> Activity: activity.performPause()
+
+
 ActivityStarter -> ActivityStack: mTargetStack.ensureActivitiesVisibleLocked(mStartActivity, 0, !PRESERVE_WINDOWS)
 ActivityStack -> ActivityRecord: r.makeClientVisible()
 ActivityRecord -> ActivityRecord: makeClientVisible()
@@ -100,31 +149,31 @@ ClientTransaction -> IApplicationThread: mClient.scheduleTransaction(this)
 note right
 IApplicationThread又是一个aidl，这里又要进行IPC了
 end note
-IApplicationThread  -[#0000FF]-> ApplicationThread: scheduleTransaction()
+IApplicationThread  -[#0000FF]-> ApplicationThread2: scheduleTransaction()
 
 
 /''
  ' 这一部分主要是开始启动APP
  '/
-ApplicationThread -> ClientTransactionHandler: ActivityThread.this.scheduleTransaction(transaction)
+ApplicationThread2 -> ClientTransactionHandler2: ActivityThread.this.scheduleTransaction(transaction)
 note right
 ClientTransactionHandler是个抽象类，ActivityThread继承了这个类
 end note
-ClientTransactionHandler -> ActivityThread: sendMessage(ActivityThread.H.EXECUTE_TRANSACTION, transaction)
-ActivityThread -> ActivityThread:handleMessage(meg:Message)
-ActivityThread -> TransactionExecutor:mTransactionExecutor.execute(transaction)
-TransactionExecutor -> TransactionExecutor:executeCallbacks(transaction)
-TransactionExecutor -> LaunchActivityItem: item.execute(mTransactionHandler, token, mPendingActions)
+ClientTransactionHandler2 -> ActivityThread2: sendMessage(ActivityThread.H.EXECUTE_TRANSACTION, transaction)
+ActivityThread2 -> ActivityThread2:handleMessage(meg:Message)
+ActivityThread2 -> TransactionExecutor2:mTransactionExecutor.execute(transaction)
+TransactionExecutor2 -> TransactionExecutor2:executeCallbacks(transaction)
+TransactionExecutor2 -> LaunchActivityItem: item.execute(mTransactionHandler, token, mPendingActions)
 note over LaunchActivityItem
 继承了ClientTransactionItem，实现了BaseClientRequest接口的execute方法
 end note
 note over LaunchActivityItem
 这里主要就是Trace.traceBegin和Trace.traceEnd
 end note
-LaunchActivityItem -> ClientTransactionHandler:client.handleLaunchActivity(r, pendingActions, null)
-ClientTransactionHandler -> ActivityThread: handleLaunchActivity(ActivityClientRecord r,\n PendingTransactionActions pendingActions, Intent customIntent)
-ActivityThread -> ActivityThread: performLaunchActivity(r, customIntent)
-ActivityThread -> Instrumentation2: mInstrumentation.newActivity(cl, component.getClassName(), r.intent)
+LaunchActivityItem -> ClientTransactionHandler2:client.handleLaunchActivity(r, pendingActions, null)
+ClientTransactionHandler2 -> ActivityThread2: handleLaunchActivity(ActivityClientRecord r,\n PendingTransactionActions pendingActions, Intent customIntent)
+ActivityThread2 -> ActivityThread2: performLaunchActivity(r, customIntent)
+ActivityThread2 -> Instrumentation2: mInstrumentation.newActivity(cl, component.getClassName(), r.intent)
 Instrumentation2 -> AppComponentFactory: getFactory(pkg).instantiateActivity(cl, className, intent)
 note over AppComponentFactory
 这里额外说明下，这个类很牛X
@@ -137,8 +186,8 @@ note over AppComponentFactory
 通过反射的方式构造了一个Activity实例,并强制类型转换
 end note
 AppComponentFactory -> Instrumentation2: 这里返回了Activity实例
-Instrumentation2 -> ActivityThread: 这里返回了Activity实例
-ActivityThread -> LoadedApk: r.packageInfo.makeApplication(false, mInstrumentation)
+Instrumentation2 -> ActivityThread2: 这里返回了Activity实例
+ActivityThread2 -> LoadedApk: r.packageInfo.makeApplication(false, mInstrumentation)
 LoadedApk -> Instrumentation2: mActivityThread.mInstrumentation.newApplication(cl, appClass, appContext)
 Instrumentation2 -> AppComponentFactory:getFactory(context.getPackageName()).instantiateApplication(cl, className)
 AppComponentFactory -> AppComponentFactory:instantiateApplication(ClassLoader cl,  String className)
@@ -147,11 +196,11 @@ note over AppComponentFactory
 通过反射的方式构造了一个Activity实例,并强制类型转换
 end note
 AppComponentFactory -> Instrumentation2: 这里返回Application实例
-Instrumentation2 -> ActivityThread: 这里返回Application实例
-note over ActivityThread
+Instrumentation2 -> ActivityThread2: 这里返回Application实例
+note over ActivityThread2
 这里需要注意的是Activity是优先于Application创建出来的
 end note
-ActivityThread -> Instrumentation2: mInstrumentation.callActivityOnCreate(activity, r.state, r.persistentState)
+ActivityThread2 -> Instrumentation2: mInstrumentation.callActivityOnCreate(activity, r.state, r.persistentState)
 Instrumentation2 -> Activity2: activity.performCreate(icicle)
 Activity2 -> Activity2: onCreate(icicle, persistentState)
 
