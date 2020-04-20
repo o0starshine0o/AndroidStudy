@@ -16,10 +16,16 @@ class FileGenerator: AbstractProcessor(){
         const val KAPT_KOTLIN_GENERATED_OPTION_NAME = "kapt.kotlin.generated"
     }
 
+    /**
+     * 设置支持的版本
+     */
     override fun getSupportedSourceVersion(): SourceVersion {
         return SourceVersion.latestSupported()
     }
 
+    /**
+     * 添加需要支持的注解
+     */
     override fun getSupportedAnnotationTypes(): MutableSet<String> {
         return mutableSetOf(GreetingGenerator::class.java.canonicalName)
     }
