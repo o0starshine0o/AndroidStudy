@@ -1,5 +1,10 @@
 @startuml
 
+/''
+ ' 进程的启动是由一个组件触发
+ ' Activity和Service最大的区别是Activity是有状态的，Service是无状态的
+ '/
+
 (*)  --> "收到请求\n（startActivity/bindService)"
 if "检查在Manifest中注册的进程是否启动"
 --> [False] "启动一个进程"
