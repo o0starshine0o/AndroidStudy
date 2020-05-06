@@ -1,0 +1,17 @@
+@startuml
+
+(*)  --> "收到请求\n（startActivity/bindService)"
+if "检查在Manifest中注册的进程是否启动"
+--> [False] "启动一个进程"
+--> "构建一个Application对象"
+--> "Application.attachBaseContext()"
+--> "构建所有应在在这个进程的\nContentProvider"
+--> "调用所有ContentProvider.onCreate()"
+--> "调用所有Application.onCreate()"
+--> "初始化需要用到的组件\n（Activity、Service）"
+else
+--> [True] "初始化需要用到的组件\n（Activity、Service）"
+endif
+-->(*)
+
+@enduml
