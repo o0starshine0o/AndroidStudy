@@ -19,6 +19,7 @@ class AidlClient private constructor() : ServiceConnection {
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
         bookManager = BookManager.Stub.asInterface(service)
         // 接下来就是调用服务端的接口
+        // 客户端以为是直接调用接口，其实是被转换成了code，最后交给onTransact方法去switch
         bookManager.books
         bookManager.getBook(0)
         bookManager.bookCount
