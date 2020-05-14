@@ -1,0 +1,168 @@
+@startuml
+/''
+ ' 使用插件PlantUML查看
+ ' 如果显示不完整需要修改AndroidStudio的配置：
+ ' /Applications/Android\ Studio.app/Contents/bin/studio.vmoptions
+ ' 添加：-DPLANTUML_LIMIT_SIZE=24384
+ '/
+
+title <size:40>PPS和加载启动过程</size>
+legend right
+  作者：星
+  github：https://github.com/o0starshine0o
+end legend
+header 实线代表调用\n虚线代表返回\n蓝线代表IPC
+
+box <size:30>宿主进程</size> #LightBlue
+participant SamplePluginManager
+participant FastPluginManager
+participant BaseDynamicPluginManager
+participant PluginManagerThatUseDynamicLoader
+participant "UuidManagerBinder\n作为服务端的Binder" as UuidManagerBinder
+participant "PpsController\n持有插件进程的Binder" as PpsController
+end box
+
+box <size:30>插件进程</size> #fbb034
+participant "PpsBinder\n作为客户端的Binder" as PpsBinder
+participant "PluginProcessService\n持有宿主的Binder" as PPS
+participant DynamicRuntime
+participant LoaderImplLoader
+participant "LoaderFactoryImpl\n约定的不变类" as LoaderFactoryImpl
+participant DynamicPluginLoader
+participant "CoreLoaderFactoryImpl\n约定的不变类" as CoreLoaderFactoryImpl
+participant SamplePluginLoader
+participant "ShadowPluginLoader\n操作插件生命周期" as ShadowPluginLoader
+participant PluginLoaderBinder
+end box
+
+rnote over SamplePluginManager: enter()
+rnote over SamplePluginManager: onStartActivity()
+rnote over SamplePluginManager: installPlugin()
+SamplePluginManager -> FastPluginManager:
+rnote over FastPluginManager: startPluginActivity()
+rnote over FastPluginManager: convertActivityIntent()
+rnote over FastPluginManager: loadPlugin()
+rnote over FastPluginManager: loadPluginLoaderAndRuntime()
+FastPluginManager -> BaseDynamicPluginManager:
+rnote over BaseDynamicPluginManager: bindPluginProcessService()
+BaseDynamicPluginManager -[#blue]>o PPS:
+rnote over PPS: onBind()
+note over BaseDynamicPluginManager: 这里是系统的AMS，省略了AMS这一块的内容
+PPS -[#blue]->o BaseDynamicPluginManager:
+rnote over BaseDynamicPluginManager: mHostContext.bindService()
+BaseDynamicPluginManager -> PluginManagerThatUseDynamicLoader: service:IBinder
+rnote over PluginManagerThatUseDynamicLoader: onPluginServiceConnected()
+note over PluginManagerThatUseDynamicLoader: 在这里，宿主用<size:24>PpsController</size>包裹了service：IBinder
+PluginManagerThatUseDynamicLoader -> UuidManagerBinder:
+rnote over UuidManagerBinder: init()
+UuidManagerBinder --> PluginManagerThatUseDynamicLoader:
+PluginManagerThatUseDynamicLoader -> PpsController:UuidManagerBinder:IBinder
+rnote over PpsController: setUuidManager()
+PpsController -[#blue]>o PpsBinder: uuidManagerBinder
+PpsBinder -> PPS:
+rnote over PPS: setUuidManager()
+note over PPS: 使用<size:24>UuidManager</size>包裹了来自宿主进程的IBinder
+PPS --> PpsBinder:
+PpsBinder -[#blue]->o PpsController:
+PpsController --> PluginManagerThatUseDynamicLoader:
+PluginManagerThatUseDynamicLoader --> BaseDynamicPluginManager:
+BaseDynamicPluginManager --> FastPluginManager:
+== 以上，完成插件进程的创建和Binder的双向交换 ==
+
+rnote over FastPluginManager: loadRunTime()
+FastPluginManager -> PluginManagerThatUseDynamicLoader:
+rnote over PluginManagerThatUseDynamicLoader: loadRunTime()
+hnote over PluginManagerThatUseDynamicLoader: 省略了检查PPS状态的操作
+PluginManagerThatUseDynamicLoader -> PpsController:
+rnote over PpsController: loadRuntime()
+PpsController -[#blue]>o PpsBinder:
+PpsBinder -> PPS:
+rnote over PPS: loadRuntime()
+PPS -[#blue]>o UuidManagerBinder:
+UuidManagerBinder -> BaseDynamicPluginManager:
+rnote over BaseDynamicPluginManager: getRuntime()
+rnote over BaseDynamicPluginManager: getInstalledPl()
+BaseDynamicPluginManager --> UuidManagerBinder: installedApk
+UuidManagerBinder -[#blue]->o PPS: installedApk
+PPS -> DynamicRuntime: installedApk
+rnote over DynamicRuntime: loadRuntime()
+note over DynamicRuntime: 将RuntimeClassLoader插入到BootClassLoader与PathClassLoader之间\n完成非标准的双亲委派
+rnote over DynamicRuntime: saveLastRuntimeInfo()
+DynamicRuntime --> PPS:
+PPS --> PpsBinder:
+PpsBinder -[#blue]-> PpsController:
+PpsController --> PluginManagerThatUseDynamicLoader:
+PluginManagerThatUseDynamicLoader --> FastPluginManager:
+== 以上，完成插件的非标准双亲委派模型 ==
+
+rnote over FastPluginManager: loadPluginLoader()
+FastPluginManager -> PluginManagerThatUseDynamicLoader:
+rnote over PluginManagerThatUseDynamicLoader: loadPluginLoader
+hnote over PluginManagerThatUseDynamicLoader: 省略了检查PPS状态的操作
+PluginManagerThatUseDynamicLoader -> PpsController:
+rnote over PpsController: loadPluginLoader()
+PpsController -[#blue]>o PpsBinder:
+PpsBinder -> PPS:
+rnote over PPS: loadPluginLoader()
+hnote over PPS: 同样的IPC，获取InstalledApk
+PPS -> LoaderImplLoader: installedApk
+rnote over LoaderImplLoader: init()
+rnote over LoaderImplLoader: load()
+LoaderImplLoader -> LoaderFactoryImpl: <size:28>反射</size>
+rnote over LoaderFactoryImpl: init()
+rnote over LoaderFactoryImpl: buildLoader()
+LoaderFactoryImpl -> DynamicPluginLoader:
+rnote over DynamicPluginLoader: init()
+DynamicPluginLoader -> CoreLoaderFactoryImpl: <size:28>反射</size>
+rnote over CoreLoaderFactoryImpl: build()
+CoreLoaderFactoryImpl --> SamplePluginLoader:
+rnote over SamplePluginLoader: init()
+SamplePluginLoader --> CoreLoaderFactoryImpl:samplePluginLoader
+CoreLoaderFactoryImpl --> DynamicPluginLoader: samplePluginLoader
+note over DynamicPluginLoader: 用mPluginLoader保存了samplePluginLoader\n设置代理、提供holder、onCreate之类的操作
+DynamicPluginLoader --> LoaderFactoryImpl: dynamicPluginLoader
+LoaderFactoryImpl -> PluginLoaderBinder:dynamicPluginLoader
+rnote over PluginLoaderBinder: init()
+PluginLoaderBinder --> LoaderFactoryImpl:
+LoaderFactoryImpl --> LoaderImplLoader:
+LoaderImplLoader --> PPS: pluginLoader
+note over PPS: 使用mPluginLoader保存pluginLoader
+PPS --> PpsBinder:
+PpsBinder -[#blue]->o PpsController:
+PpsController --> PluginManagerThatUseDynamicLoader:
+hnote over PluginManagerThatUseDynamicLoader: 省略了获取PluginLoader，就是loadPluginLoader生成的pluginLoader
+note over PluginManagerThatUseDynamicLoader: 使用mPluginLoader保存pluginLoader
+PluginManagerThatUseDynamicLoader --> FastPluginManager:
+== 以上，拿到插件的Loader，方便之后直接操作插件（包括生命周期） ==
+
+FastPluginManager -[#blue]>o PluginLoaderBinder:partKey
+rnote over PluginLoaderBinder: loadPlugin()
+PluginLoaderBinder -> DynamicPluginLoader:
+rnote over DynamicPluginLoader: loadPlugin()
+hnote over DynamicPluginLoader: 同样的IPC，获取InstalledApk
+DynamicPluginLoader -> SamplePluginLoader: installedApk
+SamplePluginLoader -> ShadowPluginLoader:installedApk
+rnote over ShadowPluginLoader: loadPlugin()
+hnote over ShadowPluginLoader: PluginServiceManager在这里初始化\n这里是真正的加载插件
+ShadowPluginLoader --> SamplePluginLoader:
+SamplePluginLoader --> DynamicPluginLoader:
+DynamicPluginLoader --> PluginLoaderBinder:
+PluginLoaderBinder -[#blue]->o FastPluginManager:
+== 以上，完成插件的初始化安装 ==
+
+FastPluginManager -[#blue]>o PluginLoaderBinder:partKey
+rnote over PluginLoaderBinder: callApplicationOnCreate()
+PluginLoaderBinder -> DynamicPluginLoader:
+rnote over DynamicPluginLoader: callApplicationOnCreate()
+DynamicPluginLoader -> SamplePluginLoader:
+SamplePluginLoader -> ShadowPluginLoader:
+rnote over ShadowPluginLoader: callApplicationOnCreate()
+hnote over ShadowPluginLoader: 熟悉的味道\n在application.onCreate()之前，\n还进行了ContentProvider的初始化
+ShadowPluginLoader --> SamplePluginLoader:
+SamplePluginLoader --> DynamicPluginLoader:
+DynamicPluginLoader --> PluginLoaderBinder:
+PluginLoaderBinder -[#blue]->o FastPluginManager:
+hnote over FastPluginManager: 利用mPluginLoader跨进程转换Intent\n和上面的过程类似，不再画了
+rnote over FastPluginManager: mPluginLoader.startActivityInPluginProcess()
+hnote over FastPluginManager: 利用mPluginLoader启动Activity\n和上面的过程类似，不再画了
+@enduml
