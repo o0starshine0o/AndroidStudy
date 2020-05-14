@@ -1,0 +1,214 @@
+@startuml
+
+
+/''
+ ' 包关系
+ '/
+
+package sdk.core.manager{
+class BasePluginManager
+}
+
+package sdk.dynamic.dynamic-manager{
+class BaseDynamicPluginManager
+interface UuidManagerImpl
+class PluginManagerThatUseDynamicLoader
+class BinderPluginLoader
+interface UuidManager
+}
+
+package sdk.dynamic.dynamic-host{
+interface PluginManagerImpl
+interface PluginManager
+class PpsController
+}
+
+package sdk.dynamic.dynamic-loader{
+interface PluginLoader
+}
+
+package simple.manager(Manager插件）{
+class FastPluginManager
+class SamplePluginManager
+}
+
+/''
+ ' 继承实现关系
+ '/
+
+PluginManager <|-- PluginManagerImpl
+
+BasePluginManager <|-down- BaseDynamicPluginManager
+UuidManagerImpl <|.. BaseDynamicPluginManager
+BaseDynamicPluginManager <|-- PluginManagerThatUseDynamicLoader
+PluginManagerImpl <|.right. PluginManagerThatUseDynamicLoader
+PluginManagerThatUseDynamicLoader o-left- BinderPluginLoader
+PluginManagerThatUseDynamicLoader o-right- PpsController
+
+PluginManagerThatUseDynamicLoader <|-- FastPluginManager
+FastPluginManager <|-- SamplePluginManager
+
+PluginLoader <|.. BinderPluginLoader
+
+/''
+ ' 具体类图
+ '/
+
++abstract class BasePluginManager{
+提供插件的安装、卸载、查询
+..
++ mHostContext:mHostContext //宿主的context对象
+- mUnpackManager // 从压缩包中将插件解压出来
+- mInstalledDao // 插件信息查询数据库接口
+--
++ installPluginFromDir() // 从文件夹中解压插件
++ installPluginFromZip() // 从压缩包中解压插件
++ onInstallCompleted() // 将插件信息持久化到数据库
++ oDexPlugin() // odex优化
++ oDexPluginLoaderOrRunTime() // odex优化
++ extractSo() // 插件apk的so解压
++ extractLoaderOrRunTimeSo() // 插件apk的so解压
++ getInstalledPlugins() // 获取已安装的插件（时间序）
++ deleteInstalledPlugin() // 删除指定uuid的插件
+}
+
++abstract class BaseDynamicPluginManager{
+通过bindService，来启动插件apk的进程，返回插件apk操作IBinder
+返回Loader插件，RunTime插件
+帮助他的子类提前实现了PluginManagerImpl接口的方法
+..
++ bindPluginProcessService() // 重要！！！启动PluginProcessService（创建了插件的进程）
++ waitServiceConnected() // 等待进程启动
++ getPlugin() // 获取业务插件
++ getPluginLoader() // 获取Loader插件
++ getRuntime() // 获取Runtime插件
++ onCreate() // PluginManager对象创建的时候回调
++ onSaveInstanceState() //
++ onDestroy() //
+# onPluginServiceConnected(IBinder) // 有IBinder，这个IBinder是位于插件进程中的
+}
+
++interface UuidManagerImpl{
+返回插件（包含Loader、Runtime、业务）
+运行在宿主进程，在通信中作为客户端的接口
+..
++ getPlugin()
++ getPluginLoader()
++ getRuntime()
+}
+
++abstract class PluginManagerThatUseDynamicLoader{
+创建了PpsController和PluginLoader
+..
+# mPpsController:PpsController // 插件进程PluginProcessService的接口，代理了插件的IBinder
+# mPluginLoader:BinderPluginLoader // 插件加载服务端接口
+--
+# onPluginServiceConnected() // 在插件的进程创建出来之后，创建PpsController和PluginLoader
+}
+
++interface PluginManager{
+Manager的动态化,宿主中只会调用这个方法
+..
++ enter()
+}
+
++interface PluginManagerImpl{
+生命周期
+..
++ onCreate()
++ onSaveInstanceState()
++ onDestroy()
+}
+
++abstract class FastPluginManager{
+从压缩包中解压插件
+安装插件的runtime，loader，.so
+更新数据库，返回最新的那一条数据
+..
+- mFixedPool // 利用一个固定线程数量的线程池
+--
++ installPlugin() // 安装插件
++ startPluginActivity() // 启动Activity
+}
+
++class SamplePluginManager{
+这个类由宿主反射构建，并且转换为PluginManager
+调用PluginManager中唯一的方法enter()
+注意getPluginProcessServiceName()需要根据要启动的插件选择在宿主中预埋的Service
+这个预埋的Service需要继承PluginProcessService
+..
+- executorService // 使用单线程的线程池执行启动任务
+--
+# getPluginProcessServiceName() // 宿主中注册的PluginProcessService实现的类名
++ enter() // 安装插件，启动插件中的Activity
+}
+
++class BinderPluginLoader{
+通过binder的transact()方法，完成跨进程通信
+..
+-mRemote:IBinder // 插件的IBinder
+--
++loadPlugin()
++getLoadedPlugin()
++callApplicationOnCreate()
++convertActivityIntent()
++startPluginService()
++stopPluginService()
++bindPluginService()
++unbindService()
++startActivityInPluginProcess()
+}
+
++interface PluginLoader{
+操作插件的方法
+类似于aidl生成的接口
+..
++loadPlugin()
++getLoadedPlugin()
++callApplicationOnCreate()
++convertActivityIntent()
++startPluginService()
++stopPluginService()
++bindPluginService()
++unbindService()
++startActivityInPluginProcess()
+}
+
++class PpsController{
+-mRemote:IBinder //
++ loadRuntime()
++ loadPluginLoader()
++ setUuidManager()
++ exit()
++ getPpsStatus()
++ getPluginLoader()
+}
+
+@enduml
+
+
+调研框架的原理和实现
+调研框架的原理和实现-大体实现（已完成）
+调研框架的原理和实现-技术点（已完成）
+调研框架的原理和实现（时间较长）
+调研框架的原理和实现-宿主(1d)
+调研框架的原理和实现-插件(2d)
+调研框架的原理和实现-通信(2d)
+调研框架的原理和实现-Manager(1d)
+调研框架的原理和实现-Loader(1d)
+调研框架的原理和实现-其他相关(2d)
+把框架应用到APP上
+把框架应用到APP上-使用demo（demo可运行，已完成）
+把框架应用到APP上-应用到我们的APP上
+把框架应用到APP上-应用到我们的APP上-代码整理(3d)
+把框架应用到APP上-应用到我们的APP上-构建脚本(2d）
+加载一个测试的插件
+加载一个测试的插件-本地加载(2d)
+加载一个测试的插件-网络加载(1d)
+加载步数包插件(2d)
+加载公共组件插件(未知)（依赖组件化的完成）（这里依据公共组件的个数和改造的难易程度不同）
+对不同的包进行处理等(未知）
+工程化的解决问题(未知）
+
+启动时间，初始化（未知）
+odex慢（未知）

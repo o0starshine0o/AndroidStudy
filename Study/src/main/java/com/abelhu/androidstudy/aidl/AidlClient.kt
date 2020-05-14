@@ -17,6 +17,8 @@ class AidlClient private constructor() : ServiceConnection {
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+        // 这个service就是服务端的Service了，通过向ServiceManager查询的方式，启动了位于服务端的Service
+        // 这个BookManager类是直接从服务端拷贝而来的，只能保证调用其中的方法而已，不能作为一个单独的"实例"存在
         bookManager = BookManager.Stub.asInterface(service)
         // 接下来就是调用服务端的接口
         // 客户端以为是直接调用接口，其实是被转换成了code，最后交给onTransact方法去switch

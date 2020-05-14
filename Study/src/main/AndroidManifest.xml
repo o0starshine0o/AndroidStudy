@@ -24,22 +24,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="n">
+
         <service
             android:name=".tinker.TinkerResultService"
             android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <!--    用于进程间的通信    -->
+            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 用于进程间的通信 -->
         <service
             android:name=".binder.service.MyBinderService"
-            android:exported="false" />
-        <!--    用于aidl的服务    -->
+            android:exported="false" /> <!-- 用于aidl的服务 -->
         <service
             android:name=".aidl.AidlService"
             android:exported="true"
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.abelhu.androidstudy.aidl" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
@@ -55,6 +54,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.main.activity.mode.LaunchModeActivity"
+            android:label="@string/title_activity_launch_mode"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
         <activity
             android:name=".ui.screen.ScreenActivity"
             android:label="@string/title_activity_screen"
@@ -65,9 +72,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-        <!--    用于验证Binder通信    -->
+        </activity> <!-- 用于验证Binder通信 -->
         <activity android:name=".binder.client.NormalActivity" />
     </application>
 

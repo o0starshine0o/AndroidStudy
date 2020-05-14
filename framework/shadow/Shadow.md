@@ -53,9 +53,9 @@ DynamicPluginManager.enter方法做了三件事
 
     - loadRuntime 跨进程load runtime，hack class loader
     - loadPluginLoader 跨进程传uuid，插件进程根据uuid初始化pluginLoader，将其传回客户端
-    - PluginLoader.loadPlugin(partKey) 跨进程调用mDynamicPluginLoader.loadPlugin(_arg0)。先初始化PluginServiceManager，再调用LoadPluginBloc.loadPlugin
-    - 在HostApplication.loadPlugin加载插件到classloader中，调用createShadowApplication初始化插件application，将所包含的信息注册保存
 
+  - PluginLoader.loadPlugin(partKey) 跨进程调用mDynamicPluginLoader.loadPlugin(_arg0)。先初始化PluginServiceManager，再调用LoadPluginBloc.loadPlugin
+  - 在LoadPluginBloc.loadPlugin加载插件到classloader中，调用createShadowApplication初始化插件application，将所包含的信息注册保存
   - 跨进程调用mDynamicPluginLoader.callApplicationOnCreate
   - 跨进程调用mDynamicPluginLoader.convertActivityIntent 确认启动的类名在插件中存在，将类信息放到intent内，在host进程内启动对应Activity。
 
@@ -112,7 +112,7 @@ DynamicPluginLoader.convertActivityIntent();
 - 跨进程loadRuntime
   - 在插件进程的PPS内，使用mUuidManager（即从宿主进程传递来的binder）反过来调用宿主进程的PluginManagerThatUseDynamicLoader.getRuntime，构造一个InstalledApk返回到PPS内
   - 使用InstalledApk内的path来调用DynamicRuntime.loadRuntime
-  - 关键是DynamicRuntime.hackParentToRuntime，将RuntimeClassLoader（这个就是下面说的DexClassLoader）插入到BootClassLoader与之间。
+  - 关键是DynamicRuntime.hackParentToRuntime，将RuntimeClassLoader（这个就是下面说的DexClassLoader）插入到BootClassLoader与PathClassLoader之间。
   - 保存结果，可以用作runtime恢复
 
 更具体的原理可以参考作者的文章[Shadow的全动态设计原理解析](<https://juejin.im/post/5d1b466f6fb9a07ed524b995>)，对应container动态化。

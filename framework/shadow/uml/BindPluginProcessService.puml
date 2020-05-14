@@ -1,0 +1,31 @@
+@startuml
+
+title <size:40>启动插件进程的过程</size>
+footer 参考：https://juejin.im/post/5d1968545188255543342406#heading-2
+
+participant 宿主进程 as host
+participant 插件进程 as plugin
+
+host -->o plugin: 走你，我等10秒：bindPluginProcessService#bindService
+hnote over plugin: 我通过绑定<size:20>PPS</size>来启动一个进程哈
+plugin --> host: 给你我的IBinder
+hnote over host: 把你的IBinder包装成<size:20>PpsController</size>
+hnote over host: 我把PluginManager包装成我的IBinder
+host -[#blue]> plugin: （IPC）拿好我的IBinder：mPpsController.setUuidManager()
+hnote over plugin: 收到，用<size:20>PPS.mUuidManager</size>来保存
+host -[#blue]> plugin: （IPC）把Loader给我：mPpsController.getPluginLoader()
+plugin --> host: 对不起，木有：null
+host -[#blue]> plugin: （IPC）看下你的状态：mPpsController.getPpsStatus()
+plugin --> host: 给你我的状态：new PpsStatus()
+host -[#blue]> plugin: （IPC）去加载一下runtime吧：mPpsController.loadRuntime()
+plugin -[#blue]> host: （IPC）大哥，runtime给我一下呗(只有这一次）：PPS.loadRuntime
+host --> plugin: 拿好：UuidManagerBinder.onTransact
+hnote over plugin: 收到，保存一下
+host -[#blue]> plugin: （IPC）再去加载一下PluginLoader吧：mPpsController.loadPluginLoader()
+plugin -[#blue]> host: （IPC）大哥，PluginLoader给我一下呗(只有这一次）：PPS.loadPluginLoader
+host --> plugin: 拿好：UuidManagerBinder.onTransact
+hnote over plugin: 收到，保存一下
+host -[#blue]> plugin: （IPC）把Loader给我：mPpsController.getPluginLoader()
+plugin --> host: 这次有了，拿好：PPS.mPluginLoader
+
+@enduml

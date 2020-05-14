@@ -3,10 +3,11 @@ task initProject {
 }
 
 buildscript {
-    ext.gradle_version = '3.5.3'
-    ext.kotlin_version = '1.3.61'
+    ext.gradle_version = '3.6.2'
+    ext.kotlin_version = '1.3.72'
 
     repositories {
+        mavenLocal()
         // central仓和jcenter仓的聚合仓
         maven { url 'https://maven.aliyun.com/repository/public' }
         // proxy: https://maven.google.com/
@@ -21,7 +22,6 @@ buildscript {
         maven { url 'https://maven.aliyun.com/repository/grails-core' }
         // proxy: https://repository.apache.org/snapshots/
         maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
-        mavenLocal()
         mavenCentral()
         jcenter()
         google()
@@ -38,6 +38,7 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenLocal()
         // central仓和jcenter仓的聚合仓
         maven { url 'https://maven.aliyun.com/repository/public' }
         // proxy: https://maven.google.com/
@@ -52,7 +53,6 @@ allprojects {
         maven { url 'https://maven.aliyun.com/repository/grails-core' }
         // proxy: https://repository.apache.org/snapshots/
         maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
-        mavenLocal()
         mavenCentral()
         jcenter()
         google()

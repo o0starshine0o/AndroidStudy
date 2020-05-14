@@ -57,8 +57,8 @@ android {
         jvmTarget = "1.8"
     }
     compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     flavorDimensions "market"
 //    // 多渠道打包
@@ -66,6 +66,8 @@ android {
 //        tencent { dimension "market" }
 ////        mi { dimension "market" }
 //    }
+// To inline the bytecode built with JVM target 1.8 into
+// bytecode that is being built with JVM target 1.6. (e.g. navArgs)
 }
 
 dependencies {
