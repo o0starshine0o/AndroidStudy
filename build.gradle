@@ -1,7 +1,3 @@
-task initProject {
-    println("init: $rootProject.name")
-}
-
 buildscript {
     ext.gradle_version = '3.6.2'
     ext.kotlin_version = '1.3.72'
@@ -61,14 +57,4 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-task hello {
-    println("Hello World...")
-}
-
-task h1 {
-    doLast {
-        println("Hello World action task...")
-    }
 }

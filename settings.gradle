@@ -2,3 +2,4 @@ println('This is executed during the initialization phase')
 
 rootProject.name='AndroidStudy'
 include ':Study', ':Groovy', ':Annotation', ':AnnotationCode'
+include ':Plugin'

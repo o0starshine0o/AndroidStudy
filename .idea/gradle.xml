@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/Annotation" />
             <option value="$PROJECT_DIR$/AnnotationCode" />
             <option value="$PROJECT_DIR$/Groovy" />
+            <option value="$PROJECT_DIR$/Plugin" />
             <option value="$PROJECT_DIR$/Study" />
           </set>
         </option>
