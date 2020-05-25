@@ -1,4 +1,6 @@
+// 制作插件都需要gradle-plugin里面的类
 apply plugin: 'java-gradle-plugin'
+// 使用kotlin开发
 apply plugin: 'kotlin'
 
 dependencies {
@@ -7,3 +9,40 @@ dependencies {
 
 sourceCompatibility = "7"
 targetCompatibility = "7"
+
+/**
+ * 辅助DSL的类，可以在里面定义变量
+ **/
+class BuildScriptExtension{
+    String name = "default build script extension"
+}
+
+/**
+ * 真正的插件
+ **/
+class BuildScriptPlugin implements Plugin<Project> {
+    @Override
+    void apply(Project project) {
+        // 注意，第一个buildScriptExtension是自定义的DSL（Domain Specified Language）名字
+        // 实现动态传参
+        def extension = project.extensions.create('buildScriptExtension', BuildScriptExtension)
+
+        // 定义一个任务，可以使用gradle buildScriptPlugin执行
+        project.task('buildScriptPlugin'){
+            group 'abelhu'
+            doLast {
+                println extension.name
+            }
+        }
+    }
+}
+
+apply plugin: BuildScriptPlugin
+
+// DSL，自定义的那种
+buildScriptExtension{
+    name 'custom build script extension'
+}
+
+// 如果需要调试，不能使用apply from的方式，需要直接拷贝源码过来
+apply from: 'publish.gradle'
