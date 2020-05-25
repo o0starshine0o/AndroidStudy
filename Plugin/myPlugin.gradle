@@ -1,0 +1,6 @@
+// 应用自定义的插件
+apply plugin: 'abelhu.study'
+// 修改插件中的变量
+myScriptExtension {
+    name 'Custom My Script Extension'
+}
