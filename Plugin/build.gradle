@@ -4,8 +4,8 @@ apply plugin: 'java-gradle-plugin'
 apply plugin: 'kotlin'
 // 演示直接使用buildScript作为插件开发
 apply from: 'plugin.gradle'
-// 演示通过依赖项目使用插件
-apply from: 'myPlugin.gradle'
+//// 演示通过依赖项目使用插件，因为使用了transform，不能再此module中再使用自定义的插件了
+//apply from: 'myPlugin.gradle'
 // 如果需要调试，不能使用apply from的方式，需要直接拷贝源码过来
 apply from: 'publish.gradle'
 
@@ -24,6 +24,8 @@ gradlePlugin {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // 使用其中的transform
+    implementation'com.android.tools.build:gradle:3.6.3'
 }
 
 sourceCompatibility = "7"
