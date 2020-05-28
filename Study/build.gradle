@@ -135,7 +135,7 @@ dependencies {
     implementation project(":Annotation")
     kapt project(":AnnotationCode")
     // bytecode edit
-    implementation 'org.javassist:javassist:3.18.1-GA'
+    implementation 'org.javassist:javassist:3.27.0-GA'
 }
 // tinker， 因为依赖project.android.defaultConfig，所以需要放在配置文件的最后
 apply from: 'tinker.gradle'
