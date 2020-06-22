@@ -1,4 +1,4 @@
-package com.designpattern.structure.proxy.objectproxy
+package com.designpattern.structure.adapter.classadapter
 
 import org.junit.Test
 

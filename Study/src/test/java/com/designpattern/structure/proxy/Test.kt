@@ -1,4 +1,4 @@
-package com.designpattern.structure.proxy.interfaceproxy
+package com.designpattern.structure.proxy
 
 import org.junit.Test
 

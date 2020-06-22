@@ -1,4 +1,4 @@
-package com.designpattern.structure.proxy.objectproxy
+package com.designpattern.structure.adapter.objectadapter
 
 class Adapter : IInterface {
     private val real = RealObject()

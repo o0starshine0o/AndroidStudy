@@ -1,4 +1,4 @@
-package com.designpattern.structure.proxy.classproxy
+package com.designpattern.structure.adapter.objectadapter
 
 interface IInterface {
     fun function0()
