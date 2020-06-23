@@ -4,6 +4,7 @@ import java.util.concurrent.CyclicBarrier
 import kotlin.concurrent.thread
 
 fun main() {
+    // 注意，CyclicBarrier内部是使用ReentrantLock
     val barrier = CyclicBarrier(2) {
         listOf('A', 'B', 'C', 'D').forEach { print(it) }
     }
