@@ -15,6 +15,7 @@ fun main() {
             print(it)
             lock = true
         }
+        // 进程等待，等到有2个进程都在等待时，线程继续运行
         barrier.await()
     }
     thread {
@@ -24,6 +25,7 @@ fun main() {
             print(it)
             lock = false
         }
+        // 进程等待，等到有2个进程都在等待时，线程继续运行
         barrier.await()
     }
 }
