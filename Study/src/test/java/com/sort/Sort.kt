@@ -117,6 +117,41 @@ class Sort {
         quickSortStub(list, left + 1, end)
     }
 
+    /**
+     * 归并排序，log(n)
+     */
+    @Test
+    fun mergeSort() {
+        val list = arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9).apply { shuffle() }
+        println("mergeSort:${list}")
+        mergeSortStub(list, 0, list.size - 1)
+        println("----${list}----")
+    }
+
+    private fun mergeSortStub(list: ArrayList<Int>, start: Int, end: Int) {
+        if (start >= end) return
+        val middle = (start + end) / 2
+        mergeSortStub(list, start, middle)
+        mergeSortStub(list, middle + 1, end)
+        mergeSortMerge(list, start, middle + 1, end)
+    }
+
+    private fun mergeSortMerge(list: ArrayList<Int>, start: Int, middle: Int, end: Int) {
+        var i = start
+        var j = middle
+        // 注意kotlin使用的是浅拷贝，这里需要深拷贝
+        val tempList = list.subList(start, end + 1).toIntArray().copyOf()
+        for (k in start..end) {
+            when {
+                // 注意这里面的边界条件判断，i如果大于middle了，表明前一个数组已经拷贝完成，后面的数组应该直接怼上去
+                i >= middle -> list[k] = tempList[j - start].apply { j++ }
+                // j的判断条件就不是middle了，而是end，而且不用加等号
+                j > end -> list[k] = tempList[i - start].apply { i++ }
+                else -> list[k] = if (tempList[i - start] > tempList[j - start]) tempList[i - start].apply { i++ } else tempList[j - start].apply { j++ }
+            }
+        }
+    }
+
     private fun swap(list: ArrayList<Int>, i: Int, j: Int) {
         // 注意，相同的数做异或为0,会导致交换失败
         if (i == j || list[i] == list[j]) return
