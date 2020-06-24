@@ -86,7 +86,7 @@ class Sort {
     }
 
     /**
-     * 快排，log(n)
+     * 快排，n*log(n)
      * 分治
      */
     @Test
@@ -118,7 +118,7 @@ class Sort {
     }
 
     /**
-     * 归并排序，log(n)
+     * 归并排序，n*log(n)
      */
     @Test
     fun mergeSort() {
