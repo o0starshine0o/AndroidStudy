@@ -85,6 +85,38 @@ class Sort {
         println("----${list}----")
     }
 
+    /**
+     * 快排，log(n)
+     * 分治
+     */
+    @Test
+    fun quickSort() {
+        val list = arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9).apply { shuffle() }
+        println("quickSort:${list}")
+        quickSortStub(list, 0, list.size - 1)
+        println("----${list}----")
+    }
+
+    private fun quickSortStub(list: ArrayList<Int>, start: Int, end: Int) {
+        if (start >= end) return
+        var left = start
+        var right = end
+        val main = list[left]
+        while (left < right) {
+            while (left < right && list[right] < main) right--
+            if (left >= right) break
+            list[left] = list[right]
+            left++
+            while (left < right && list[left] > main) left++
+            if (left >= right) break
+            list[right] = list[left]
+            right--
+        }
+        list[left] = main
+        quickSortStub(list, start, left - 1)
+        quickSortStub(list, left + 1, end)
+    }
+
     private fun swap(list: ArrayList<Int>, i: Int, j: Int) {
         // 注意，相同的数做异或为0,会导致交换失败
         if (i == j || list[i] == list[j]) return
