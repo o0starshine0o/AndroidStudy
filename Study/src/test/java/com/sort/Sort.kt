@@ -1,6 +1,8 @@
 package com.sort
 
 import org.junit.Test
+import java.util.*
+import kotlin.math.pow
 
 class Sort {
 
@@ -190,6 +192,32 @@ class Sort {
             t = k
             k = 2 * k + 1
         }
+    }
+
+    /**
+     * 基数排序
+     * 先按照个位数字，放到桶里面，再取出
+     * 然后按照十位数字，放到桶里面，再取出
+     */
+    @Test
+    fun radixSort() {
+        val list = arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 34, 56, 89, 91, 233).apply { shuffle() }
+        println("heapSort:${list}")
+        val bucket = Array(10) { LinkedList<Int>() }
+        // 获取最高位，表示要桶排序几次
+        var max = Int.MIN_VALUE
+        list.forEach { max = maxOf(it.toString().length, max) }
+        // 按照位数进行桶排
+        for (t in 0 until max) {
+            // 把所有数字全放到桶里
+            for (num in list) bucket[(num / 10.0.pow(t) % 10).toInt()].add(num)
+            // 把桶里数字全部取出来，放到原始数组中
+            var i = 0
+            bucket.forEach { temp -> temp.forEach { list[i++] = it } }
+            // 清空桶
+            bucket.forEach { it.clear() }
+        }
+        println("----${list}----")
     }
 
     private fun swap(list: ArrayList<Int>, i: Int, j: Int) {
