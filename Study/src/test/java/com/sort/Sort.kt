@@ -152,6 +152,46 @@ class Sort {
         }
     }
 
+    /**
+     * 堆排序，n*log(n)
+     * 最大堆的性质：每个节点的值都大于等于其子节点的值
+     * 最小堆的性质：每个节点的值都小于等于其子节点的值
+     * 对于节点i，左节点为2i+1，右节点为2i+2
+     * 算法：循环交换顶点和最后一个元素，然后通过旋转维持堆的性质
+     */
+    @Test
+    fun heapSort() {
+        val list = arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9).apply { shuffle() }
+        println("heapSort:${list}")
+        // 构建最小堆，从最后一个非叶节点开始调整，每次减少1，最后到达根节点，表明已经构建完成
+        for (i in list.size / 2 - 1 downTo 0) heapSortStub(list, i, list.size)
+        println("heapSortBuild:${list}")
+        // 交换堆顶元素和末尾元素，重新调整堆的大小，并且重新建立堆
+        for (i in list.size - 1 downTo 0) {
+            swap(list, 0, i)
+            heapSortStub(list, 0, i)
+        }
+        println("----${list}----")
+    }
+
+    /**
+     * 调整堆，默认top以外的顺序不管，只调整以top为堆顶的堆
+     */
+    private fun heapSortStub(list: ArrayList<Int>, top: Int, end: Int) {
+        // 从左子节点开始
+        var t = top
+        var k = t * 2 + 1
+        while (k < end) {
+            // 如果左子节点的值大于右子节点，把k指向右节点，以获取较小的值
+            if (k + 1 < end && list[k] > list[k + 1]) k++
+            // 如果子节点的值小于父节点，交换2者的值，否则父节点已经是最小值，表示调整完成，直接结束调整
+            if (list[k] < list[t]) swap(list, k, t) else break
+            // 调整t为新的根节点，调整k的值为新的左子节点
+            t = k
+            k = 2 * k + 1
+        }
+    }
+
     private fun swap(list: ArrayList<Int>, i: Int, j: Int) {
         // 注意，相同的数做异或为0,会导致交换失败
         if (i == j || list[i] == list[j]) return
