@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false).apply {
-            homeViewModel.text.observe(this@HomeFragment, Observer { textHome.text = it })
+            homeViewModel.text.observe(viewLifecycleOwner, Observer { textHome.text = it })
             click.setOnClickListener { Toast.makeText(context, "click", Toast.LENGTH_LONG).show() }
             startLaunchModeActivity.setOnClickListener {
                 startActivity(Intent(context, LaunchModeActivity::class.java).apply {

@@ -2,11 +2,11 @@ package com.reflection
 
 import org.junit.Test
 
-class Construction(private val base: Base) {
+class Construction constructor(private val base: Base) {
     fun test() {
         val clazz = this::class.java
         val base = MyBase("Construction")
-        val constructor = clazz.getConstructor(MyBase::class.java)
+        val constructor = clazz.getConstructor(Base::class.java)
         val instance = constructor.newInstance(base)
         instance.toPrint()
         toPrint()

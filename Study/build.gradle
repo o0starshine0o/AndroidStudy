@@ -48,6 +48,10 @@ android {
             java.srcDirs = ['src/main/java', 'src/main/aidl']
         }
     }
+    lintOptions {
+        // 静态检查有无法使用的包，暂时不管他
+        disable 'InvalidPackage'
+    }
     aaptOptions {
         // 关闭png的优化，保证热更新
         cruncherEnabled false
@@ -136,6 +140,9 @@ dependencies {
     kapt project(":AnnotationCode")
     // bytecode edit
     implementation 'org.javassist:javassist:3.27.0-GA'
+
+    testImplementation 'org.openjdk.jmh:jmh-core:1.23'
+    kaptTest 'org.openjdk.jmh:jmh-generator-annprocess:1.23'
 }
 // tinker， 因为依赖project.android.defaultConfig，所以需要放在配置文件的最后
 apply from: 'tinker.gradle'

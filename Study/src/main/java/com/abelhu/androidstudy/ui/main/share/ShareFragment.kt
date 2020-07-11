@@ -24,7 +24,7 @@ class ShareFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         shareViewModel = ViewModelProvider(this).get(ShareViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_share, container, false)
-        shareViewModel.text.observe(this, Observer { root.text_share.text = it })
+        shareViewModel.text.observe(viewLifecycleOwner, Observer { root.text_share.text = it })
 
         root.toastView.setOnClickListener {
             if (toast == null) {

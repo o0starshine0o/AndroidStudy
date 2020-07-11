@@ -26,7 +26,7 @@ class SendFragment : EventBusBaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         sendViewModel = ViewModelProvider(this).get(SendViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_send, container, false)
-        sendViewModel.text.observe(this, Observer { textSend.text = it })
+        sendViewModel.text.observe(viewLifecycleOwner, Observer { textSend.text = it })
         return root
     }
 
