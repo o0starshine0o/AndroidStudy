@@ -13,10 +13,12 @@ import java.util.concurrent.TimeUnit
 @Warmup(iterations = 2, time = 1, timeUnit = TimeUnit.SECONDS)
 // 测试 5 轮，每次 3s
 @Measurement(iterations = 5, time = 3, timeUnit = TimeUnit.SECONDS)
-// fork 1 个线程
+// fork 1 个进程程
 @Fork(1)
 // 每个测试线程一个实例
 @State(Scope.Thread)
+// 使用多少个线程测试
+@Threads(Threads.MAX)
 open class JMHTest {
     companion object {
         const val NUMBER = 9

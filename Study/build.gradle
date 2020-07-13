@@ -141,6 +141,7 @@ dependencies {
     // bytecode edit
     implementation 'org.javassist:javassist:3.27.0-GA'
 
+    // jmh:
     testImplementation 'org.openjdk.jmh:jmh-core:1.23'
     kaptTest 'org.openjdk.jmh:jmh-generator-annprocess:1.23'
 }
