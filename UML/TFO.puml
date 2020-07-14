@@ -1,0 +1,30 @@
+@startuml
+title TFO连接
+autonumber
+legend right
+  作者：星
+  github：https://github.com/o0starshine0o
+end legend
+
+participant Client
+participant Server
+
+== 建立链接前置 ==
+note over Client, Server: 已经完成了第一轮的三次握手
+note over Client, Server #ffaaaa: 注意在第二次握手时服务器把cookie通过tcp报文的FastOpen传给了客户端，并且客户端已经保存
+
+== 第一次握手 ==
+note over Client: SYN-SENT
+Client -> Server: SYN\nCookie（这是第一轮握手记录的Cookie）\nHTTP请求(注意，这里直接发请求了)
+rnote over Server #ffaaaa: 验证cookie
+note over Server: SYN-RCVD
+== 第二次握手 ==
+Server --> Client: ACK, ack=x+1\nSYN, seq=y
+Server --> Client: HTTP响应
+note right #ffaaaa: 第二次握手的时候已经给响应了
+note over Client: ESTABLISHED
+== 第三次握手(不用等服务器的HTTP响应，在拿到服务器的Seq就可以开始了） ==
+Client --> Server: ack=y+1
+note over Server: ESTABLISHED
+
+@enduml

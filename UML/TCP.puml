@@ -1,0 +1,48 @@
+@startuml
+title TCP连接
+autonumber
+legend right
+  作者：星
+  github：https://github.com/o0starshine0o
+end legend
+
+participant Client
+participant Server
+
+== 奖励链接前置 ==
+note over Client: CLOSED
+note over Server: CLOSED
+
+== 第一次握手 ==
+note over Server: LISTEN
+note over Client: SYN-SENT
+Client -> Server: SYN\nseq=x
+note over Server: SYN-RCVD
+== 第二次握手 ==
+Server --> Client: ACK, ack=x+1\nSYN, seq=y
+note over Client: ESTABLISHED
+== 第三次握手 ==
+Client --> Server: ACK\nseq=x+1\nack=y+1
+note over Server: ESTABLISHED
+== 开始交换数据 ==
+== 开始关闭链接 ==
+== 第一次挥手 ==
+note over Client: FIN-WAIT-1
+Client -> Server: FIN\nseq=p
+note left : 半关闭，只能接受，不能发送了
+note over Server: CLOSED-WAIT
+== 第二次挥手 ==
+Server --> Client: ACK\nack=p+1
+note over Client: FIN-WAIT-2
+note over Server: LAST-ACK
+== 第三次挥手 ==
+Server -> Client: FIN\nseq=q
+note left : 等待2个MSL，报文最大生存时间
+note over Client: TIME-WAIT
+== 第四次挥手 ==
+Client --> Server: ACK\nack=q+1
+note over Server: CLOSED
+note over Client: CLOSED
+
+
+@enduml
