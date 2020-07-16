@@ -1,0 +1,980 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="tinker" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="82a3f534-55b6-4b0f-bdee-ea07b47383be" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="229" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_2_API_29" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/Study">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/Groovy">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/Plugin">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="AndroidStudy" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="AndroidStudy" type="f1a62948:ProjectNode" />
+                <item name="Study" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="AndroidStudy" type="f1a62948:ProjectNode" />
+                <item name="Study" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit4 Test Class" />
+        <option value="layoutResourceFile" />
+        <option value="Kotlin Enum" />
+        <option value="Kotlin Data Class" />
+        <option value="Interface" />
+        <option value="UML Activity" />
+        <option value="UML Class" />
+        <option value="Gradle Kotlin DSL Settings" />
+        <option value="Kotlin Object" />
+        <option value="Gradle Kotlin DSL Build Script" />
+        <option value="Class" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin Class" />
+        <option value="Kotlin File" />
+        <option value="UML Sequence" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode />
+    </option>
+  </component>
+  <component name="GroovyConsoleState">
+    <option name="list">
+      <list>
+        <Entry>
+          <option name="url" value="file://$APPLICATION_CONFIG_DIR$/consoles/groovy/groovy_console_1.groovy" />
+          <option name="moduleName" value="Groovy" />
+          <option name="title" value="Groovy (Groovy)" />
+        </Entry>
+        <Entry>
+          <option name="url" value="file://$APPLICATION_CONFIG_DIR$/consoles/groovy/groovy_console.groovy" />
+          <option name="moduleName" value="Study" />
+          <option name="title" value="Study (Bundled Groovy 2.4.15)" />
+        </Entry>
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1ZCem7RXQHeBb8wvPZK0fbtYJeY" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DEBUGGABLE_DEVICE" value="oppo-pchm10-192.168.1.109:5555" />
+    <property name="DEBUGGABLE_PROCESS" value="com.abelhu.androidstudy" />
+    <property name="DEBUGGER_ID" value="Auto" />
+    <property name="DefaultPlantUmlFileTemplate" value="UML Sequence" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="172.16.100.216:5555" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-05-11T02:28:01.158Z" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SHOW_ALL_PROCESSES" value="false" />
+    <property name="adb_path" value="$USER_HOME$/Library/Android/sdk/platform-tools/adb" />
+    <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
+    <property name="full.screen.before.presentation.mode" value="true" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/Study/src/androidTest/java/com/abelhu/androidstudy" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/UML" />
+    <property name="not.eligible.for.single.variant.sync" value="true" />
+    <property name="project.structure.last.edited" value="Suggestions" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="show.do.not.ask.upgrade.gradle.plugin" value="3.5.3" />
+  </component>
+  <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Default Config" />
+    <option name="BUILD_VARIANTS_TAB" value="Build Types" />
+    <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
+    <option name="LAST_EDITED_BUILD_TYPE" value="debug" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.abelhu.androidstudy.aidl" />
+      <recent name="com.abelhu.androidstudy.binder.service" />
+      <recent name="com.designpattern.structure.proxy.interfaceproxy" />
+      <recent name="com.abelhu.leet" />
+      <recent name="com.abelhu.androidstudy.instrumentation" />
+    </key>
+    <key name="android.template.parentActivityClass">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.abelhu.androidstudy" />
+    </key>
+    <key name="android.template.packageName">
+      <recent name="com.abelhu.androidstudy.ui.main.activity.mode" />
+      <recent name="com.abelhu.androidstudy.ui.screen" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.designpattern.structure.bridge" />
+      <recent name="com.abelhu.androidstudy.tinker" />
+      <recent name="com.designpattern.behavior.visitor" />
+      <recent name="com.designpattern.behavior.state" />
+      <recent name="com.designpattern.behavior.responsbility" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.abelhu.layout" />
+      <recent name="com.visible" />
+      <recent name="com.abelhu.androidstudy.rx" />
+      <recent name="com.abelhu.androidstudy" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/UML" />
+      <recent name="$PROJECT_DIR$/Study/src/main/java/com/abelhu/javastudy/jmh" />
+      <recent name="$PROJECT_DIR$/Study/src/test/java/com/abelhu/bytecode" />
+      <recent name="$PROJECT_DIR$/Study/src/test/java/com/chen" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/framework/shadow/pic" />
+      <recent name="$PROJECT_DIR$/Study/src/main/aidl/com/abelhu/androidstudy/aidl" />
+      <recent name="$PROJECT_DIR$/Study/src/main/java/com/abelhu/androidstudy/tinker" />
+      <recent name="$PROJECT_DIR$/Study/src/test/java/com/innerclass" />
+      <recent name="$PROJECT_DIR$/Groovy/src/main" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Kotlin.JMHTestKt">
+    <configuration name="TestJava" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Study" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.kotlin.bigdecimal.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.kotlin.bigdecimal" />
+      <option name="MAIN_CLASS_NAME" value="com.kotlin.bigdecimal.TestJava" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="Study" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="DEBUGGER_TYPE" value="Java" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="true" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AndroidStudy:Plugin [publish]" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/Plugin" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="publish" />
+          </list>
+        </option>
+        <option name="vmOptions" value="" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="GroovyTest" type="GroovyScriptRunConfiguration" factoryName="Groovy">
+      <setting name="path" value="file://$PROJECT_DIR$/Groovy/src/main/groovy/com/ablehu/study/printTest.groovy" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workDir" value="file://$PROJECT_DIR$" />
+      <setting name="debug" value="false" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Study" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.reflection.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.reflection" />
+      <option name="MAIN_CLASS_NAME" value="com.reflection.Test" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JMHTest" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <module name="Study" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.abelhu.base.JMHTest" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JMHTestKt (1)" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <module name="Study" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.abelhu.javastudy.jmh.JMHTestKt" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JMHTestKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <module name="Study" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" value="com.abelhu.base.JMHTestKt" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Android App.app" />
+      <item itemvalue="Android JUnit.TestJava" />
+      <item itemvalue="Gradle.AndroidStudy:Plugin [publish]" />
+      <item itemvalue="Groovy.GroovyTest" />
+      <item itemvalue="Kotlin.JMHTestKt" />
+      <item itemvalue="Kotlin.JMHTest" />
+      <item itemvalue="Kotlin.JMHTestKt (1)" />
+      <item itemvalue="Remote.remote" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Kotlin.JMHTestKt" />
+        <item itemvalue="Kotlin.JMHTestKt (1)" />
+        <item itemvalue="Android JUnit.TestJava" />
+        <item itemvalue="Kotlin.JMHTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="82a3f534-55b6-4b0f-bdee-ea07b47383be" name="Default Changelist" comment="" />
+      <created>1572861089230</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1572861089230</updated>
+    </task>
+    <task id="LOCAL-00085" summary="add : study tinker again">
+      <created>1585283212205</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1585283212205</updated>
+    </task>
+    <task id="LOCAL-00086" summary="add : restart app when patch apply">
+      <created>1585314040341</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1585314040341</updated>
+    </task>
+    <task id="LOCAL-00087" summary="add : update tinker script">
+      <created>1585645406021</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1585645406022</updated>
+    </task>
+    <task id="LOCAL-00088" summary="add : optimize script">
+      <created>1585649146040</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1585649146040</updated>
+    </task>
+    <task id="LOCAL-00089" summary="add : optimize script">
+      <created>1585659101052</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1585659101053</updated>
+    </task>
+    <task id="LOCAL-00090" summary="add : update tinker patch version">
+      <created>1585737949898</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1585737949900</updated>
+    </task>
+    <task id="LOCAL-00091" summary="add : from project.android.defaultConfig get versionName">
+      <created>1585799440776</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1585799440777</updated>
+    </task>
+    <task id="LOCAL-00092" summary="fix : bug error property">
+      <created>1585881378511</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1585881378511</updated>
+    </task>
+    <task id="LOCAL-00093" summary="add : binder demo">
+      <created>1585883338188</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1585883338188</updated>
+    </task>
+    <task id="LOCAL-00094" summary="add : binder and aidl study">
+      <created>1585904190765</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1585904190767</updated>
+    </task>
+    <task id="LOCAL-00095" summary="add : test for kotlin lambda">
+      <created>1585907726329</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1585907726330</updated>
+    </task>
+    <task id="LOCAL-00096" summary="add : app start flow">
+      <created>1586223742070</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1586223742070</updated>
+    </task>
+    <task id="LOCAL-00097" summary="add : app start flow">
+      <created>1586330881465</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1586330881466</updated>
+    </task>
+    <task id="LOCAL-00098" summary="add : in out">
+      <created>1586934549171</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1586934549171</updated>
+    </task>
+    <task id="LOCAL-00099" summary="add : design pattern bridge">
+      <created>1586936529132</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1586936529132</updated>
+    </task>
+    <task id="LOCAL-00100" summary="add : comment">
+      <created>1587368971277</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1587368971277</updated>
+    </task>
+    <task id="LOCAL-00101" summary="add : conpoment start">
+      <created>1588746673632</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1588746673635</updated>
+    </task>
+    <task id="LOCAL-00102" summary="add : some note">
+      <created>1588756488458</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1588756488458</updated>
+    </task>
+    <task id="LOCAL-00103" summary="add : some note">
+      <created>1588935669816</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1588935669818</updated>
+    </task>
+    <task id="LOCAL-00104" summary="add : some note">
+      <created>1588936037122</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1588936037123</updated>
+    </task>
+    <task id="LOCAL-00105" summary="add : some note">
+      <created>1589424207842</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1589424207844</updated>
+    </task>
+    <task id="LOCAL-00106" summary="add : how shadow start activity">
+      <created>1589448531400</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1589448531402</updated>
+    </task>
+    <task id="LOCAL-00107" summary="add : version and gradle plugin study">
+      <created>1590388589687</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1590388589689</updated>
+    </task>
+    <task id="LOCAL-00108" summary="add : Publish script">
+      <created>1590393939591</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1590393939591</updated>
+    </task>
+    <task id="LOCAL-00109" summary="add : can publish plugin and use">
+      <created>1590397505118</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1590397505118</updated>
+    </task>
+    <task id="LOCAL-00110" summary="add : test static method">
+      <created>1590460455683</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1590460455686</updated>
+    </task>
+    <task id="LOCAL-00111" summary="add : byte code edit to test function time">
+      <created>1590462841695</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1590462841695</updated>
+    </task>
+    <task id="LOCAL-00112" summary="add : add custom transform">
+      <created>1590486144556</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1590486144560</updated>
+    </task>
+    <task id="LOCAL-00113" summary="add : transform method use to static method use">
+      <created>1590633092690</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1590633092691</updated>
+    </task>
+    <task id="LOCAL-00114" summary="add : watch plus plus byte code">
+      <created>1592447747370</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1592447747371</updated>
+    </task>
+    <task id="LOCAL-00115" summary="add : lock support study">
+      <created>1592476073613</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1592476073614</updated>
+    </task>
+    <task id="LOCAL-00116" summary="add : lock support study and cas">
+      <created>1592478255218</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1592478255218</updated>
+    </task>
+    <task id="LOCAL-00117" summary="add : synchronized and wait\notify">
+      <created>1592538473031</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1592538473032</updated>
+    </task>
+    <task id="LOCAL-00118" summary="add : reentrant lock study">
+      <created>1592564210508</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1592564210510</updated>
+    </task>
+    <task id="LOCAL-00119" summary="add : modify proxy and adapter">
+      <created>1592798707424</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1592798707425</updated>
+    </task>
+    <task id="LOCAL-00120" summary="add : CountDownLatch and CyclicBarrier">
+      <created>1592899019788</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1592899019791</updated>
+    </task>
+    <task id="LOCAL-00121" summary="add : CountDownLatch and CyclicBarrier">
+      <created>1592899223718</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1592899223718</updated>
+    </task>
+    <task id="LOCAL-00122" summary="add : CountDownLatch and CyclicBarrier">
+      <created>1592899644144</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1592899644144</updated>
+    </task>
+    <task id="LOCAL-00123" summary="add : sort">
+      <created>1592903656680</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1592903656680</updated>
+    </task>
+    <task id="LOCAL-00124" summary="add : sort">
+      <created>1592907286769</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1592907286769</updated>
+    </task>
+    <task id="LOCAL-00125" summary="add : shell sort">
+      <created>1592965306948</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1592965306948</updated>
+    </task>
+    <task id="LOCAL-00126" summary="add : quick sort">
+      <created>1592969440622</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1592969440622</updated>
+    </task>
+    <task id="LOCAL-00127" summary="add : merge sort">
+      <created>1592981954555</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1592981954555</updated>
+    </task>
+    <task id="LOCAL-00128" summary="fix : complex of merge">
+      <created>1592984235361</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1592984235361</updated>
+    </task>
+    <task id="LOCAL-00129" summary="add: heap sort">
+      <created>1593164234118</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1593164234119</updated>
+    </task>
+    <task id="LOCAL-00130" summary="add: radix sort">
+      <created>1593169139499</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1593169139500</updated>
+    </task>
+    <task id="LOCAL-00131" summary="add: use jmh test function">
+      <created>1594457871392</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1594457871393</updated>
+    </task>
+    <task id="LOCAL-00132" summary="add: use jmh test function">
+      <created>1594608174203</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1594608174203</updated>
+    </task>
+    <task id="LOCAL-00133" summary="add: tcp and tfo">
+      <created>1594708411993</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1594708411993</updated>
+    </task>
+    <option name="localTasksCounter" value="134" />
+    <servers />
+  </component>
+  <component name="UpdateCopyrightCheckinHandler">
+    <option name="UPDATE_COPYRIGHT" value="true" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="add : some note" />
+    <MESSAGE value="add : how shadow start activity" />
+    <MESSAGE value="add : version and gradle plugin study" />
+    <MESSAGE value="add : Publish script" />
+    <MESSAGE value="add : can publish plugin and use" />
+    <MESSAGE value="add : test static method" />
+    <MESSAGE value="add : byte code edit to test function time" />
+    <MESSAGE value="add : add custom transform" />
+    <MESSAGE value="add : transform method use to static method use" />
+    <MESSAGE value="add : watch plus plus byte code" />
+    <MESSAGE value="add : lock support study" />
+    <MESSAGE value="add : lock support study and cas" />
+    <MESSAGE value="add : synchronized and wait\notify" />
+    <MESSAGE value="add : reentrant lock study" />
+    <MESSAGE value="add : modify proxy and adapter" />
+    <MESSAGE value="add : CountDownLatch and CyclicBarrier" />
+    <MESSAGE value="add : sort" />
+    <MESSAGE value="add : shell sort" />
+    <MESSAGE value="add : quick sort" />
+    <MESSAGE value="add : merge sort" />
+    <MESSAGE value="fix : complex of merge" />
+    <MESSAGE value="add: heap sort" />
+    <MESSAGE value="add: radix sort" />
+    <MESSAGE value="add: use jmh test function" />
+    <MESSAGE value="add: tcp and tfo" />
+    <option name="LAST_COMMIT_MESSAGE" value="add: tcp and tfo" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/Code1333.kt</url>
+          <line>20</line>
+          <option name="timeStamp" value="110" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/Code1310.kt</url>
+          <line>19</line>
+          <option name="timeStamp" value="111" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/Code1310.kt</url>
+          <line>24</line>
+          <option name="timeStamp" value="112" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/Code1310.kt</url>
+          <line>9</line>
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/Study/src/main/java/com/abelhu/androidstudy/tinker/TinkerLoadReporter.kt</url>
+          <line>84</line>
+          <option name="timeStamp" value="123" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/Study/src/main/java/com/abelhu/androidstudy/tinker/TinkerLoadReporter.kt</url>
+          <line>20</line>
+          <option name="timeStamp" value="126" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/Study/src/test/java/com/reflection/Construction.kt</url>
+          <line>8</line>
+          <option name="timeStamp" value="196" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$USER_HOME$/Library/Android/sdk/sources/android-29/java/io/FileInputStream.java</url>
+          <line>145</line>
+          <option name="timeStamp" value="117" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.tinkerpatch.tinker/tinker-android-lib/1.9.14.5/e9b544d8011e14208dddaf7456226fa7522d4309/tinker-android-lib-1.9.14.5-sources.jar!/com/tencent/tinker/lib/service/TinkerPatchService.java</url>
+          <line>111</line>
+          <option name="timeStamp" value="136" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Study/tinkerPatch.gradle</url>
+          <line>72</line>
+          <option name="timeStamp" value="163" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.tinkerpatch.tinker/tinker-android-loader/1.9.14.5/55816fa99afa8ff12df8c4847bd54ce61bd5dfd5/tinker-android-loader-1.9.14.5-sources.jar!/com/tencent/tinker/loader/shareutil/ShareTinkerInternals.java</url>
+          <line>195</line>
+          <option name="timeStamp" value="195" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="app">
+        <watch expression="file == null || !file.exists()" language="JAVA" />
+        <watch expression="file.isInvalid()" language="JAVA" />
+      </configuration>
+      <configuration name="JUnit">
+        <watch expression="clazz.constructors" language="kotlin" />
+      </configuration>
+      <configuration name="Remote">
+        <watch expression="buildDir" language="Groovy" />
+        <watch expression="project.name" language="Groovy" />
+        <watch expression="project.version" language="Groovy" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/AndroidStudy$MainActivityTest_onCreateOptionsMenu.ic" NAME="MainActivityTest.onCreateOptionsMenu Coverage Results" MODIFIED="1575017274827" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.abelhu.androidstudy.*</FILTER>
+    </SUITE>
+  </component>
+  <component name="gradleExecuteTaskHistory">
+    <option value="" />
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>AndroidStudy</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
