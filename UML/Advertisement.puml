@@ -1,24 +1,25 @@
 @startuml
 start
-: i=0;
-while (i < Key.size) is (true)
-    if (Key[i]是否有缓存) then (false)
+if (存在有效的广告\n(以mid为依据)) then (true)
+    stop
+else (false)
+    : i=0;
+    while (i < Key.size) is (true)
         : 请求Key[i];
         note left
             这里可以是把请求放到list里面
             然后交给并发控制去请求
         end note
-    else (true)
-    endif
-    if (Key[i]是否在展示间隔内) then (true);
-        : i++;
-    else (false)
-        stop
-        note right
-            如果从来没有展示过
-            按照不在展示间隔范围内处理
-        end note
-    endif
-endWhile (false)
-stop
+        if (Key[i]是否在展示间隔内) then (true);
+            : i++;
+        else (false)
+            stop
+            note right
+                如果从来没有展示过
+                按照不在展示间隔范围内处理
+            end note
+        endif
+    endWhile (false)
+    stop
+endif
 @enduml
