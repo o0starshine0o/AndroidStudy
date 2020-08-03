@@ -4,8 +4,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-// 演示通过依赖项目使用插件
-apply plugin: 'abelhu.study'
+// 演示通过依赖项目使用插件，使用这个插件会导致apk中没有dex文件，以后修复吧，现在先不使用了
+//apply plugin: 'abelhu.study'
 // 进阶为tinkerPatch，全套解决方案，包含了tinker.gradle的所有内容，所以就不需要在再apply tinker.gradle了
 //apply from: 'tinkerPatch.gradle'
 
