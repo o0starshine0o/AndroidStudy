@@ -31,7 +31,8 @@ class Tree<K : Comparable<K>, V> {
         val delete = get(key)
         // 寻找代替节点
         val replace = getReplace(delete)
-        // todo:平衡代替节点
+        // 平衡代替节点
+        balance(replace)
         // 用代替节点代替删除节点
         replace(delete, replace)
     }
@@ -139,8 +140,8 @@ class Tree<K : Comparable<K>, V> {
      */
     private fun getReplace(node: Node<K, V>?) = when {
         node == null -> null
-        // 木有子节点，就木有可替换的节点
-        node.left == null && node.right == null -> null
+        // 木有子节点，就木有可替换的节点，这边认为替换节点就是自身
+        node.left == null && node.right == null -> node
         // 只有一个子节点，那么子节点就是要被替换的节点
         node.left == null && node.right != null -> node.right
         node.left != null && node.right == null -> node.left
@@ -158,16 +159,51 @@ class Tree<K : Comparable<K>, V> {
     }
 
     /**
+     * 重新平衡替换节点
+     */
+    private fun balance(replace: Node<K, V>?) {
+        // 情况1：替换节点的颜色是红色，删除了也不会影响平衡，不作处理
+        if (replace?.color == Red) return
+        // 情况2：替换节点的颜色是黑色，需要通过旋转来平衡树
+        when (getBranch(replace)) {
+            // 情况2.1：替换节点是其父节点的左子节点
+            Left -> {
+                val brother = replace?.parent?.right
+                if (brother?.color == Red) {
+                    // 情况2.1.1：替换节点的兄弟节点是红色（父节点肯定是黑色，性质4，2个子节点一定是黑色）
+                    // 将兄节点设为黑色，父节点设为红色，对父节点左旋，得到情况2.1.2.3，然后按照2.1.2.3处理, todo
+                    brother.color = Black
+                    replace.parent?.color = Red
+                    rotateLeft(replace.parent)
+                } else if (brother?.color == Black) {
+                    // 情况2.1.2：替换节点的兄弟节点是黑色（父节点和子节点的颜色都不确定）
+                    if (brother.right?.color == Red) {
+                        // 情况2.1.2.1： 兄节点的右子节点是红色
+                        // 兄节点颜色设为父节点的颜色，父节点设为黑色，兄节点的右子节点设为黑色，对父节点左旋
+                        brother.color = replace.parent?.color ?: Red
+                        replace.parent?.color = Black
+                        brother.right?.color = Black
+                        rotateLeft(replace.parent)
+                    }
+                }
+            }
+            Right -> root
+        }
+    }
+
+    /**
      * 用替换节点替换删除节点
      */
     private fun replace(delete: Node<K, V>?, replace: Node<K, V>?) {
-        replace?.left = delete?.left
-        replace?.right = delete?.right
-        replace?.parent = delete?.parent
-        replace?.color = delete?.color ?: Red
+        // 如果要用自身替换自身，意味着要删除自身
+        val node = if (delete == replace) null else replace
+        node?.left = delete?.left
+        node?.right = delete?.right
+        node?.parent = delete?.parent
+        node?.color = delete?.color ?: Red
         when {
-            delete?.parent?.left == delete -> delete?.parent?.left = replace
-            delete?.parent?.right == delete -> delete?.parent?.right = replace
+            delete?.parent?.left == delete -> delete?.parent?.left = node
+            delete?.parent?.right == delete -> delete?.parent?.right = node
         }
     }
 
@@ -183,9 +219,9 @@ class Tree<K : Comparable<K>, V> {
     /**
      * 判断当前节点位于父节点的哪个分支上
      */
-    private fun getBranch(node: Node<K, V>) = when (node) {
-        node.parent?.left -> Left
-        node.parent?.right -> Right
+    private fun getBranch(node: Node<K, V>?) = when (node) {
+        node?.parent?.left -> Left
+        node?.parent?.right -> Right
         else -> Undefine
     }
 

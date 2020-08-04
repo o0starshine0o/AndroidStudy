@@ -7,9 +7,11 @@ class Test {
 
     init {
         tree.add(Node(100, "100"))
+        tree.add(Node(50, "50"))
         tree.add(Node(200, "200"))
-        tree.add(Node(150, "150"))
-        tree.delete(Int.MAX_VALUE)
+        tree.add(Node(125, "125"))
+        tree.add(Node(300, "300"))
+        tree.delete(50)
     }
 
     @Test
