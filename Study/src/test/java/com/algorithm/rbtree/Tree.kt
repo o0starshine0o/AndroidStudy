@@ -2,10 +2,11 @@ package com.algorithm.rbtree
 
 import androidx.annotation.IntDef
 
+const val Undefine = Int.MIN_VALUE
 const val Left = 0
 const val Right = 1
 
-@IntDef(Left, Right)
+@IntDef(Left, Right, Undefine)
 @Retention(AnnotationRetention.SOURCE)
 annotation class Branch
 
@@ -80,19 +81,37 @@ class Tree<K : Comparable<K>, V> {
             // 情况4.2：叔节点不存在，或者为黑色
             // 如果叔节点为黑色，那么一定是叶子节点null，否则黑高就不满足了
             else {
-                when (branch) {
-                    // 情况4.2.1：插入节点是其父节点的左子节点
-                    Left -> {
-                        // 父节点设置为黑色，祖节点设置为红色，对祖节点进行右旋
-                        parent.color = Black
-                        parent.parent?.color = Red
-                        rotateRight(parent.parent)
+                // 判断父节点是祖节点的哪个branch
+                when (getBranch(parent)) {
+                    Left -> when (branch) {
+                        // 情况4.2.1：插入节点是其父节点的左子节点
+                        Left -> {
+                            // 父节点设置为黑色，祖节点设置为红色，对祖节点进行右旋
+                            parent.color = Black
+                            parent.parent?.color = Red
+                            rotateRight(parent.parent)
+                        }
+                        // 情况4.2.2：插入节点是其父节点的右子节点
+                        Right -> {
+                            // 对父节点进行左旋，得到4.2.1的情况
+                            rotateLeft(parent)
+                            add(parent, node, Left)
+                        }
                     }
-                    // 情况4.2.2：插入节点是其父节点的右子节点
-                    Right -> {
-                        // 对父节点进行左旋，得到4.2.1的情况
-                        rotateLeft(parent)
-                        add(parent, node, Left)
+                    Right -> when (branch) {
+                        // 情况4.3.1：插入节点是其父节点的右子节点
+                        Right -> {
+                            // 父节点设置为黑色，祖节点设置为红色，对祖节点进行左旋
+                            parent.color = Black
+                            parent.parent?.color = Red
+                            rotateLeft(parent.parent)
+                        }
+                        // 情况4.3.2：插入节点是其父节点的左子节点
+                        Left -> {
+                            // 对父节点进行右旋，得到4.3.1的情况
+                            rotateRight(parent)
+                            add(parent, node, Right)
+                        }
                     }
                 }
             }
@@ -102,28 +121,32 @@ class Tree<K : Comparable<K>, V> {
     /**
      * 获取叔节点
      */
-    private fun getUncle(node: Node<K, V>): Node<K, V>? {
-        return when (node.parent) {
-            node.parent?.parent?.left -> node.parent?.parent?.right
-            node.parent?.parent?.right -> node.parent?.parent?.left
-            else -> null
-        }
+    private fun getUncle(node: Node<K, V>) = when (node.parent) {
+        node.parent?.parent?.left -> node.parent?.parent?.right
+        node.parent?.parent?.right -> node.parent?.parent?.left
+        else -> null
+    }
+
+    private fun getBranch(node: Node<K, V>) = when (node) {
+        node.parent?.left -> Left
+        node.parent?.right -> Right
+        else -> Undefine
     }
 
     /**
      * 左旋
      */
-    private fun rotateLeft(node: Node<K, V>) {
+    private fun rotateLeft(node: Node<K, V>?) {
         // 记录下父节点
-        val parent = node.parent
+        val parent = node?.parent
         // 记录右子节点
-        val right = node.right
+        val right = node?.right
         // 旋转后，当前节点的右子节点变成了原先右子节点的左子节点
-        node.right = right?.left
+        node?.right = right?.left
         right?.left?.parent = node
         // 旋转后，原先右子节点的左子节点变成了当前节点
         right?.left = node
-        node.parent = right
+        node?.parent = right
         // 旋转后，原先的右子节点变成了根节点，需要判断node位于父节点的哪个分支上
         when {
             parent == null -> root = right

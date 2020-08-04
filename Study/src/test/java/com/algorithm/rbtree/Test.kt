@@ -7,8 +7,8 @@ class Test {
 
     init {
         tree.add(Node(100, "100"))
-        tree.add(Node(50, "50"))
-        tree.add(Node(1, "1"))
+        tree.add(Node(200, "200"))
+        tree.add(Node(150, "150"))
     }
 
     @Test
