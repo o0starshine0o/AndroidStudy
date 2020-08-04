@@ -22,25 +22,62 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/apply_patch"
-        app:layout_constraintTop_toBottomOf="@id/text_tools"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/text_tools" />
 
     <Button
         android:id="@+id/downloadPatch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/download_patch"
-        app:layout_constraintTop_toBottomOf="@id/applyPatch"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/applyPatch" />
 
     <Button
         android:id="@+id/deletePatch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/delete_patch"
-        app:layout_constraintTop_toBottomOf="@id/downloadPatch"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/downloadPatch" />
+
+    <Button
+        android:id="@+id/getBaseStation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/get_base_station"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/deletePatch" />
+
+    <Button
+        android:id="@+id/getWiFi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/get_wifi_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/getBaseStation" />
+
+    <Button
+        android:id="@+id/getInstalledApk"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/get_installed_apk"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/getWiFi" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/getInstalledApk" />
 </androidx.constraintlayout.widget.ConstraintLayout>
