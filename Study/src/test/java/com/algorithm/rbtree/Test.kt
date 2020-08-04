@@ -9,6 +9,7 @@ class Test {
         tree.add(Node(100, "100"))
         tree.add(Node(200, "200"))
         tree.add(Node(150, "150"))
+        tree.delete(Int.MAX_VALUE)
     }
 
     @Test

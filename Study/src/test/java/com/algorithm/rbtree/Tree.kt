@@ -13,15 +13,36 @@ annotation class Branch
 class Tree<K : Comparable<K>, V> {
     private var root: Node<K, V>? = null
 
-    fun get(key: K): V? = get(key, root)
+    /**
+     * 获取节点
+     */
+    fun get(key: K): Node<K, V>? = get(key, root)
+
+    /**
+     * 增加节点
+     */
+    fun add(node: Node<K, V>) = add(node, root)
+
+    /**
+     * 删除节点
+     */
+    fun delete(key: K) {
+        // 找到要被删除的节点
+        val delete = get(key)
+        // 寻找代替节点
+        val replace = getReplace(delete)
+        // todo:平衡代替节点
+        // 用代替节点代替删除节点
+        replace(delete, replace)
+    }
 
     /**
      * 使用递归来查找
      */
-    private fun get(getKey: K, node: Node<K, V>?): V? {
+    private fun get(getKey: K, node: Node<K, V>?): Node<K, V>? {
         node?.apply {
             // 相等，返回这个节点
-            if (getKey == key) return value
+            if (getKey == key) return node
             // 小于当前节点，递归查找当前节点的左子节点
             if (getKey < key) return get(getKey, left)
             // 大于当前节点，递归查找当前节点的右子节点
@@ -29,11 +50,6 @@ class Tree<K : Comparable<K>, V> {
         }
         return null
     }
-
-    /**
-     * 公开的方法，给其他地方使用
-     */
-    fun add(node: Node<K, V>) = add(node, root)
 
     /**
      * 通过递归的方式，先完成查找二叉树的构建
@@ -119,6 +135,43 @@ class Tree<K : Comparable<K>, V> {
     }
 
     /**
+     * 如果要删除此节点，应该先找到对应的替代节点
+     */
+    private fun getReplace(node: Node<K, V>?) = when {
+        node == null -> null
+        // 木有子节点，就木有可替换的节点
+        node.left == null && node.right == null -> null
+        // 只有一个子节点，那么子节点就是要被替换的节点
+        node.left == null && node.right != null -> node.right
+        node.left != null && node.right == null -> node.left
+        // 如果有2个子节点，需要找到被删除节点的后继节点（大于删除节点的最小节点）
+        else -> getNext(node)
+    }
+
+    /**
+     * 寻找后继节点，大于当前节点的最小节点
+     */
+    private fun getNext(node: Node<K, V>?): Node<K, V>? {
+        var next = node?.right
+        while (next?.left != null) next = next.left
+        return next
+    }
+
+    /**
+     * 用替换节点替换删除节点
+     */
+    private fun replace(delete: Node<K, V>?, replace: Node<K, V>?) {
+        replace?.left = delete?.left
+        replace?.right = delete?.right
+        replace?.parent = delete?.parent
+        replace?.color = delete?.color ?: Red
+        when {
+            delete?.parent?.left == delete -> delete?.parent?.left = replace
+            delete?.parent?.right == delete -> delete?.parent?.right = replace
+        }
+    }
+
+    /**
      * 获取叔节点
      */
     private fun getUncle(node: Node<K, V>) = when (node.parent) {
@@ -127,6 +180,9 @@ class Tree<K : Comparable<K>, V> {
         else -> null
     }
 
+    /**
+     * 判断当前节点位于父节点的哪个分支上
+     */
     private fun getBranch(node: Node<K, V>) = when (node) {
         node.parent?.left -> Left
         node.parent?.right -> Right
