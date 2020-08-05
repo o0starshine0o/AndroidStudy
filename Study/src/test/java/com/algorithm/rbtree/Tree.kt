@@ -171,10 +171,11 @@ class Tree<K : Comparable<K>, V> {
                 val brother = replace?.parent?.right
                 if (brother?.color == Red) {
                     // 情况2.1.1：替换节点的兄弟节点是红色（父节点肯定是黑色，性质4，2个子节点一定是黑色）
-                    // 将兄节点设为黑色，父节点设为红色，对父节点左旋，得到情况2.1.2.3，然后按照2.1.2.3处理, todo
+                    // 将兄节点设为黑色，父节点设为红色，对父节点左旋，得到情况2.1.2.3，然后按照2.1.2.3处理
                     brother.color = Black
                     replace.parent?.color = Red
                     rotateLeft(replace.parent)
+                    balance(replace)
                 } else if (brother?.color == Black) {
                     // 情况2.1.2：替换节点的兄弟节点是黑色（父节点和子节点的颜色都不确定）
                     if (brother.right?.color == Red) {
@@ -184,10 +185,67 @@ class Tree<K : Comparable<K>, V> {
                         replace.parent?.color = Black
                         brother.right?.color = Black
                         rotateLeft(replace.parent)
+                    } else if (brother.right?.color == Black) {
+                        if (brother.left?.color == Red) {
+                            // 情况2.1.2.2： 兄节点的左子节点是红色
+                            // 将兄节点设为红色，兄节点的左子节点设为黑色，对兄节点做右旋，可以得到2.1.2.1
+                            brother.color = Red
+                            brother.left?.color = Black
+                            rotateRight(brother)
+                            // 按照2.1.2.1处理
+                            brother.left?.color = replace.parent?.color ?: Red
+                            replace.parent?.color = Black
+                            brother.color = Black
+                            rotateLeft(replace.parent)
+                        } else if (brother.left?.color == Black) {
+                            // 情况2.1.2.3： 兄节点的左子节点是黑色
+                            // 将兄节点设为红色,父节点作为替换跌点,重新处理
+                            brother.color = Red
+                            balance(replace.parent)
+                        }
                     }
                 }
             }
-            Right -> root
+            // 情况2.2：替换节点是其父节点的右子节点,刚好和情况2.1相反
+            Right -> {
+                val brother = replace?.parent?.left
+                if (brother?.color == Red) {
+                    // 情况2.2.1：替换节点的兄弟节点是红色（父节点肯定是黑色，性质4，2个子节点一定是黑色）
+                    // 将兄节点设为黑色，父节点设为红色，对父节点右旋，得到情况2.2.2.3，然后按照2.2.2.3处理
+                    brother.color = Black
+                    replace.parent?.color = Red
+                    rotateRight(replace.parent)
+                    balance(replace)
+                } else if (brother?.color == Black) {
+                    // 情况2.2.2：替换节点的兄弟节点是黑色（父节点和子节点的颜色都不确定）
+                    if (brother.left?.color == Red) {
+                        // 情况2.2.2.1： 兄节点的左子节点是红色
+                        // 兄节点颜色设为父节点的颜色，父节点设为黑色，兄节点的左子节点设为黑色，对父节点右旋
+                        brother.color = replace.parent?.color ?: Red
+                        replace.parent?.color = Black
+                        brother.left?.color = Black
+                        rotateRight(replace.parent)
+                    } else if (brother.left?.color == Black) {
+                        if (brother.right?.color == Red) {
+                            // 情况2.2.2.2： 兄节点的右子节点是红色
+                            // 将兄节点设为红色，兄节点的右子节点设为黑色，对兄节点做左旋，可以得到2.2.2.1
+                            brother.color = Red
+                            brother.right?.color = Black
+                            rotateLeft(brother)
+                            // 按照2.2.2.1处理
+                            brother.right?.color = replace.parent?.color ?: Red
+                            replace.parent?.color = Black
+                            brother.color = Black
+                            rotateRight(replace.parent)
+                        } else if (brother.right?.color == Black) {
+                            // 情况2.1.2.3： 兄节点的左子节点是黑色
+                            // 将兄节点设为红色,父节点作为替换跌点,重新处理
+                            brother.color = Red
+                            balance(replace.parent)
+                        }
+                    }
+                }
+            }
         }
     }
 
