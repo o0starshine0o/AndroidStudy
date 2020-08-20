@@ -29,23 +29,24 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false).apply {
             homeViewModel.text.observe(viewLifecycleOwner, Observer { textHome.text = it })
             homeViewModel.progress.observe(viewLifecycleOwner, Observer { progress.progress = it })
+            // 点击穿透相关
             click.setOnClickListener { Toast.makeText(context, "click", Toast.LENGTH_LONG).show() }
+            // 启动模式相关
             startLaunchModeActivity.setOnClickListener {
                 startActivity(Intent(context, LaunchModeActivity::class.java).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK })
             }
-            download.setOnClickListener(this@HomeFragment::download)
+            // 下载相关
+            download.setOnClickListener {
+                DownloadManager.download(url, "${context?.filesDir}/plugin.zip") { _, read, length, _ ->
+                    homeViewModel.progress.postValue((100 * read / length).toInt())
+                }
+            }
+            pause.setOnClickListener { DownloadManager.pause(url) }
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         homeViewModel.saveState(outState)
-    }
-
-    private fun download(view: View? = null) {
-        context?.filesDir
-        DownloadManager.download(url, "${context?.filesDir}/plugin.zip") { _, read, length, _ ->
-            homeViewModel.progress.postValue((100 * read / length).toInt())
-        }
     }
 }

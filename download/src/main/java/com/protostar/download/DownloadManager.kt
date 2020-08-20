@@ -39,7 +39,8 @@ class DownloadManager private constructor() : DownloadProgressListener {
          * @param savePath 保存文件的目录
          * @param listener 下载监听器
          */
-        fun download(url: String, savePath: String, listener: ProgressListener? = null) = download(DownloadInfo(url, savePath), listener)
+        fun download(url: String, savePath: String, listener: ProgressListener? = null) =
+            download(manager.infoMap[url]?.takeIf { info -> info.savePath == savePath } ?: DownloadInfo(url, savePath), listener)
 
 
         /**
