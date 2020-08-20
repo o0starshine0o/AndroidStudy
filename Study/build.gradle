@@ -144,6 +144,8 @@ dependencies {
     // jmh:
     testImplementation 'org.openjdk.jmh:jmh-core:1.23'
     kaptTest 'org.openjdk.jmh:jmh-generator-annprocess:1.23'
+
+    implementation project(':download')
 }
 // tinker， 因为依赖project.android.defaultConfig，所以需要放在配置文件的最后
 apply from: 'tinker.gradle'

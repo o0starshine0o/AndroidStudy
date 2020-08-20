@@ -8,6 +8,7 @@ class HomeViewModel(private var count:Int = 0) : ViewModel(), LifecycleObserver 
         const val COUNT_KEY = "COUNT_KEY"
     }
     val text = MutableLiveData<String>().apply { value = "This is home Fragment" }
+    val progress = MutableLiveData<Int>()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume(){

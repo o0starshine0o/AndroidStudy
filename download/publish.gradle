@@ -1,0 +1,116 @@
+apply plugin: 'maven-publish'
+apply plugin: 'org.jetbrains.dokka'
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    options.encoding = "UTF-8"
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+task generateJavadoc(type: Jar, dependsOn: dokkaJavadoc) {
+    group = 'jar'
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+task generateSourcesJar(type: Jar) {
+    group = 'jar'
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+dokkaHtml {
+    dokkaSourceSets {
+        configureEach {
+            noAndroidSdkLink = true
+        }
+    }
+}
+
+publishing {
+    publications {
+        download(MavenPublication) {
+            groupId = 'com.protostar'
+            artifactId = 'download'
+            version = android.defaultConfig.versionName
+            afterEvaluate { artifact(tasks.getByName("bundleReleaseAar")) }
+            // 这一步实在是太慢了,暂时就不要了
+//            artifact generateJavadoc
+            artifact generateSourcesJar
+
+            pom {
+                name = 'ProtostarDownload'
+                description = 'a library for protostar to download file'
+                url = 'https://git-client.ixianlai.com/huyongsheng/ProtostarSupport'
+                properties = [
+                        myProp          : "value",
+                        "prop.with.dots": "anotherValue"
+                ]
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'AbelHu'
+                        name = 'AbelHu'
+                        email = 'tohys@qq.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git@git-client.ixianlai.com:huyongsheng/ProtostarSupport.git'
+                    developerConnection = 'https://git-client.ixianlai.com/huyongsheng/ProtostarSupport'
+                    url = 'https://git-client.ixianlai.com/huyongsheng/ProtostarSupport'
+                }
+            }
+
+            // The publication doesn't know about our dependencies, so we have to manually add them to the pom
+            pom.withXml {
+
+                final dependenciesNode = asNode().appendNode('dependencies')
+
+                ext.addDependency = { Dependency dep, String scope ->
+                    if (dep.group == null || dep.version == null || dep.name == null || dep.name == "unspecified")
+                        return // ignore invalid dependencies
+
+                    final dependencyNode = dependenciesNode.appendNode('dependency')
+                    dependencyNode.appendNode('groupId', dep.group)
+                    dependencyNode.appendNode('artifactId', dep.name)
+                    dependencyNode.appendNode('version', dep.version)
+                    dependencyNode.appendNode('scope', scope)
+
+                    if (!dep.transitive) {
+                        // If this dependency is transitive, we should force exclude all its dependencies them from the POM
+                        final exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
+                        exclusionNode.appendNode('groupId', '*')
+                        exclusionNode.appendNode('artifactId', '*')
+                    } else if (!dep.properties.excludeRules.empty) {
+                        // Otherwise add specified exclude rules
+                        final exclusionNode = dependencyNode.appendNode('exclusions').appendNode('exclusion')
+                        dep.properties.excludeRules.each { ExcludeRule rule ->
+                            exclusionNode.appendNode('groupId', rule.group ?: '*')
+                            exclusionNode.appendNode('artifactId', rule.module ?: '*')
+                        }
+                    }
+                }
+
+                // List all "compile" dependencies (for old Gradle)
+                configurations.compile.getAllDependencies().each { dep -> addDependency(dep, "compile") }
+                // List all "api" dependencies (for new Gradle) as "compile" dependencies
+                configurations.api.getAllDependencies().each { dep -> addDependency(dep, "compile") }
+                // List all "implementation" dependencies (for new Gradle) as "runtime" dependencies
+                configurations.implementation.getAllDependencies().each { dep -> addDependency(dep, "runtime") }
+            }
+        }
+    }
+    repositories {
+        mavenLocal()
+        maven {
+            url = 'http://192.168.10.223:8081/repository/maven-releases/'
+            credentials {
+                username = "admin"
+                password = "maven_repository@xianlai123:;"
+            }
+        }
+    }
+}

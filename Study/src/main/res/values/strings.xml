@@ -32,4 +32,6 @@
     <string name="get_base_station">获取基站信息</string>
     <string name="get_wifi_info">获取WiFi信息</string>
     <string name="get_installed_apk">获取所有安装的APP</string>
+    <string name="download">下载</string>
+    <string name="pause">暂停</string>
 </resources>

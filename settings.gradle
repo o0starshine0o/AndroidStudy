@@ -1,3 +1,4 @@
+include ':download'
 println('This is executed during the initialization phase')
 
 rootProject.name='AndroidStudy'
