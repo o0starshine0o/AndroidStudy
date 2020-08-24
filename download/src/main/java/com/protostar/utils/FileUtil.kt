@@ -26,7 +26,7 @@ fun writeCache(responseBody: ResponseBody?, info: DownloadInfo) {
             randomAccessFile.channel.use { channelOut ->
                 val mappedBuffer = channelOut.map(FileChannel.MapMode.READ_WRITE, info.readLength, allLength - info.readLength)
                 val buffer = ByteArray(1024 * 4)
-                var length = 0
+                var length: Int
                 byteStream().use { stream -> while (stream.read(buffer).apply { length = this } != -1) mappedBuffer.put(buffer, 0, length) }
             }
         }
