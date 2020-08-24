@@ -74,7 +74,7 @@ class DownloadManager private constructor() : DownloadProgressListener {
          *
          * @param url 需要暂停下载文件的info
          */
-        fun pause(url: String) = manager.subscribeMap.remove(manager.infoMap.remove(url))?.unsubscribe()
+        fun pause(url: String) = manager.subscribeMap.remove(manager.infoMap[url])?.unsubscribe()
     }
 
     /**
@@ -102,44 +102,34 @@ class DownloadManager private constructor() : DownloadProgressListener {
 
     override fun progress(url: String, read: Long, length: Long, done: Boolean) {
         infoMap[url]?.apply {
-            Log.i(TAG, "url: $url, read: $read; contentLength: $length")
-            readLength = read
-            // 该方法仍然是在子线程，如果想要调用进度回调，需要切换到主线程，否则的话，会在子线程更新UI，直接错误
             // 如果断点续传，重新请求的文件大小是从断点处到最后的大小，不是整个文件的大小，info中的存储的总长度是
             // 整个文件的大小，所以某一时刻总文件的大小可能会大于从某个断点处请求的文件的总大小。此时read的大小为
             // 之前读取的加上现在读取的
-            if (contentLength > length) {
-                readLength += contentLength - length
-            } else {
-                contentLength = length
-            }
+            readLength = if (contentLength > length) read + contentLength - length else read
+            // 相同的原因,保存总长度
+            if (contentLength < length) contentLength = length
+            // 该方法仍然是在子线程，如果想要调用进度回调，需要切换到主线程，否则的话，会在子线程更新UI，直接错误
             Observable.just(1).observeOn(AndroidSchedulers.mainThread()).subscribe {
                 progressObserver?.progressChanged(url, readLength, contentLength, done)
+                Log.i(TAG, "url: $url, read: $readLength; totalLength: $contentLength")
             }
         }
     }
 
     private fun downLoad(info: DownloadInfo) {
         Log.i(TAG, "start download with info: $info")
-        service.download("bytes=${info.readLength}-", info.url)
+        infoMap[info.url] = info
+        subscribeMap[info] = service.download("bytes=${info.readLength}-", info.url)
             .subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io()).retryWhen(RetryWhenNetworkException())
             .map { responseBody -> info.apply { writeCache(responseBody, this) } }
             .observeOn(AndroidSchedulers.mainThread()).subscribe(object : Subscriber<DownloadInfo>() {
+                override fun onError(e: Throwable) = Unit.apply { Log.e(TAG, "onError: $e") }
+                override fun onNext(info: DownloadInfo) = Unit.apply { Log.i(TAG, "onNext: $info") }
                 override fun onCompleted() {
                     infoMap.remove(info.url)
                     subscribeMap.remove(info)
                     Log.i(TAG, "onCompleted: $info")
                 }
-
-                override fun onError(e: Throwable) {
-                    infoMap.remove(info.url)
-                    subscribeMap.remove(info)
-                    Log.i(TAG, "onError: $e")
-                }
-
-                override fun onNext(info: DownloadInfo) {
-                    Log.i(TAG, "onNext: $info")
-                }
-            }).apply { infoMap[info.url] = info;subscribeMap[info] = this }
+            })
     }
 }

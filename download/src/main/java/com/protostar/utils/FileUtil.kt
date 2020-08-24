@@ -20,13 +20,14 @@ import java.nio.channels.FileChannel
 fun writeCache(responseBody: ResponseBody?, info: DownloadInfo) {
     responseBody?.apply {
         val file = File(info.savePath).apply { parentFile?.mkdirs() }
+        // 注意,contentLength返回的是stream的长度,如果是断点续传,那么contentLength是需要加上之前的数据长度才是最终的文件大小
         val allLength = if (info.contentLength == 0L) contentLength() else info.contentLength
         RandomAccessFile(file, "rwd").use { randomAccessFile ->
             randomAccessFile.channel.use { channelOut ->
                 val mappedBuffer = channelOut.map(FileChannel.MapMode.READ_WRITE, info.readLength, allLength - info.readLength)
                 val buffer = ByteArray(1024 * 4)
                 var length = 0
-                byteStream().use { stream -> while (stream.read(buffer).also { length = it } != -1) mappedBuffer.put(buffer, 0, length) }
+                byteStream().use { stream -> while (stream.read(buffer).apply { length = this } != -1) mappedBuffer.put(buffer, 0, length) }
             }
         }
     }

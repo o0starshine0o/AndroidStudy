@@ -1,6 +1,5 @@
 package com.protostar.download
 
-import android.util.Log
 import okhttp3.ResponseBody
 import okio.Buffer
 import okio.BufferedSource
@@ -25,7 +24,6 @@ class DownloadResponseBody(val url: String, val responseBody: ResponseBody, val 
                 override fun read(sink: Buffer, byteCount: Long) = super.read(sink, byteCount).apply {
                     totalBytesRead += if (this != -1L) this else 0
                     listener.progress(url, totalBytesRead, responseBody.contentLength(), this == -1L)
-                    Log.i("DownloadResponseBody", "download: $url, read: $totalBytesRead, length: ${responseBody.contentLength()}, done: ${this == -1L}")
                 }
             }
         })
