@@ -58,7 +58,7 @@ class DownloadManager private constructor() : DownloadProgressListener {
          * @param info 下载文件info
          */
         fun download(info: DownloadInfo, listener: ProgressListener? = null) = info.apply {
-            manager.progressObserver = listener
+            manager.progressObserver[info.url] = listener
             manager.downLoad(info)
         }
 
@@ -90,7 +90,7 @@ class DownloadManager private constructor() : DownloadProgressListener {
     /**
      * 下载进度监听器
      */
-    private var progressObserver: ProgressListener? = null
+    private var progressObserver = HashMap<String, ProgressListener?>()
 
     /**
      * 下载服务
@@ -110,7 +110,7 @@ class DownloadManager private constructor() : DownloadProgressListener {
             if (contentLength < length) contentLength = length
             // 该方法仍然是在子线程，如果想要调用进度回调，需要切换到主线程，否则的话，会在子线程更新UI，直接错误
             Observable.just(1).observeOn(AndroidSchedulers.mainThread()).subscribe {
-                progressObserver?.progressChanged(url, readLength, contentLength, done)
+                progressObserver[url]?.progressChanged(url, readLength, contentLength, done)
                 Log.i(TAG, "url: $url, read: $readLength; totalLength: $contentLength")
             }
         }
