@@ -1,5 +1,3 @@
-println('This is executed during the configuration phase.')
-
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -10,19 +8,18 @@ apply plugin: 'kotlin-kapt'
 //apply from: 'tinkerPatch.gradle'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion 30
     defaultConfig {
-        applicationId "com.abelhu.androidstudy"
+        applicationId 'com.abelhu.androidstudy'
         minSdkVersion 23
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode PROJ_VERSION_CODE.toInteger()
         versionName PROJ_VERSION
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // 关闭自定义的Instrumentation和Looper检查
-        buildConfigField("Boolean", "CustomInstrumentation", "false")
-        buildConfigField("Boolean", "CustomLooper", "false")
+        buildConfigField "Boolean", "CustomInstrumentation", "false"
+        buildConfigField "Boolean", "CustomLooper", "false"
     }
     buildTypes {
         debug {
@@ -72,8 +69,6 @@ android {
 //        tencent { dimension "market" }
 ////        mi { dimension "market" }
 //    }
-// To inline the bytecode built with JVM target 1.8 into
-// bytecode that is being built with JVM target 1.6. (e.g. navArgs)
 }
 
 dependencies {
@@ -83,19 +78,19 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     // androidx
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.navigation:navigation-fragment:2.2.2'
-    implementation 'androidx.navigation:navigation-ui:2.2.2'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.navigation:navigation-fragment:2.3.1'
+    implementation 'androidx.navigation:navigation-ui:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
-    implementation 'androidx.navigation:navigation-runtime-ktx:2.2.2'
-    implementation 'androidx.navigation:navigation-runtime:2.2.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.1'
+    implementation 'androidx.navigation:navigation-runtime-ktx:2.3.1'
+    implementation 'androidx.navigation:navigation-runtime:2.3.1'
     implementation 'androidx.multidex:multidex:2.0.1'
     // google
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.2.1'
     // dagger Dependency Injection : https://github.com/google/dagger
     implementation 'com.google.dagger:dagger:2.27'
     kapt 'com.google.dagger:dagger-compiler:2.27'
@@ -107,17 +102,17 @@ dependencies {
     // android unit test
     testImplementation 'org.mockito:mockito-core:3.3.3'
     // UI testing with Espresso
-    androidTestImplementation 'androidx.test:core:1.2.0'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test:rules:1.2.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.ext:truth:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-web:3.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.2.0'
+    androidTestImplementation 'androidx.test:core:1.3.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test:rules:1.3.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.ext:truth:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-web:3.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.3.0'
     // UI testing with UI Automator
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
     // eventBus: https://github.com/greenrobot/EventBus
@@ -149,4 +144,4 @@ dependencies {
 }
 
 // tinker， 因为依赖project.android.defaultConfig，所以需要放在配置文件的最后
-apply from: 'tinker.gradle'
+//apply from: 'tinker.gradle'
