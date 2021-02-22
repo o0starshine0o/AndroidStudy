@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="LeetcodeEditor">
+    <option name="projectConfig">
+      <map>
+        <entry key="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[319]灯泡开关.kt">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[319]灯泡开关.kt" />
+              <option name="questionId" value="319" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[39]组合总和.kt">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[39]组合总和.kt" />
+              <option name="questionId" value="39" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[605]种花问题.kt">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[605]种花问题.kt" />
+              <option name="questionId" value="605" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="/var/folders/nf/23r15v7x2r5950wlqg4hlb4r0000gn/T/leetcode/editor/cn/[600]不含连续1的非负整数.kt">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="/var/folders/nf/23r15v7x2r5950wlqg4hlb4r0000gn/T/leetcode/editor/cn/[600]不含连续1的非负整数.kt" />
+              <option name="questionId" value="600" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="/var/folders/nf/23r15v7x2r5950wlqg4hlb4r0000gn/T/leetcode/editor/cn/[675]为高尔夫比赛砍树.kt">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="/var/folders/nf/23r15v7x2r5950wlqg4hlb4r0000gn/T/leetcode/editor/cn/[675]为高尔夫比赛砍树.kt" />
+              <option name="questionId" value="675" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

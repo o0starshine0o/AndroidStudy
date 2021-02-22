@@ -124,8 +124,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
     // cache video: https://github.com/danikula/AndroidVideoCache
     implementation 'com.danikula:videocache:2.7.1'
-    // using pager layout
-    implementation 'com.github.qicodes:pagerlayout:1.0.4'
+//    // using pager layout
+//    implementation 'com.github.qicodes:pagerlayout:1.0.4'
     // utils
     implementation 'com.github.qicodes:utils:1.3.2'
     // permission

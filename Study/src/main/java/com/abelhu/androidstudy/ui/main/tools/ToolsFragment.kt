@@ -21,8 +21,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.abelhu.androidstudy.R
 import com.qicode.extension.TAG
 import com.tbruyelle.rxpermissions2.RxPermissions
-import com.tencent.tinker.lib.tinker.TinkerInstaller
-import com.tinkerpatch.sdk.TinkerPatch
+//import com.tencent.tinker.lib.tinker.TinkerInstaller
+//import com.tinkerpatch.sdk.TinkerPatch
 import kotlinx.android.synthetic.main.fragment_tools.*
 
 class ToolsFragment : Fragment() {
@@ -49,9 +49,9 @@ class ToolsFragment : Fragment() {
     @SuppressLint("SdCardPath")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        applyPatch.setOnClickListener { TinkerInstaller.onReceiveUpgradePatch(context, "/sdcard/Download/patch_signed.apk") }
-        downloadPatch.setOnClickListener { TinkerPatch.with().fetchPatchUpdate(true) }
-        deletePatch.setOnClickListener { TinkerPatch.with().cleanAll() }
+//        applyPatch.setOnClickListener { TinkerInstaller.onReceiveUpgradePatch(context, "/sdcard/Download/patch_signed.apk") }
+//        downloadPatch.setOnClickListener { TinkerPatch.with().fetchPatchUpdate(true) }
+//        deletePatch.setOnClickListener { TinkerPatch.with().cleanAll() }
 
         /**
          * 功能描述：通过手机信号获取基站信息

@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.abelhu.androidstudy.R
-import com.abelhu.pagerlayout.PagerLayoutManager
-import com.abelhu.pagerlayout.PagerSnapHelper
+//import com.abelhu.pagerlayout.PagerLayoutManager
+//import com.abelhu.pagerlayout.PagerSnapHelper
 import kotlinx.android.synthetic.main.fragment_slideshow.*
 
 class SlideFragment : Fragment() {
@@ -26,16 +26,16 @@ class SlideFragment : Fragment() {
         recyclerView.recycledViewPool.setMaxRecycledViews(SlideAdapter.TYPE_3, 4)
         recyclerView.recycledViewPool.setMaxRecycledViews(SlideAdapter.TYPE_2, 4)
         recyclerView.recycledViewPool.setMaxRecycledViews(SlideAdapter.TYPE_1, 4)
-        recyclerView.layoutManager = PagerLayoutManager(12) {
-            when (it) {
-                37 -> SlideAdapter.TYPE_1
-                in 0..1 -> SlideAdapter.TYPE_2
-                in 18..20 -> SlideAdapter.TYPE_3
-                in 46..51 -> SlideAdapter.TYPE_6
-                in 56..58 -> SlideAdapter.TYPE_3
-                else -> SlideAdapter.TYPE_4
-            }
-        }
-        PagerSnapHelper().attachToRecyclerView(recyclerView)
+//        recyclerView.layoutManager = PagerLayoutManager(12) {
+//            when (it) {
+//                37 -> SlideAdapter.TYPE_1
+//                in 0..1 -> SlideAdapter.TYPE_2
+//                in 18..20 -> SlideAdapter.TYPE_3
+//                in 46..51 -> SlideAdapter.TYPE_6
+//                in 56..58 -> SlideAdapter.TYPE_3
+//                else -> SlideAdapter.TYPE_4
+//            }
+//        }
+//        PagerSnapHelper().attachToRecyclerView(recyclerView)
     }
 }
