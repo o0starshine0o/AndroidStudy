@@ -29,18 +29,37 @@ import org.junit.Test
  */
 class Solution83 {
     val set = mutableSetOf<Int>()
-    fun deleteDuplicates(head: ListNode?): ListNode? {
-        if (set.contains(head?.`val`)) {
-            head?.next = head?.next?.next
-            deleteDuplicates(head?.next)
+    fun deleteDuplicates(head: ListNode?, current: ListNode? = null): ListNode? {
+        // 终止条件
+        if (head?.next == null) return head
+        // 起始条件
+        if (current == null) {
+            set.add(head.`val`)
+            deleteDuplicates(head, head.next)
+        } else {
+            // 如果已经包含,去掉这个节点,否则继续往下遍历
+            if (set.contains(current.`val`)) {
+                head.next = current.next
+                deleteDuplicates(head, head.next)
+            } else {
+                set.add(current.`val`)
+                deleteDuplicates(head.next, current.next)
+            }
         }
         return head
     }
 
 
     @Test
-    fun test0() = print(ListNode.output(ListNode.create("1->1->2->3->3")))
-//    @Test
-//    fun test0() = assert(deleteDuplicates("aa") == 0)
+    fun test0() = assert(ListNode.output(deleteDuplicates(ListNode.create("1->1->2"))).apply { print("$this\n") } == "1->2")
+
+    @Test
+    fun test1() = assert(ListNode.output(deleteDuplicates(ListNode.create("1->1->2->3->3"))).apply { print("$this\n") } == "1->2->3")
+
+    @Test
+    fun test2() = assert(ListNode.output(deleteDuplicates(null)).apply { print("$this\n") } == "")
+
+    @Test
+    fun test3() = assert(ListNode.output(deleteDuplicates(ListNode.create("1"))).apply { print("$this\n") } == "1")
 }
 //leetcode submit region end(Prohibit modification and deletion)
