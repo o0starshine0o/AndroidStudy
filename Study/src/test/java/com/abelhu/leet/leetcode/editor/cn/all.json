@@ -1,15 +1,15 @@
 [
   {
     "articleLive": 2,
-    "formTitle": "[766]托普利茨矩阵",
-    "frontendQuestionId": "766",
+    "formTitle": "[1052]爱生气的书店老板",
+    "frontendQuestionId": "1052",
     "leaf": true,
-    "level": 1,
+    "level": 2,
     "nodeType": "def",
-    "questionId": "777",
+    "questionId": "1138",
     "status": "",
-    "title": "托普利茨矩阵",
-    "titleSlug": "toeplitz-matrix"
+    "title": "爱生气的书店老板",
+    "titleSlug": "grumpy-bookstore-owner"
   },
   {
     "articleLive": 2,
@@ -1003,7 +1003,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "83",
-    "status": "",
+    "status": "ac",
     "title": "删除排序链表中的重复元素",
     "titleSlug": "remove-duplicates-from-sorted-list"
   },
@@ -9193,6 +9193,18 @@
   },
   {
     "articleLive": 2,
+    "formTitle": "[766]托普利茨矩阵",
+    "frontendQuestionId": "766",
+    "leaf": true,
+    "level": 1,
+    "nodeType": "def",
+    "questionId": "777",
+    "status": "",
+    "title": "托普利茨矩阵",
+    "titleSlug": "toeplitz-matrix"
+  },
+  {
+    "articleLive": 2,
     "formTitle": "[767]重构字符串",
     "frontendQuestionId": "767",
     "leaf": true,
@@ -12610,18 +12622,6 @@
     "status": "",
     "title": "高度检查器",
     "titleSlug": "height-checker"
-  },
-  {
-    "articleLive": 2,
-    "formTitle": "[1052]爱生气的书店老板",
-    "frontendQuestionId": "1052",
-    "leaf": true,
-    "level": 2,
-    "nodeType": "def",
-    "questionId": "1138",
-    "status": "",
-    "title": "爱生气的书店老板",
-    "titleSlug": "grumpy-bookstore-owner"
   },
   {
     "articleLive": 2,
@@ -19483,7 +19483,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "1746",
-    "status": "",
+    "status": "ac",
     "title": "两个相同字符之间的最长子字符串",
     "titleSlug": "largest-substring-between-two-equal-characters"
   },
