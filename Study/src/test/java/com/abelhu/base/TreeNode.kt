@@ -5,6 +5,7 @@ import org.junit.Test
 class TreeNode(var `val`: Int) {
     var left: TreeNode? = null
     var right: TreeNode? = null
+    var next: TreeNode? = null
 
     companion object {
         fun preOrder(root: TreeNode?): String {
@@ -19,6 +20,8 @@ class TreeNode(var `val`: Int) {
             return if (root == null) "" else "${postOrder(root.left)}${postOrder(root.right)}${root.`val`}"
         }
     }
+
+    override fun toString() = `val`.toString()
 }
 
 class TestTreeNode {

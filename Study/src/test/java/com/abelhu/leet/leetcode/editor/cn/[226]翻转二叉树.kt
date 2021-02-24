@@ -39,7 +39,7 @@ import com.abelhu.base.TreeNode
  *     var right: TreeNode? = null
  * }
  */
-class Solution {
+class Solution226 {
     fun invertTree(root: TreeNode?): TreeNode? {
         root?.apply {
             val temp = left

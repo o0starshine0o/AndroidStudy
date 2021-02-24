@@ -3,6 +3,14 @@
   <component name="LeetcodeEditor">
     <option name="projectConfig">
       <map>
+        <entry key="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[116]填充每个节点的下一个右侧节点指针.kt">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[116]填充每个节点的下一个右侧节点指针.kt" />
+              <option name="questionId" value="116" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[226]翻转二叉树.kt">
           <value>
             <LeetcodeEditor>
