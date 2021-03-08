@@ -1,4 +1,5 @@
 import com.abelhu.base.ListNode
+import org.junit.Test
 
 
 //反转从位置 m 到 n 的链表。请使用一趟扫描完成反转。
@@ -25,40 +26,42 @@ import com.abelhu.base.ListNode
  * }
  */
 class Solution92 {
+    // 后驱节点
+    private var successor: ListNode? = null
+
     fun reverseBetween(head: ListNode?, left: Int, right: Int): ListNode? {
-// base case
-        if (left == 1) {
-            return reverseN(head, right)
-        }
-        // 前进到反转的起点触发 base case
-        head?.next = reverseBetween(head?.next, left - 1, right - 1)
+        // 结束条件:找到了需要反转的位置
+        if (left == 1) return reverseN(head, right)
+        // 递归调用,注意,每次调用,双指针都要同步移动
+        val result = reverseBetween(head?.next, left - 1, right - 1)
+        // 处理根节点
+        head?.next = result
+        // 返回最开始的根节点
         return head
     }
 
-    fun reverse(head: ListNode): ListNode? {
-        if (head.next == null) return head
-        val last = head.next?.let { reverse(it) }
-        head.next?.next = head
-        head.next = null
-        return last
-    }
-
-    private var successor: ListNode? = null // 后驱节点
-
-
-    // 反转以 head 为起点的 n 个节点，返回新的头结点
-    fun reverseN(head: ListNode?, n: Int): ListNode? {
-        if (n == 1) {
-            // 记录第 n + 1 个节点
-            successor = head!!.next
+    fun reverseN(head: ListNode?, count: Int): ListNode? {
+        // 结束条件
+        if (count == 1) {
+            // 保存后继节点
+            successor = head?.next
+            // 只有这一个节点,所以可以直接返回
             return head
         }
-        // 以 head.next 为起点，需要反转前 n - 1 个节点
-        val last = reverseN(head!!.next, n - 1)
-        head.next!!.next = head
-        // 让反转之后的 head 节点和后面的节点连起来
-        head.next = successor
-        return last
+        // 递归求解
+        val result = reverseN(head?.next, count - 1)
+        // 处理根节点
+        head?.next?.next = head
+        // 注意,这里需要把最后一个被"反转"的节点的子节点设置为后继,以便和其他未"反转"的节点连起来
+        head?.next = successor
+        // 返回处理结果
+        return result
     }
+
+    @Test
+    fun test0() = assert("4->3->2->1->5" == ListNode.output(reverseN(ListNode.create("1->2->3->4->5"), 4)))
+
+    @Test
+    fun test1() = assert("1->4->3->2->5" == ListNode.output(reverseBetween(ListNode.create("1->2->3->4->5"), 2, 4)))
 }
 //leetcode submit region end(Prohibit modification and deletion)

@@ -18,7 +18,7 @@ class ListNode(var `val`: Int) {
             return header.next
         }
 
-        fun output(node: ListNode?) = decode(node).dropLast(2)
+        fun output(node: ListNode?) = decode(node).dropLast(2).apply { print(this) }
 
         private fun decode(node: ListNode?): String {
             return if (node == null) ""
