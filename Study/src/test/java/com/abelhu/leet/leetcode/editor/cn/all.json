@@ -1,15 +1,15 @@
 [
   {
     "articleLive": 2,
-    "formTitle": "[1052]爱生气的书店老板",
-    "frontendQuestionId": "1052",
+    "formTitle": "[132]分割回文串 II",
+    "frontendQuestionId": "132",
     "leaf": true,
-    "level": 2,
+    "level": 3,
     "nodeType": "def",
-    "questionId": "1138",
+    "questionId": "132",
     "status": "",
-    "title": "爱生气的书店老板",
-    "titleSlug": "grumpy-bookstore-owner"
+    "title": "分割回文串 II",
+    "titleSlug": "palindrome-partitioning-ii"
   },
   {
     "articleLive": 2,
@@ -19,7 +19,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "1",
-    "status": "ac",
+    "status": "",
     "title": "两数之和",
     "titleSlug": "two-sum"
   },
@@ -31,7 +31,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "2",
-    "status": "ac",
+    "status": "",
     "title": "两数相加",
     "titleSlug": "add-two-numbers"
   },
@@ -43,7 +43,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "3",
-    "status": "ac",
+    "status": "",
     "title": "无重复字符的最长子串",
     "titleSlug": "longest-substring-without-repeating-characters"
   },
@@ -55,7 +55,7 @@
     "level": 3,
     "nodeType": "def",
     "questionId": "4",
-    "status": "ac",
+    "status": "",
     "title": "寻找两个正序数组的中位数",
     "titleSlug": "median-of-two-sorted-arrays"
   },
@@ -67,7 +67,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "5",
-    "status": "ac",
+    "status": "",
     "title": "最长回文子串",
     "titleSlug": "longest-palindromic-substring"
   },
@@ -271,7 +271,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "22",
-    "status": "ac",
+    "status": "",
     "title": "括号生成",
     "titleSlug": "generate-parentheses"
   },
@@ -427,7 +427,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "35",
-    "status": "ac",
+    "status": "",
     "title": "搜索插入位置",
     "titleSlug": "search-insert-position"
   },
@@ -439,7 +439,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "36",
-    "status": "ac",
+    "status": "",
     "title": "有效的数独",
     "titleSlug": "valid-sudoku"
   },
@@ -487,7 +487,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "40",
-    "status": "ac",
+    "status": "",
     "title": "组合总和 II",
     "titleSlug": "combination-sum-ii"
   },
@@ -643,7 +643,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "53",
-    "status": "ac",
+    "status": "",
     "title": "最大子序和",
     "titleSlug": "maximum-subarray"
   },
@@ -655,7 +655,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "54",
-    "status": "ac",
+    "status": "",
     "title": "螺旋矩阵",
     "titleSlug": "spiral-matrix"
   },
@@ -739,7 +739,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "61",
-    "status": "ac",
+    "status": "",
     "title": "旋转链表",
     "titleSlug": "rotate-list"
   },
@@ -751,7 +751,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "62",
-    "status": "ac",
+    "status": "",
     "title": "不同路径",
     "titleSlug": "unique-paths"
   },
@@ -763,7 +763,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "63",
-    "status": "ac",
+    "status": "",
     "title": "不同路径 II",
     "titleSlug": "unique-paths-ii"
   },
@@ -775,7 +775,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "64",
-    "status": "ac",
+    "status": "",
     "title": "最小路径和",
     "titleSlug": "minimum-path-sum"
   },
@@ -859,7 +859,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "71",
-    "status": "ac",
+    "status": "",
     "title": "简化路径",
     "titleSlug": "simplify-path"
   },
@@ -871,7 +871,7 @@
     "level": 3,
     "nodeType": "def",
     "questionId": "72",
-    "status": "ac",
+    "status": "",
     "title": "编辑距离",
     "titleSlug": "edit-distance"
   },
@@ -895,7 +895,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "74",
-    "status": "ac",
+    "status": "",
     "title": "搜索二维矩阵",
     "titleSlug": "search-a-2d-matrix"
   },
@@ -919,7 +919,7 @@
     "level": 3,
     "nodeType": "def",
     "questionId": "76",
-    "status": "ac",
+    "status": "",
     "title": "最小覆盖子串",
     "titleSlug": "minimum-window-substring"
   },
@@ -931,7 +931,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "77",
-    "status": "ac",
+    "status": "",
     "title": "组合",
     "titleSlug": "combinations"
   },
@@ -991,7 +991,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "82",
-    "status": "ac",
+    "status": "",
     "title": "删除排序链表中的重复元素 II",
     "titleSlug": "remove-duplicates-from-sorted-list-ii"
   },
@@ -1003,7 +1003,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "83",
-    "status": "ac",
+    "status": "",
     "title": "删除排序链表中的重复元素",
     "titleSlug": "remove-duplicates-from-sorted-list"
   },
@@ -1027,7 +1027,7 @@
     "level": 3,
     "nodeType": "def",
     "questionId": "85",
-    "status": "ac",
+    "status": "",
     "title": "最大矩形",
     "titleSlug": "maximal-rectangle"
   },
@@ -1117,14 +1117,14 @@
   },
   {
     "articleLive": 2,
-    "formTitle": "[93]复原IP地址",
+    "formTitle": "[93]复原 IP 地址",
     "frontendQuestionId": "93",
     "leaf": true,
     "level": 2,
     "nodeType": "def",
     "questionId": "93",
     "status": "",
-    "title": "复原IP地址",
+    "title": "复原 IP 地址",
     "titleSlug": "restore-ip-addresses"
   },
   {
@@ -1327,7 +1327,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "110",
-    "status": "ac",
+    "status": "",
     "title": "平衡二叉树",
     "titleSlug": "balanced-binary-tree"
   },
@@ -1471,7 +1471,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "122",
-    "status": "ac",
+    "status": "",
     "title": "买卖股票的最佳时机 II",
     "titleSlug": "best-time-to-buy-and-sell-stock-ii"
   },
@@ -1549,14 +1549,14 @@
   },
   {
     "articleLive": 2,
-    "formTitle": "[129]求根到叶子节点数字之和",
+    "formTitle": "[129]求根节点到叶节点数字之和",
     "frontendQuestionId": "129",
     "leaf": true,
     "level": 2,
     "nodeType": "def",
     "questionId": "129",
     "status": "",
-    "title": "求根到叶子节点数字之和",
+    "title": "求根节点到叶节点数字之和",
     "titleSlug": "sum-root-to-leaf-numbers"
   },
   {
@@ -1582,18 +1582,6 @@
     "status": "",
     "title": "分割回文串",
     "titleSlug": "palindrome-partitioning"
-  },
-  {
-    "articleLive": 2,
-    "formTitle": "[132]分割回文串 II",
-    "frontendQuestionId": "132",
-    "leaf": true,
-    "level": 3,
-    "nodeType": "def",
-    "questionId": "132",
-    "status": "",
-    "title": "分割回文串 II",
-    "titleSlug": "palindrome-partitioning-ii"
   },
   {
     "articleLive": 2,
@@ -1639,7 +1627,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "136",
-    "status": "ac",
+    "status": "",
     "title": "只出现一次的数字",
     "titleSlug": "single-number"
   },
@@ -1831,7 +1819,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "152",
-    "status": "notac",
+    "status": "",
     "title": "乘积最大子数组",
     "titleSlug": "maximum-product-subarray"
   },
@@ -2035,7 +2023,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "169",
-    "status": "ac",
+    "status": "",
     "title": "多数元素",
     "titleSlug": "majority-element"
   },
@@ -2059,7 +2047,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "171",
-    "status": "ac",
+    "status": "",
     "title": "Excel表列序号",
     "titleSlug": "excel-sheet-column-number"
   },
@@ -2611,7 +2599,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "217",
-    "status": "ac",
+    "status": "",
     "title": "存在重复元素",
     "titleSlug": "contains-duplicate"
   },
@@ -2635,7 +2623,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "219",
-    "status": "ac",
+    "status": "",
     "title": "存在重复元素 II",
     "titleSlug": "contains-duplicate-ii"
   },
@@ -2719,7 +2707,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "226",
-    "status": "ac",
+    "status": "",
     "title": "翻转二叉树",
     "titleSlug": "invert-binary-tree"
   },
@@ -2779,7 +2767,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "231",
-    "status": "ac",
+    "status": "",
     "title": "2的幂",
     "titleSlug": "power-of-two"
   },
@@ -2815,7 +2803,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "234",
-    "status": "ac",
+    "status": "",
     "title": "回文链表",
     "titleSlug": "palindrome-linked-list"
   },
@@ -2863,7 +2851,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "238",
-    "status": "ac",
+    "status": "",
     "title": "除自身以外数组的乘积",
     "titleSlug": "product-of-array-except-self"
   },
@@ -2887,7 +2875,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "240",
-    "status": "ac",
+    "status": "",
     "title": "搜索二维矩阵 II",
     "titleSlug": "search-a-2d-matrix-ii"
   },
@@ -3283,7 +3271,7 @@
     "level": 3,
     "nodeType": "def",
     "questionId": "273",
-    "status": "ac",
+    "status": "",
     "title": "整数转换英文表示",
     "titleSlug": "integer-to-english-words"
   },
@@ -3295,7 +3283,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "274",
-    "status": "ac",
+    "status": "",
     "title": "H 指数",
     "titleSlug": "h-index"
   },
@@ -3316,7 +3304,7 @@
     "formTitle": "[276]栅栏涂色",
     "frontendQuestionId": "276",
     "leaf": true,
-    "level": 1,
+    "level": 2,
     "nodeType": "def",
     "questionId": "276",
     "status": "lock",
@@ -3355,7 +3343,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "279",
-    "status": "ac",
+    "status": "",
     "title": "完全平方数",
     "titleSlug": "perfect-squares"
   },
@@ -3421,14 +3409,14 @@
   },
   {
     "articleLive": 2,
-    "formTitle": "[285]二叉搜索树中的顺序后继",
+    "formTitle": "[285]二叉搜索树中的中序后继",
     "frontendQuestionId": "285",
     "leaf": true,
     "level": 2,
     "nodeType": "def",
     "questionId": "285",
     "status": "lock",
-    "title": "二叉搜索树中的顺序后继",
+    "title": "二叉搜索树中的中序后继",
     "titleSlug": "inorder-successor-in-bst"
   },
   {
@@ -3655,7 +3643,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "304",
-    "status": "ac",
+    "status": "",
     "title": "二维区域和检索 - 矩阵不可变",
     "titleSlug": "range-sum-query-2d-immutable"
   },
@@ -3871,7 +3859,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "322",
-    "status": "ac",
+    "status": "",
     "title": "零钱兑换",
     "titleSlug": "coin-change"
   },
@@ -4456,7 +4444,7 @@
     "formTitle": "[371]两整数之和",
     "frontendQuestionId": "371",
     "leaf": true,
-    "level": 1,
+    "level": 2,
     "nodeType": "def",
     "questionId": "371",
     "status": "",
@@ -4615,7 +4603,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "384",
-    "status": "notac",
+    "status": "",
     "title": "打乱数组",
     "titleSlug": "shuffle-an-array"
   },
@@ -4735,20 +4723,20 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "394",
-    "status": "ac",
+    "status": "",
     "title": "字符串解码",
     "titleSlug": "decode-string"
   },
   {
     "articleLive": 2,
-    "formTitle": "[395]至少有K个重复字符的最长子串",
+    "formTitle": "[395]至少有 K 个重复字符的最长子串",
     "frontendQuestionId": "395",
     "leaf": true,
     "level": 2,
     "nodeType": "def",
     "questionId": "395",
-    "status": "ac",
-    "title": "至少有K个重复字符的最长子串",
+    "status": "",
+    "title": "至少有 K 个重复字符的最长子串",
     "titleSlug": "longest-substring-with-at-least-k-repeating-characters"
   },
   {
@@ -4759,7 +4747,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "396",
-    "status": "ac",
+    "status": "",
     "title": "旋转函数",
     "titleSlug": "rotate-function"
   },
@@ -4915,7 +4903,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "409",
-    "status": "ac",
+    "status": "",
     "title": "最长回文串",
     "titleSlug": "longest-palindrome"
   },
@@ -4987,7 +4975,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "415",
-    "status": "ac",
+    "status": "",
     "title": "字符串相加",
     "titleSlug": "add-strings"
   },
@@ -5347,7 +5335,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "445",
-    "status": "ac",
+    "status": "",
     "title": "两数相加 II",
     "titleSlug": "add-two-numbers-ii"
   },
@@ -5359,7 +5347,7 @@
     "level": 3,
     "nodeType": "def",
     "questionId": "446",
-    "status": "ac",
+    "status": "",
     "title": "等差数列划分 II - 子序列",
     "titleSlug": "arithmetic-slices-ii-subsequence"
   },
@@ -5485,14 +5473,14 @@
   },
   {
     "articleLive": 2,
-    "formTitle": "[457]环形数组循环",
+    "formTitle": "[457]环形数组是否存在循环",
     "frontendQuestionId": "457",
     "leaf": true,
     "level": 2,
     "nodeType": "def",
     "questionId": "457",
     "status": "",
-    "title": "环形数组循环",
+    "title": "环形数组是否存在循环",
     "titleSlug": "circular-array-loop"
   },
   {
@@ -5743,7 +5731,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "915",
-    "status": "notac",
+    "status": "",
     "title": "在圆内随机生成点",
     "titleSlug": "generate-random-point-in-a-circle"
   },
@@ -5983,7 +5971,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "498",
-    "status": "ac",
+    "status": "",
     "title": "对角线遍历",
     "titleSlug": "diagonal-traverse"
   },
@@ -6043,7 +6031,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "503",
-    "status": "ac",
+    "status": "",
     "title": "下一个更大元素 II",
     "titleSlug": "next-greater-element-ii"
   },
@@ -6055,7 +6043,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "504",
-    "status": "ac",
+    "status": "",
     "title": "七进制数",
     "titleSlug": "base-7"
   },
@@ -6295,7 +6283,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "524",
-    "status": "ac",
+    "status": "",
     "title": "通过删除字母匹配到字典里最长单词",
     "titleSlug": "longest-word-in-dictionary-through-deleting"
   },
@@ -6343,7 +6331,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "912",
-    "status": "notac",
+    "status": "",
     "title": "按权重随机选择",
     "titleSlug": "random-pick-with-weight"
   },
@@ -6475,7 +6463,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "539",
-    "status": "ac",
+    "status": "",
     "title": "最小时间差",
     "titleSlug": "minimum-time-difference"
   },
@@ -6985,14 +6973,14 @@
   },
   {
     "articleLive": 2,
-    "formTitle": "[582]杀死进程",
+    "formTitle": "[582]杀掉进程",
     "frontendQuestionId": "582",
     "leaf": true,
     "level": 2,
     "nodeType": "def",
     "questionId": "582",
     "status": "lock",
-    "title": "杀死进程",
+    "title": "杀掉进程",
     "titleSlug": "kill-process"
   },
   {
@@ -7069,26 +7057,26 @@
   },
   {
     "articleLive": 2,
-    "formTitle": "[589]N叉树的前序遍历",
+    "formTitle": "[589]N 叉树的前序遍历",
     "frontendQuestionId": "589",
     "leaf": true,
     "level": 1,
     "nodeType": "def",
     "questionId": "775",
     "status": "",
-    "title": "N叉树的前序遍历",
+    "title": "N 叉树的前序遍历",
     "titleSlug": "n-ary-tree-preorder-traversal"
   },
   {
     "articleLive": 2,
-    "formTitle": "[590]N叉树的后序遍历",
+    "formTitle": "[590]N 叉树的后序遍历",
     "frontendQuestionId": "590",
     "leaf": true,
     "level": 1,
     "nodeType": "def",
     "questionId": "776",
     "status": "",
-    "title": "N叉树的后序遍历",
+    "title": "N 叉树的后序遍历",
     "titleSlug": "n-ary-tree-postorder-traversal"
   },
   {
@@ -7855,7 +7843,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "654",
-    "status": "ac",
+    "status": "",
     "title": "最大二叉树",
     "titleSlug": "maximum-binary-tree"
   },
@@ -7939,7 +7927,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "661",
-    "status": "ac",
+    "status": "",
     "title": "图片平滑器",
     "titleSlug": "image-smoother"
   },
@@ -8155,7 +8143,7 @@
     "level": 3,
     "nodeType": "def",
     "questionId": "679",
-    "status": "ac",
+    "status": "",
     "title": "24 点游戏",
     "titleSlug": "24-game"
   },
@@ -8551,7 +8539,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "712",
-    "status": "ac",
+    "status": "",
     "title": "两个字符串的最小ASCII删除和",
     "titleSlug": "minimum-ascii-delete-sum-for-two-strings"
   },
@@ -8689,14 +8677,14 @@
   },
   {
     "articleLive": 2,
-    "formTitle": "[724]寻找数组的中心索引",
+    "formTitle": "[724]寻找数组的中心下标",
     "frontendQuestionId": "724",
     "leaf": true,
     "level": 1,
     "nodeType": "def",
     "questionId": "724",
     "status": "",
-    "title": "寻找数组的中心索引",
+    "title": "寻找数组的中心下标",
     "titleSlug": "find-pivot-index"
   },
   {
@@ -8935,7 +8923,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "745",
-    "status": "ac",
+    "status": "",
     "title": "寻找比目标字母大的最小字母",
     "titleSlug": "find-smallest-letter-greater-than-target"
   },
@@ -9403,7 +9391,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "799",
-    "status": "ac",
+    "status": "",
     "title": "二叉搜索树节点最小距离",
     "titleSlug": "minimum-distance-between-bst-nodes"
   },
@@ -9487,7 +9475,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "806",
-    "status": "ac",
+    "status": "",
     "title": "多米诺和托米诺平铺",
     "titleSlug": "domino-and-tromino-tiling"
   },
@@ -9517,14 +9505,14 @@
   },
   {
     "articleLive": 2,
-    "formTitle": "[793]阶乘函数后K个零",
+    "formTitle": "[793]阶乘函数后 K 个零",
     "frontendQuestionId": "793",
     "leaf": true,
     "level": 3,
     "nodeType": "def",
     "questionId": "809",
     "status": "",
-    "title": "阶乘函数后K个零",
+    "title": "阶乘函数后 K 个零",
     "titleSlug": "preimage-size-of-factorial-zeroes-function"
   },
   {
@@ -9895,7 +9883,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "851",
-    "status": "ac",
+    "status": "",
     "title": "山羊拉丁文",
     "titleSlug": "goat-latin"
   },
@@ -10435,7 +10423,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "900",
-    "status": "ac",
+    "status": "",
     "title": "重新排序得到 2 的幂",
     "titleSlug": "reordered-power-of-2"
   },
@@ -10735,7 +10723,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "930",
-    "status": "ac",
+    "status": "",
     "title": "所有可能的满二叉树",
     "titleSlug": "all-possible-full-binary-trees"
   },
@@ -10951,7 +10939,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "948",
-    "status": "ac",
+    "status": "",
     "title": "排序数组",
     "titleSlug": "sort-an-array"
   },
@@ -11011,7 +10999,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "953",
-    "status": "ac",
+    "status": "",
     "title": "仅仅反转字母",
     "titleSlug": "reverse-only-letters"
   },
@@ -11071,7 +11059,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "958",
-    "status": "ac",
+    "status": "",
     "title": "按奇偶排序数组 II",
     "titleSlug": "sort-array-by-parity-ii"
   },
@@ -11419,7 +11407,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "988",
-    "status": "ac",
+    "status": "",
     "title": "翻转等价二叉树",
     "titleSlug": "flip-equivalent-binary-trees"
   },
@@ -11779,7 +11767,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "1023",
-    "status": "ac",
+    "status": "",
     "title": "基于时间的键值存储",
     "titleSlug": "time-based-key-value-store"
   },
@@ -11863,7 +11851,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "1030",
-    "status": "ac",
+    "status": "",
     "title": "从叶结点开始的最小字符串",
     "titleSlug": "smallest-string-starting-from-leaf"
   },
@@ -11923,7 +11911,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "1035",
-    "status": "notac",
+    "status": "",
     "title": "二叉树的堂兄弟节点",
     "titleSlug": "cousins-in-binary-tree"
   },
@@ -12625,6 +12613,18 @@
   },
   {
     "articleLive": 2,
+    "formTitle": "[1052]爱生气的书店老板",
+    "frontendQuestionId": "1052",
+    "leaf": true,
+    "level": 2,
+    "nodeType": "def",
+    "questionId": "1138",
+    "status": "",
+    "title": "爱生气的书店老板",
+    "titleSlug": "grumpy-bookstore-owner"
+  },
+  {
+    "articleLive": 2,
     "formTitle": "[1053]交换一次的先前排列",
     "frontendQuestionId": "1053",
     "leaf": true,
@@ -13111,7 +13111,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "1183",
-    "status": "ac",
+    "status": "",
     "title": "大样本统计",
     "titleSlug": "statistics-from-a-large-sample"
   },
@@ -13231,7 +13231,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "1195",
-    "status": "ac",
+    "status": "",
     "title": "分糖果 II",
     "titleSlug": "distribute-candies-to-people"
   },
@@ -13624,7 +13624,7 @@
     "formTitle": "[1136]平行课程",
     "frontendQuestionId": "1136",
     "leaf": true,
-    "level": 3,
+    "level": 2,
     "nodeType": "def",
     "questionId": "1101",
     "status": "lock",
@@ -13711,7 +13711,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "1250",
-    "status": "ac",
+    "status": "",
     "title": "最长公共子序列",
     "titleSlug": "longest-common-subsequence"
   },
@@ -14023,7 +14023,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "1272",
-    "status": "ac",
+    "status": "",
     "title": "查询无效交易",
     "titleSlug": "invalid-transactions"
   },
@@ -14203,7 +14203,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "1287",
-    "status": "ac",
+    "status": "",
     "title": "公交站间的距离",
     "titleSlug": "distance-between-bus-stops"
   },
@@ -15715,7 +15715,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "1435",
-    "status": "ac",
+    "status": "",
     "title": "子数组异或查询",
     "titleSlug": "xor-queries-of-a-subarray"
   },
@@ -15727,7 +15727,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "1436",
-    "status": "ac",
+    "status": "",
     "title": "获取你好友已观看的视频",
     "titleSlug": "get-watched-videos-by-your-friends"
   },
@@ -15763,7 +15763,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "1242",
-    "status": "ac",
+    "status": "",
     "title": "矩阵区域和",
     "titleSlug": "matrix-block-sum"
   },
@@ -15991,7 +15991,7 @@
     "level": 2,
     "nodeType": "def",
     "questionId": "1455",
-    "status": "ac",
+    "status": "",
     "title": "餐厅过滤器",
     "titleSlug": "filter-restaurants-by-vegan-friendly-price-and-distance"
   },
@@ -16765,14 +16765,14 @@
   },
   {
     "articleLive": 2,
-    "formTitle": "[1398]购买了产品A和产品B却没有购买产品C的顾客",
+    "formTitle": "[1398]购买了产品 A 和产品 B 却没有购买产品 C 的顾客",
     "frontendQuestionId": "1398",
     "leaf": true,
     "level": 2,
     "nodeType": "def",
     "questionId": "1536",
     "status": "lock",
-    "title": "购买了产品A和产品B却没有购买产品C的顾客",
+    "title": "购买了产品 A 和产品 B 却没有购买产品 C 的顾客",
     "titleSlug": "customers-who-bought-products-a-and-b-but-not-c"
   },
   {
@@ -16929,7 +16929,7 @@
     "questionId": "1527",
     "status": "",
     "title": "给 N x 3 网格图涂色的方案数",
-    "titleSlug": "number-of-ways-to-paint-n-x-3-grid"
+    "titleSlug": "number-of-ways-to-paint-n-3-grid"
   },
   {
     "articleLive": 2,
@@ -19483,7 +19483,7 @@
     "level": 1,
     "nodeType": "def",
     "questionId": "1746",
-    "status": "ac",
+    "status": "",
     "title": "两个相同字符之间的最长子字符串",
     "titleSlug": "largest-substring-between-two-equal-characters"
   },
@@ -21061,26 +21061,26 @@
   },
   {
     "articleLive": 2,
-    "formTitle": "[1756]Design Most Recently Used Queue",
+    "formTitle": "[1756]设计最近使用（MRU）队列",
     "frontendQuestionId": "1756",
     "leaf": true,
     "level": 2,
     "nodeType": "def",
     "questionId": "1903",
     "status": "lock",
-    "title": "Design Most Recently Used Queue",
+    "title": "设计最近使用（MRU）队列",
     "titleSlug": "design-most-recently-used-queue"
   },
   {
     "articleLive": 2,
-    "formTitle": "[1757]Recyclable and Low Fat Products",
+    "formTitle": "[1757]可回收且低脂的产品",
     "frontendQuestionId": "1757",
     "leaf": true,
     "level": 1,
     "nodeType": "def",
     "questionId": "1908",
     "status": "lock",
-    "title": "Recyclable and Low Fat Products",
+    "title": "可回收且低脂的产品",
     "titleSlug": "recyclable-and-low-fat-products"
   },
   {
@@ -21133,14 +21133,14 @@
   },
   {
     "articleLive": 2,
-    "formTitle": "[1762]Buildings With an Ocean View",
+    "formTitle": "[1762]能看到海景的建筑物",
     "frontendQuestionId": "1762",
     "leaf": true,
     "level": 2,
     "nodeType": "def",
     "questionId": "1909",
     "status": "lock",
-    "title": "Buildings With an Ocean View",
+    "title": "能看到海景的建筑物",
     "titleSlug": "buildings-with-an-ocean-view"
   },
   {
@@ -21250,6 +21250,198 @@
     "status": "",
     "title": "由子序列构造的最长回文串的长度",
     "titleSlug": "maximize-palindrome-length-from-subsequences"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1772]按受欢迎程度排列功能",
+    "frontendQuestionId": "1772",
+    "leaf": true,
+    "level": 2,
+    "nodeType": "def",
+    "questionId": "1919",
+    "status": "lock",
+    "title": "按受欢迎程度排列功能",
+    "titleSlug": "sort-features-by-popularity"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1773]统计匹配检索规则的物品数量",
+    "frontendQuestionId": "1773",
+    "leaf": true,
+    "level": 1,
+    "nodeType": "def",
+    "questionId": "1899",
+    "status": "",
+    "title": "统计匹配检索规则的物品数量",
+    "titleSlug": "count-items-matching-a-rule"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1774]最接近目标价格的甜点成本",
+    "frontendQuestionId": "1774",
+    "leaf": true,
+    "level": 2,
+    "nodeType": "def",
+    "questionId": "1900",
+    "status": "",
+    "title": "最接近目标价格的甜点成本",
+    "titleSlug": "closest-dessert-cost"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1775]通过最少操作次数使数组的和相等",
+    "frontendQuestionId": "1775",
+    "leaf": true,
+    "level": 2,
+    "nodeType": "def",
+    "questionId": "1901",
+    "status": "",
+    "title": "通过最少操作次数使数组的和相等",
+    "titleSlug": "equal-sum-arrays-with-minimum-number-of-operations"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1776]车队 II",
+    "frontendQuestionId": "1776",
+    "leaf": true,
+    "level": 3,
+    "nodeType": "def",
+    "questionId": "1902",
+    "status": "",
+    "title": "车队 II",
+    "titleSlug": "car-fleet-ii"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1777]每家商店的产品价格",
+    "frontendQuestionId": "1777",
+    "leaf": true,
+    "level": 1,
+    "nodeType": "def",
+    "questionId": "1926",
+    "status": "",
+    "title": "每家商店的产品价格",
+    "titleSlug": "products-price-for-each-store"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1778]Shortest Path in a Hidden Grid",
+    "frontendQuestionId": "1778",
+    "leaf": true,
+    "level": 2,
+    "nodeType": "def",
+    "questionId": "1931",
+    "status": "lock",
+    "title": "Shortest Path in a Hidden Grid",
+    "titleSlug": "shortest-path-in-a-hidden-grid"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1779]找到最近的有相同 X 或 Y 坐标的点",
+    "frontendQuestionId": "1779",
+    "leaf": true,
+    "level": 1,
+    "nodeType": "def",
+    "questionId": "1888",
+    "status": "",
+    "title": "找到最近的有相同 X 或 Y 坐标的点",
+    "titleSlug": "find-nearest-point-that-has-the-same-x-or-y-coordinate"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1780]判断一个数字是否可以表示成三的幂的和",
+    "frontendQuestionId": "1780",
+    "leaf": true,
+    "level": 2,
+    "nodeType": "def",
+    "questionId": "1889",
+    "status": "",
+    "title": "判断一个数字是否可以表示成三的幂的和",
+    "titleSlug": "check-if-number-is-a-sum-of-powers-of-three"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1781]所有子字符串美丽值之和",
+    "frontendQuestionId": "1781",
+    "leaf": true,
+    "level": 2,
+    "nodeType": "def",
+    "questionId": "1890",
+    "status": "",
+    "title": "所有子字符串美丽值之和",
+    "titleSlug": "sum-of-beauty-of-all-substrings"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1782]统计点对的数目",
+    "frontendQuestionId": "1782",
+    "leaf": true,
+    "level": 3,
+    "nodeType": "def",
+    "questionId": "1891",
+    "status": "",
+    "title": "统计点对的数目",
+    "titleSlug": "count-pairs-of-nodes"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1783]Grand Slam Titles",
+    "frontendQuestionId": "1783",
+    "leaf": true,
+    "level": 2,
+    "nodeType": "def",
+    "questionId": "1932",
+    "status": "lock",
+    "title": "Grand Slam Titles",
+    "titleSlug": "grand-slam-titles"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1784]检查二进制字符串字段",
+    "frontendQuestionId": "1784",
+    "leaf": true,
+    "level": 1,
+    "nodeType": "def",
+    "questionId": "1910",
+    "status": "",
+    "title": "检查二进制字符串字段",
+    "titleSlug": "check-if-binary-string-has-at-most-one-segment-of-ones"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1785]构成特定和需要添加的最少元素",
+    "frontendQuestionId": "1785",
+    "leaf": true,
+    "level": 2,
+    "nodeType": "def",
+    "questionId": "1911",
+    "status": "",
+    "title": "构成特定和需要添加的最少元素",
+    "titleSlug": "minimum-elements-to-add-to-form-a-given-sum"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1786]从第一个节点出发到最后一个节点的受限路径数",
+    "frontendQuestionId": "1786",
+    "leaf": true,
+    "level": 2,
+    "nodeType": "def",
+    "questionId": "1912",
+    "status": "",
+    "title": "从第一个节点出发到最后一个节点的受限路径数",
+    "titleSlug": "number-of-restricted-paths-from-first-to-last-node"
+  },
+  {
+    "articleLive": 2,
+    "formTitle": "[1787]使所有区间的异或结果为零",
+    "frontendQuestionId": "1787",
+    "leaf": true,
+    "level": 3,
+    "nodeType": "def",
+    "questionId": "1913",
+    "status": "",
+    "title": "使所有区间的异或结果为零",
+    "titleSlug": "make-the-xor-of-all-segments-equal-to-zero"
   },
   {
     "articleLive": 2,
