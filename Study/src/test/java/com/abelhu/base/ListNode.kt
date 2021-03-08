@@ -25,4 +25,6 @@ class ListNode(var `val`: Int) {
             else "${node.`val`}->${decode(node.next)}"
         }
     }
+
+    override fun toString() = `val`.toString()
 }
