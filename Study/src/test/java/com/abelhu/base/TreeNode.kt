@@ -22,6 +22,8 @@ class TreeNode(var `val`: Int) {
 
         fun levelOrder(root: TreeNode?) = firstLevelOrder(root).flatten().toList().joinToString { node -> node?.`val`.toString() }
 
+        fun levelOrderList(root: TreeNode?) = firstLevelOrder(root).flatten().toList().map { node -> node?.`val`.toString() }
+
         private fun firstLevelOrder(root: TreeNode?): List<List<TreeNode?>> {
             val result = mutableListOf<List<TreeNode?>>()
             var next: List<TreeNode?>? = listOf(root)
