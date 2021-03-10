@@ -1,3 +1,6 @@
+import com.abelhu.base.TreeNode
+import org.junit.Test
+
 //给你二叉树的根结点 root ，请你将它展开为一个单链表：
 //
 // 
@@ -55,21 +58,62 @@
  *     var right: TreeNode? = null
  * }
  */
-class Solution {
-//    fun flatten(root: TreeNode?): TreeNode? {
-//        // 对于每个节点:
-//        // 左子树移到右侧,成为右子树
-//        // 右子树接到左子树的最后一个节点上
-//
-//        // 先记录下右子树
-//        val right = root?.right
-//        // 左子树移到右侧,成为右子树
-//        root?.right = root?.left
-//        // 递归调用遍历
-//        val final = flatten(root?.right)
-//
-//        final?.right = right
-//
-//    }
+class Solution114 {
+    private fun flatten(root: TreeNode?) {
+        if (root == null) return
+        // 左子树拉平
+        flatten(root.left)
+        // 右子树拉平
+        flatten(root.right)
+
+        /**** 后序遍历位置 ****/
+
+        // 这里有一步操作:如果左子树为空,就不需要在移动了,直接返回即可
+        if (root.left == null) return
+        // 先把右子树移到左子树上去
+        var leftTemp = root.left
+        while (leftTemp?.right != null) leftTemp = leftTemp.right
+        leftTemp?.right = root.right
+        // 再把左子树移到右子树上去
+        root.right = root.left
+        // 设置左子树为空
+        root.left = null
+    }
+
+    @Test
+    fun testPre() {
+        val tree = TreeNode.create(arrayOf(1, 2, 5, 3, 4, null, 6))
+        flatten(tree)
+        assert("1,2,3,4,5,6," == TreeNode.preOrder(tree).apply { print("$this\n") })
+    }
+
+    @Test
+    fun testIn() {
+        val tree = TreeNode.create(arrayOf(1, 2, 5, 3, 4, null, 6))
+        flatten(tree)
+        assert("1,2,3,4,5,6," == TreeNode.inOrder(tree).apply { print("$this\n") })
+    }
+
+    @Test
+    fun testPost() {
+        val tree = TreeNode.create(arrayOf(1, 2, 5, 3, 4, null, 6))
+        flatten(tree)
+        assert("6,5,4,3,2,1," == TreeNode.postOrder(tree).apply { print("$this\n") })
+    }
+
+    @Test
+    fun testLevel() {
+        val tree = TreeNode.create(arrayOf(1, 2, 5, 3, 4, null, 6))
+        flatten(tree)
+        val result = """
+            1, 
+            null, 2, 
+            null, null, null, 3, 
+            null, null, null, null, null, null, null, 4, 
+            null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 5, 
+            null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 6
+        """.trimIndent().replace("\n", "")
+        assert(result == TreeNode.levelOrder(tree).apply { print("$this\n") })
+    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
