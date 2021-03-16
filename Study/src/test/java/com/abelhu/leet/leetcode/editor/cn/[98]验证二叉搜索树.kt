@@ -48,17 +48,17 @@ import org.junit.Test
  * }
  */
 class Solution98 {
-    fun isValidBST(root: TreeNode?, min: Int? = null, max: Int? = null): Boolean {
+    fun isValidBST(root: TreeNode?, min: TreeNode? = null, max: TreeNode? = null): Boolean {
         // 结束条件
         if (root == null) return true
         //// 先序遍历起点
         root.left?.apply { if (`val` >= root.`val`) return false }
         root.right?.apply { if (`val` <= root.`val`) return false }
-        max?.apply { if (root.`val` >= this) return false }
-        min?.apply { if (root.`val` <= this) return false }
+        max?.`val`?.apply { if (root.`val` >= this) return false }
+        min?.`val`?.apply { if (root.`val` <= this) return false }
         // 左右子树
-        val left = isValidBST(root.left, min, kotlin.math.min(max ?: root.`val`, root.`val`))
-        val right = isValidBST(root.right, kotlin.math.max(min ?: root.`val`, root.`val`), max)
+        val left = isValidBST(root.left, min, root)
+        val right = isValidBST(root.right, root, max)
         // 输出结果
         return left && right
     }
