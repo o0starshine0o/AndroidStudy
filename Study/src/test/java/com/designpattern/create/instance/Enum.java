@@ -1,11 +1,26 @@
 package com.designpattern.create.instance;
 
+public class Enum {
 
-public enum Enum implements EnumInterface {
-    Instance {
-        @Override
-        public void doing() {
+    private Enum() {
+    }
 
+    static Enum getInstance() {
+        return InnerEnum.Instance.getInstance();
+    }
+
+    enum InnerEnum {
+        Instance;
+
+        private final Enum data;
+
+        InnerEnum() {
+            data = new Enum();
+        }
+
+        Enum getInstance() {
+            return data;
         }
     }
+
 }

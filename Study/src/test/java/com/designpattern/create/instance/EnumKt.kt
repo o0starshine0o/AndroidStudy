@@ -1,7 +1,15 @@
 package com.designpattern.create.instance
 
-enum class EnumKt : EnumInterface {
-    Instance {
-        override fun doing() {}
+class EnumKt private constructor() {
+    companion object {
+        fun getInstance() = Enum.Instance.getInstance()
+    }
+
+    enum class Enum {
+        Instance;
+
+        private val instance: EnumKt = EnumKt()
+
+        fun getInstance() = instance
     }
 }
