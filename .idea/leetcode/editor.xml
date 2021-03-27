@@ -99,6 +99,14 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[450]删除二叉搜索树中的节点.kt">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[450]删除二叉搜索树中的节点.kt" />
+              <option name="questionId" value="450" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[538]把二叉搜索树转换为累加树.kt">
           <value>
             <LeetcodeEditor>
@@ -128,6 +136,14 @@
             <LeetcodeEditor>
               <option name="path" value="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[654]最大二叉树.kt" />
               <option name="questionId" value="654" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[700]二叉搜索树中的搜索.kt">
+          <value>
+            <LeetcodeEditor>
+              <option name="path" value="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[700]二叉搜索树中的搜索.kt" />
+              <option name="questionId" value="783" />
             </LeetcodeEditor>
           </value>
         </entry>
