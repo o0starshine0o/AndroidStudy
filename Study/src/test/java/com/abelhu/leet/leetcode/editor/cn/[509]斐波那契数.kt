@@ -87,16 +87,17 @@ class Solution509 {
         var i = 0
         var left = 0
         var right = 0
-        var temp = 0
         while (i < n) {
-            temp = right
-            right = when (i) {
+            left = when (i) {
                 0 -> 1
                 1 -> 1
                 // 这里就是状态转移方程了
                 else -> left + right
             }
-            left = temp
+            // 交换left和right
+            left = left.xor(right)
+            right = left.xor(right)
+            left = left.xor(right)
             i++
         }
         return right
