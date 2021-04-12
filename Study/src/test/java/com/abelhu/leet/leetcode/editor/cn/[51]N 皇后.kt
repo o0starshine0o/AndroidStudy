@@ -93,5 +93,10 @@ class Solution51 {
     fun test() {
         print(solveNQueens(4))
     }
+
+    @Test
+    fun test1() {
+        print(solveNQueens(8).size)
+    }
 }
 //leetcode submit region end(Prohibit modification and deletion)
