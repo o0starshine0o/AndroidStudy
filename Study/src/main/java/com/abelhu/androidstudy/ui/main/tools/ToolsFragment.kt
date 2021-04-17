@@ -1,5 +1,7 @@
 package com.abelhu.androidstudy.ui.main.tools
 
+//import com.tencent.tinker.lib.tinker.TinkerInstaller
+//import com.tinkerpatch.sdk.TinkerPatch
 import android.Manifest.permission.*
 import android.annotation.SuppressLint
 import android.content.Context
@@ -16,13 +18,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.abelhu.androidstudy.R
 import com.qicode.extension.TAG
-import com.tbruyelle.rxpermissions2.RxPermissions
-//import com.tencent.tinker.lib.tinker.TinkerInstaller
-//import com.tinkerpatch.sdk.TinkerPatch
+import com.tbruyelle.rxpermissions3.RxPermissions
 import kotlinx.android.synthetic.main.fragment_tools.*
 
 class ToolsFragment : Fragment() {
@@ -32,6 +31,8 @@ class ToolsFragment : Fragment() {
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        RxPermissions(this).setLogging(true)
+        RxPermissions(this).request(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION).subscribe()
         RxPermissions(this).request(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION).subscribe { granted ->
             if (granted) Log.i(TAG(), "get permission")
             else Log.e(TAG(), "can not get permission")
@@ -41,8 +42,8 @@ class ToolsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         toolsViewModel = ViewModelProvider(this).get(ToolsViewModel::class.java)
         return inflater.inflate(R.layout.fragment_tools, container, false).apply {
-            toolsViewModel.fragmentInfo.observe(viewLifecycleOwner, Observer { text_tools.text = it })
-            toolsViewModel.baseStation.observe(viewLifecycleOwner, Observer { info.text = it })
+            toolsViewModel.fragmentInfo.observe(viewLifecycleOwner, { text_tools.text = it })
+            toolsViewModel.baseStation.observe(viewLifecycleOwner, { info.text = it })
         }
     }
 
