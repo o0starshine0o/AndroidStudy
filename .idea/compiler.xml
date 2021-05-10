@@ -2,9 +2,9 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
-      <module name="AndroidStudy.download" target="1.8" />
+      <module name="AndroidStudy.download" target="11" />
       <module name="AndroidStudy.Groovy" target="1.8" />
-      <module name="AndroidStudy.Study" target="1.8" />
+      <module name="AndroidStudy.Study" target="11" />
       <module name="Annotation" target="1.7" />
       <module name="AnnotationCode" target="1.7" />
       <module name="Plugin" target="1.7" />
