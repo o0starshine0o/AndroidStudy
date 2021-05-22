@@ -26,17 +26,17 @@ class MyPlugin : Plugin<Project> {
 
         // 注册一个transform
         val plugin = project.plugins.getPlugin(AppPlugin::class.java)
-        plugin.baseExtension.registerTransform(CustomTransform())
+//        plugin.baseExtension.registerTransform(CustomTransform())
     }
 
-    private val AppPlugin.baseExtension: BaseExtension
-        get() {
-            return if (com.android.builder.model.Version.ANDROID_GRADLE_PLUGIN_VERSION == "3.0.0") {
-                val method = BasePlugin::class.declaredFunctions.first { it.name == "getExtension" }
-                method.isAccessible = true
-                method.call(this) as BaseExtension
-            } else {
-                extension
-            }
-        }
+//    private val AppPlugin.baseExtension: BaseExtension
+//        get() {
+//            return if (com.android.builder.model.Version.ANDROID_GRADLE_PLUGIN_VERSION == "3.0.0") {
+//                val method = BasePlugin::class.declaredFunctions.first { it.name == "getExtension" }
+//                method.isAccessible = true
+//                method.call(this) as BaseExtension
+//            } else {
+//                extension
+//            }
+//        }
 }
