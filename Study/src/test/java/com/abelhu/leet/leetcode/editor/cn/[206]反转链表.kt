@@ -38,7 +38,28 @@ class Solution206 {
         return result
     }
 
+
+    private fun reverseList1(head: ListNode?):ListNode?{
+        var pre = head
+        var current = head?.next
+        var next = current?.next
+        // 注意,这个不要放到循环里面去,只有第一次的时候需要清空
+        pre?.next = null
+
+        while (current!=null){
+            current.next = pre
+            pre = current
+            current = next
+            next = next?.next
+        }
+
+        return pre
+    }
+
     @Test
     fun test() = assert("5->4->3->2->1" == ListNode.output(reverseList(ListNode.create("1->2->3->4->5"))))
+
+    @Test
+    fun test1() = assert("5->4->3->2->1" == ListNode.output(reverseList1(ListNode.create("1->2->3->4->5"))))
 }
 //leetcode submit region end(Prohibit modification and deletion)
