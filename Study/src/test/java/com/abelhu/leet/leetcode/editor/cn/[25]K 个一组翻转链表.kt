@@ -77,13 +77,12 @@ class Solution25 {
         // 结束条件
         if (head?.next == null) return head
         // 先反转前k个节点
-        val result = reverseN(head, k)
-        // 如果返回的是null,表示反转过的链表开头为null,意味着最后一组不够了,返回当前节点
-        if (result == null) return head
+        // 如果返回的是null,意味着最后一组不够了,返回当前节点,不再做反转操作
+        val last = reverseN(head, k) ?: return head
         // 再递归反转之后的节点
         head.next = reverseKGroup(successor, k)
         // 返回反转好了的节点
-        return result
+        return last
     }
 
     fun reverseN(head: ListNode?, count: Int): ListNode? {
@@ -95,9 +94,8 @@ class Solution25 {
             return head
         }
         // 递归求解
-        val result = reverseN(head?.next, count - 1)
-        // 如果返回的是null,表示反转过的链表开头为null,意味着最后一组不够了,返回结果
-        if (result == null) return result
+        // 如果返回的是null,意味着最后一组不够了,返回结果null
+        val result = reverseN(head?.next, count - 1) ?: return null
         // 处理根节点
         head?.next?.next = head
         // 注意,这里需要把最后一个被"反转"的节点的子节点设置为后继,以便和其他未"反转"的节点连起来,不需要再反转链表了

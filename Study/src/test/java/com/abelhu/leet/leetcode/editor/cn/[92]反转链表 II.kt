@@ -49,13 +49,14 @@ class Solution92 {
             return head
         }
         // 递归求解
-        val result = reverseN(head?.next, count - 1)
+        val last = reverseN(head?.next, count - 1)
         // 处理根节点
         head?.next?.next = head
+        // 这里是核心,需要把不用反转的节点记录下来,否则没法连接起来
         // 注意,这里需要把最后一个被"反转"的节点的子节点设置为后继,以便和其他未"反转"的节点连起来
         head?.next = successor
         // 返回处理结果
-        return result
+        return last
     }
 
     @Test

@@ -25,21 +25,27 @@ import org.junit.Test
  * }
  */
 class Solution206 {
-    private fun reverseList(head: ListNode?): ListNode? {
-        // 终止条件
+    fun reverseList(head: ListNode?): ListNode? {
+        // 终止条件:链表只有一个元素时直接返回
         if (head?.next == null) return head
         // 递归
-        val result = reverseList(head.next)
+        // 原先:1->2->3->4
+        // 返回:1->2<-3<-4
+        // last为4,代表原先的链表尾,新链表的头
+        val last = reverseList(head.next)
         // 后续遍历,需要处理根节点
+        // 这里纠正1与2的关系,让其反转为1<-2<-3<-4
         head.next?.next = head
         // 清空head的next
+        // 因为目前1的next还是为2,所以需要进行清空操作
         head.next = null
-        // result作为链表的头
-        return result
+        // last作为链表的头
+        return last
     }
 
-
-    private fun reverseList1(head: ListNode?):ListNode?{
+    fun reverseList1(head: ListNode?):ListNode?{
+        // 需要用3个变量,分别记录前一个节点,目前的节点,下一个节点
+        // 反转pre和current的关系,并且这3个节点都往后移动
         var pre = head
         var current = head?.next
         var next = current?.next
