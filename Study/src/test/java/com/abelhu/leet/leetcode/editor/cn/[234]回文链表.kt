@@ -38,19 +38,28 @@ class Solution234 {
     }
 
 
+    /**
+     * 模仿了一个栈结构,FILO
+     */
     private fun traverse(right: ListNode?): Boolean {
         // 递归结束条件
         if (right == null) return true
         // 处理节点
+        // 先处理节点,意味着后续遍历
         var result = traverse(right.next)
         // [前序|中序]遍历,右侧节点在最后处理
         // 使用位操作
         result = (right.`val` == left?.`val`).and(result)
-        // 左侧指针需要移项到下一位
+        // 出栈的时候,不仅要出栈,与之对应的左侧指针需要移项到下一位
+        // 所以原本可以O(N/2)的判断必须要变成O(N)的时间复杂度
         left = left?.next
         // 返回结果
         return result
     }
+
+    // 如果需要把时间复杂度降为N/2,需要先用快慢指针找到中点,然后把右侧的链表进行入栈操作,再判断
+    // 如果需要把空间复杂度降为O(1),需要先用快慢指针找到中点,然后进行翻转链表操作,再判断
+    // 如果还需要恢复链表,需要把反转的链表再次反转一遍
 
     @Test
     fun test() = assert(!isPalindrome(ListNode.create("1->2")))
