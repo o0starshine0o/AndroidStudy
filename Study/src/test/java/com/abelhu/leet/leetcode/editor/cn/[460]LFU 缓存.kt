@@ -71,7 +71,7 @@ class Solution460 {
     /**
      * 因为LinkedHashMap不符合要求了,这里需要自己构建双重链表(数组+链表)
      */
-    class LFUCache(private val capacity: Int = 8) {
+    class LFUCache(capacity: Int = 8) {
         val lfuMap = LFUHashMap<Int, Int>(capacity)
 
         fun get(key: Int): Int = lfuMap[key]?.value ?: -1
@@ -90,7 +90,7 @@ class Solution460 {
             // 放置更新的时候,需要先删除掉再插入
             fun put(key: K, value: V): LFUNode<K, V> = put(super.get(key)?.apply { this.value = value;remove(this) } ?: LFUNode(key, value))
 
-            fun remove(node: LFUNode<K, V>): LFUNode<K, V>? {
+            private fun remove(node: LFUNode<K, V>): LFUNode<K, V>? {
                 // 先根据node的frequency找到map中对应的节点
                 when (val subMap = map[node.frequency]) {
                     null -> return null
@@ -101,7 +101,7 @@ class Solution460 {
                 return super.remove(node.key)
             }
 
-            fun put(node: LFUNode<K, V>): LFUNode<K, V> {
+            private fun put(node: LFUNode<K, V>): LFUNode<K, V> {
                 // 先在源map中保存数据
                 super.put(node.key, node)
                 // 判断是否超出了限制, 如果超过了,就需要把频率最少,最早放进去的node删除掉
