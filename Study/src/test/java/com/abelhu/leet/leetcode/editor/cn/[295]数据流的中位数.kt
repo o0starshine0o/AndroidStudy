@@ -46,6 +46,11 @@ class MedianFinder() {
     private val small = PriorityQueue<Int>() { a, b -> b - a }
     private val large = PriorityQueue<Int>()
 
+    /**
+     * 注意,这里是先放入再取出
+     * 放入的时候完成了元素的排列
+     * 2个队列都放入意味着2个队列都已经排好序了
+     */
     fun addNum(num: Int) {
         if (small.size > large.size) {
             small.offer(num)
