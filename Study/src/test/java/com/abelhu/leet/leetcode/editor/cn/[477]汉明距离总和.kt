@@ -34,8 +34,10 @@ class Solution477 {
         var result = 0
         // 因为10^9只需要到30位就可以了,没必要遍历完所有的int位
         for (i in 0..30) {
+            // 判断在第i位上有多少0,多少1
             var temp = 0
             for (num in nums) temp += num shr i and 1
+            // 所有数字在第i位上的汉明距离 = 0的个数*1的个数
             result += temp * (nums.size - temp)
         }
         return result
