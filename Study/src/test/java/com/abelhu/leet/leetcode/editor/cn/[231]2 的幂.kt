@@ -80,6 +80,32 @@ class Solution231 {
         return count == 1
     }
 
+    /**
+     *  n & n-1 : 可以将最低位的1移除
+     *  原理: 假设n的二进制表示为0x_aaaa_1_0000,那么n-1表示为0x_aaaa_0_1111
+     *  将 n & n-1 的结果就是0x_aaaa_0_0000
+     */
+    fun isPowerOfTwo1(n: Int): Boolean {
+        return if (n > 0) n and (n - 1) == 0 else false
+    }
+
+    /**
+     *  n & -n : 直接获取最低位的1
+     *  补码: 所有位取反+1
+     *  原理: 假设n的二进制表示为0x_aaaa_1_0000,那么n-1表示为0x_bbbb_1_0000
+     *  将 n & -n 的结果就是0x_0000_1_0000(高位全部清空)
+     */
+    fun isPowerOfTwo2(n: Int): Boolean {
+        return if (n > 0) n and -n == n else false
+    }
+
+    /**
+     * 在数据范围内,是2^30的约数
+     */
+    fun isPowerOfTwo3(n: Int): Boolean {
+        return n > 0 && (1 shl 30) % n == 0
+    }
+
     @Test
     fun test0() {
         assert(isPowerOfTwo(1))
@@ -92,6 +118,48 @@ class Solution231 {
         assert(!isPowerOfTwo(7))
         assert(!isPowerOfTwo(9))
         assert(!isPowerOfTwo(-2147483648))
+    }
+
+    @Test
+    fun test1() {
+        assert(isPowerOfTwo1(1))
+        assert(isPowerOfTwo1(2))
+        assert(isPowerOfTwo1(4))
+        assert(isPowerOfTwo1(8))
+
+        assert(!isPowerOfTwo1(3))
+        assert(!isPowerOfTwo1(-1))
+        assert(!isPowerOfTwo1(7))
+        assert(!isPowerOfTwo1(9))
+        assert(!isPowerOfTwo1(-2147483648))
+    }
+
+    @Test
+    fun test2() {
+        assert(isPowerOfTwo2(1))
+        assert(isPowerOfTwo2(2))
+        assert(isPowerOfTwo2(4))
+        assert(isPowerOfTwo2(8))
+
+        assert(!isPowerOfTwo2(3))
+        assert(!isPowerOfTwo2(-1))
+        assert(!isPowerOfTwo2(7))
+        assert(!isPowerOfTwo2(9))
+        assert(!isPowerOfTwo2(-2147483648))
+    }
+
+    @Test
+    fun test3() {
+        assert(isPowerOfTwo3(1))
+        assert(isPowerOfTwo3(2))
+        assert(isPowerOfTwo3(4))
+        assert(isPowerOfTwo3(8))
+
+        assert(!isPowerOfTwo3(3))
+        assert(!isPowerOfTwo3(-1))
+        assert(!isPowerOfTwo3(7))
+        assert(!isPowerOfTwo3(9))
+        assert(!isPowerOfTwo3(-2147483648))
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
