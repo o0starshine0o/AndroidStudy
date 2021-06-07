@@ -80,7 +80,7 @@ dependencies {
     // androidx
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.navigation:navigation-fragment:2.3.1'
     implementation 'androidx.navigation:navigation-ui:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -92,13 +92,13 @@ dependencies {
     // google
     implementation 'com.google.android.material:material:1.2.1'
     // dagger Dependency Injection : https://github.com/google/dagger
-    implementation 'com.google.dagger:dagger:2.27'
+    implementation 'com.google.dagger:dagger:2.35.1'
     kapt 'com.google.dagger:dagger-compiler:2.27'
-    implementation 'com.google.dagger:dagger-android:2.27'
+    implementation 'com.google.dagger:dagger-android:2.35.1'
     implementation 'com.google.dagger:dagger-android-support:2.27'
     kapt 'com.google.dagger:dagger-android-processor:2.27'
     // unit test
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
     // android unit test
     testImplementation 'org.mockito:mockito-core:3.3.3'
     // UI testing with Espresso
@@ -141,7 +141,26 @@ dependencies {
     kaptTest 'org.openjdk.jmh:jmh-generator-annprocess:1.23'
 
     implementation project(':download')
+
+    // matrix
+    implementation "com.tencent.matrix:matrix-android-lib:$MATRIX_VERSION"
+    implementation "com.tencent.matrix:matrix-android-commons:$MATRIX_VERSION"
+    implementation "com.tencent.matrix:matrix-trace-canary:$MATRIX_VERSION"
+    implementation "com.tencent.matrix:matrix-resource-canary-android:$MATRIX_VERSION"
+    implementation "com.tencent.matrix:matrix-resource-canary-common:$MATRIX_VERSION"
+    implementation "com.tencent.matrix:matrix-io-canary:$MATRIX_VERSION"
+    implementation "com.tencent.matrix:matrix-sqlite-lint-android-sdk:$MATRIX_VERSION"
+    implementation "com.tencent.matrix:matrix-battery-canary:$MATRIX_VERSION"
 }
 
 // tinker， 因为依赖project.android.defaultConfig，所以需要放在配置文件的最后
 //apply from: 'tinker.gradle'
+
+apply plugin: 'com.tencent.matrix-plugin'
+matrix {
+    trace {
+        enable = true	//if you don't want to use trace canary, set false
+        baseMethodMapFile = "${project.buildDir}/matrix_output/Debug.methodmap"
+        blackListFile = "${project.projectDir}/matrixTrace/blackMethodList.txt"
+    }
+}

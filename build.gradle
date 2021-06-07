@@ -21,12 +21,11 @@ buildscript {
         // 公司仓库
         maven { url 'http://repo.wxianlai.com//repository/android-group/' }
         mavenCentral()
-        jcenter()
         google()
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:$gradle_version"
+        classpath "com.android.tools.build:gradle:${gradle_version}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // TinkerPatch 插件, 无需再单独引用tinker的其他库
         classpath "com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:1.2.14.5"
@@ -35,6 +34,8 @@ buildscript {
 //        classpath "com.abelhu:study:1.0.0"
         // kotlin 的javac
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:1.4.0-rc"
+        // matrix
+        classpath "com.tencent.matrix:matrix-gradle-plugin:${MATRIX_VERSION}"
     }
 }
 
@@ -58,7 +59,6 @@ allprojects {
         // 公司仓库
         maven { url 'http://repo.wxianlai.com//repository/android-group/' }
         mavenCentral()
-        jcenter()
         google()
     }
 }
