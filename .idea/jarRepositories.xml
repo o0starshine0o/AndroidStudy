@@ -71,5 +71,10 @@
       <option name="name" value="maven8" />
       <option name="url" value="http://repo.wxianlai.com//repository/android-group/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven8" />
+      <option name="name" value="maven8" />
+      <option name="url" value="https://jitpack.io" />
+    </remote-repository>
   </component>
 </project>

@@ -24,7 +24,7 @@ class MyApplication : Application() {
     }
 
     private fun initMatrix() {
-        Matrix.Builder(this).patchListener(MatrixListener(this))
+        Matrix.Builder(this).pluginListener(MatrixListener(this))
             .apply {
                 plugin(initIoCanary(MatrixConfig.instance))
                 plugin(initTrace(MatrixConfig.instance))
