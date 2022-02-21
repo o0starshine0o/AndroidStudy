@@ -9,15 +9,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.abelhu.androidstudy.R
+import com.abelhu.androidstudy.databinding.FragmentHomeBinding
 import com.abelhu.androidstudy.ui.main.activity.mode.LaunchModeActivity
 import com.protostar.download.DownloadManager
-import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : Fragment() {
 
     private val homeViewModel by lazy { ViewModelProvider(this).get(HomeViewModel::class.java) }
     private val url = "/shadow/plugin/advertisement-debug-plugin-copy.zip"
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +26,8 @@ class HomeFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false).apply {
+        binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding.apply {
             homeViewModel.text.observe(viewLifecycleOwner, Observer { textHome.text = it })
             homeViewModel.progress.observe(viewLifecycleOwner, Observer { progress.progress = it })
             // 点击穿透相关
@@ -43,6 +44,7 @@ class HomeFragment : Fragment() {
             }
             pause.setOnClickListener { DownloadManager.pause(url) }
         }
+        return binding.root
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

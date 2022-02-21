@@ -3,12 +3,10 @@ package com.abelhu.androidstudy.ui.main.slideshow
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.abelhu.androidstudy.R
+import com.abelhu.androidstudy.databinding.ItemIconBinding
 import com.qicode.extension.TAG
-import kotlinx.android.synthetic.main.item_icon.view.*
 import kotlin.random.Random
 
 class SlideAdapter : RecyclerView.Adapter<SlideAdapter.SlideHolder>() {
@@ -20,9 +18,12 @@ class SlideAdapter : RecyclerView.Adapter<SlideAdapter.SlideHolder>() {
         const val TYPE_1 = 12
     }
 
+    private lateinit var binding: ItemIconBinding
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SlideHolder {
         Log.i(TAG(), "onCreateViewHolder with type: $viewType")
-        return SlideHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_icon, parent, false))
+        binding = ItemIconBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return SlideHolder(binding)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -50,12 +51,12 @@ class SlideAdapter : RecyclerView.Adapter<SlideAdapter.SlideHolder>() {
         Log.i(TAG(), "onViewRecycled with position: ${holder.recycleHolder()}")
     }
 
-    class SlideHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class SlideHolder(private val binding: ItemIconBinding) : RecyclerView.ViewHolder(binding.root) {
         private var index = 0
         fun initHolder(position: Int) {
             index = position
-            itemView.iconView.setBackgroundColor(Color.rgb(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256)))
-            itemView.nameView.text = position.toString()
+            binding.iconView.setBackgroundColor(Color.rgb(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256)))
+            binding.nameView.text = position.toString()
             itemView.tag = position
             Log.i(TAG(), "init holder: $position")
         }

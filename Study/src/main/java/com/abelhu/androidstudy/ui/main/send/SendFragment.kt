@@ -5,12 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.abelhu.androidstudy.R
+import com.abelhu.androidstudy.databinding.FragmentSendBinding
 import com.abelhu.androidstudy.message.SendMessage
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_send.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -22,12 +20,13 @@ class SendFragment : EventBusBaseFragment() {
     }
 
     private lateinit var sendViewModel: SendViewModel
+    private lateinit var binding: FragmentSendBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         sendViewModel = ViewModelProvider(this).get(SendViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_send, container, false)
-        sendViewModel.text.observe(viewLifecycleOwner, Observer { textSend.text = it })
-        return root
+        binding = FragmentSendBinding.inflate(layoutInflater)
+        sendViewModel.text.observe(viewLifecycleOwner) { binding.textSend.text = it }
+        return binding.root
     }
 
     override fun onResume() {
@@ -42,7 +41,7 @@ class SendFragment : EventBusBaseFragment() {
 
     @Subscribe(threadMode = ThreadMode.POSTING)
     override fun subscribeMessage0(message: SendMessage) {
-        Snackbar.make(rootView, "get message from main", Snackbar.LENGTH_LONG).setAction("Action", null).show()
+        Snackbar.make(binding.rootView, "get message from main", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         Log.d(Tag, "subscribeMessage0")
     }
     // there is a bug in EventBus: https://github.com/greenrobot/EventBus/issues/539

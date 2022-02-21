@@ -10,25 +10,26 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.abelhu.androidstudy.R
+import com.abelhu.androidstudy.databinding.ActivityMainBinding
 import com.abelhu.androidstudy.message.SendMessage
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
 import org.greenrobot.eventbus.EventBus
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
-        fab.setOnClickListener { EventBus.getDefault().post(SendMessage()); }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.bar.toolbar)
+        binding.bar.fab.setOnClickListener { EventBus.getDefault().post(SendMessage()); }
         val navController = findNavController(R.id.NavHost)
-        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+        appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        binding.navView.setupWithNavController(navController)
 
         val decorView = window.decorView
         val uiOptions: Int = View.SYSTEM_UI_FLAG_FULLSCREEN

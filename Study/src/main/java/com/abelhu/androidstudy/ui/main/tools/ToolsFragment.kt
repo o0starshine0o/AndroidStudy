@@ -19,14 +19,14 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.abelhu.androidstudy.R
+import com.abelhu.androidstudy.databinding.FragmentToolsBinding
 import com.qicode.extension.TAG
 import com.tbruyelle.rxpermissions3.RxPermissions
-import kotlinx.android.synthetic.main.fragment_tools.*
 
 class ToolsFragment : Fragment() {
 
     private lateinit var toolsViewModel: ToolsViewModel
+    private lateinit var binding: FragmentToolsBinding
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,10 +41,12 @@ class ToolsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         toolsViewModel = ViewModelProvider(this).get(ToolsViewModel::class.java)
-        return inflater.inflate(R.layout.fragment_tools, container, false).apply {
-            toolsViewModel.fragmentInfo.observe(viewLifecycleOwner, { text_tools.text = it })
-            toolsViewModel.baseStation.observe(viewLifecycleOwner, { info.text = it })
+        binding = FragmentToolsBinding.inflate(inflater, container, false)
+        binding.apply {
+            toolsViewModel.fragmentInfo.observe(viewLifecycleOwner) { textTools.text = it }
+            toolsViewModel.baseStation.observe(viewLifecycleOwner) { info.text = it }
         }
+        return binding.root
     }
 
     @SuppressLint("SdCardPath")
@@ -63,7 +65,7 @@ class ToolsFragment : Fragment() {
          * # CID，Cell Identity，基站编号；
          * # BSSS，Base station signal strength，基站信号强度。
          */
-        getBaseStation.setOnClickListener {
+        binding.getBaseStation.setOnClickListener {
             val telephony = context?.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
             val operator = telephony.networkOperator
             var mcc = Int.MAX_VALUE
@@ -123,12 +125,12 @@ cid(Cell Identity，基站编号):$cid
             toolsViewModel.baseStation.postValue(message)
         }
 
-        getWiFi.setOnClickListener {
+        binding.getWiFi.setOnClickListener {
             val wifi = context?.applicationContext?.getSystemService(Context.WIFI_SERVICE) as? WifiManager
             toolsViewModel.baseStation.postValue(wifi?.connectionInfo?.ssid)
         }
 
-        getInstalledApk.apply { movementMethod = ScrollingMovementMethod.getInstance() }.setOnClickListener {
+        binding.getInstalledApk.apply { movementMethod = ScrollingMovementMethod.getInstance() }.setOnClickListener {
             val message = StringBuilder()
             context?.packageManager?.getInstalledPackages(0)?.forEach { message.append(it.packageName).append("\n") }
             toolsViewModel.baseStation.postValue(message.toString())

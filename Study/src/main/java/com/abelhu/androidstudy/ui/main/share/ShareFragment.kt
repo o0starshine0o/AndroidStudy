@@ -10,23 +10,23 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.abelhu.androidstudy.R
+import com.abelhu.androidstudy.databinding.FragmentShareBinding
 import com.qicode.extension.TAG
-import kotlinx.android.synthetic.main.fragment_share.view.*
 
 class ShareFragment : Fragment() {
 
     private lateinit var shareViewModel: ShareViewModel
+    private lateinit var binding: FragmentShareBinding
 
     private var toast: Toast? = null
 
     @SuppressLint("ShowToast")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         shareViewModel = ViewModelProvider(this).get(ShareViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_share, container, false)
-        shareViewModel.text.observe(viewLifecycleOwner, Observer { root.text_share.text = it })
+        binding = FragmentShareBinding.inflate(layoutInflater)
+        shareViewModel.text.observe(viewLifecycleOwner, Observer { binding.textShare.text = it })
 
-        root.toastView.setOnClickListener {
+        binding.toastView.setOnClickListener {
             if (toast == null) {
                 toast = Toast.makeText(it.context, "toast test", Toast.LENGTH_LONG)
             } else {
@@ -36,6 +36,6 @@ class ShareFragment : Fragment() {
             Log.i(TAG(), "toast show: ${System.currentTimeMillis()}")
             Thread.sleep(1980)
         }
-        return root
+        return binding.root
     }
 }

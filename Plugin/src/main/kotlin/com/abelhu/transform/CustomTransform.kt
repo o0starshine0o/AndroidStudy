@@ -4,7 +4,6 @@ import com.android.build.api.transform.QualifiedContent
 import com.android.build.api.transform.Transform
 import com.android.build.api.transform.TransformInvocation
 import com.android.build.gradle.internal.pipeline.TransformManager
-import com.android.ide.common.internal.WaitableExecutor
 
 class CustomTransform : Transform() {
     /**
@@ -43,12 +42,12 @@ class CustomTransform : Transform() {
         transformInvocation.referencedInputs
         // OutputProvider管理输出路径，如果消费型输入为空，你会发现OutputProvider == null
         transformInvocation.outputProvider
-        // 使用并发处理，同样可以提升项目编译速度
-        val executor = WaitableExecutor.useGlobalSharedThreadPool()
-        // 这里模拟并发处理
-        executor.execute { } // 将修改过的字节码copy到dest，就可以实现编译期间干预字节码的目的了
-        executor.execute { } // 将修改过的字节码copy到dest，就可以实现编译期间干预字节码的目的了
-        // 等待所有任务完成
-        executor.waitForTasksWithQuickFail<Any>(true)
+//        // 使用并发处理，同样可以提升项目编译速度
+//        val executor = WaitableExecutor.useGlobalSharedThreadPool()
+//        // 这里模拟并发处理
+//        executor.execute { } // 将修改过的字节码copy到dest，就可以实现编译期间干预字节码的目的了
+//        executor.execute { } // 将修改过的字节码copy到dest，就可以实现编译期间干预字节码的目的了
+//        // 等待所有任务完成
+//        executor.waitForTasksWithQuickFail<Any>(true)
     }
 }
