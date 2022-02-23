@@ -152,6 +152,9 @@ dependencies {
     implementation "com.tencent.matrix:matrix-io-canary:2.0.1"
     implementation "com.tencent.matrix:matrix-sqlite-lint-android-sdk:2.0.1"
     implementation "com.tencent.matrix:matrix-battery-canary:2.0.1"
+
+    // network
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 }
 
 // tinker， 因为依赖project.android.defaultConfig，所以需要放在配置文件的最后
