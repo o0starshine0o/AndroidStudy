@@ -13,8 +13,9 @@ import com.tencent.matrix.resource.config.ResourceConfig
 import com.tencent.matrix.trace.TracePlugin
 import com.tencent.matrix.trace.config.TraceConfig
 import com.tencent.mrs.plugin.IDynamicConfig
+import dagger.hilt.android.HiltAndroidApp
 
-
+@HiltAndroidApp
 class MyApplication : Application() {
 
     override fun onCreate() {
