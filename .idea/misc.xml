@@ -4,7 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="Study/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
+        <entry key="Study/src/main/res/layout/activity_screen.xml" value="0.40989583333333335" />
         <entry key="Study/src/main/res/layout/app_bar_main.xml" value="0.20416666666666666" />
+        <entry key="Study/src/main/res/layout/default_wrapper.xml" value="0.3958333333333333" />
+        <entry key="Study/src/main/res/layout/other_wrapper.xml" value="0.40989583333333335" />
       </map>
     </option>
   </component>

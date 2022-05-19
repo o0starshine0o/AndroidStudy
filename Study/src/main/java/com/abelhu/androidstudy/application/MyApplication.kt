@@ -15,6 +15,7 @@ import com.tencent.matrix.trace.config.TraceConfig
 import com.tencent.mrs.plugin.IDynamicConfig
 import dagger.hilt.android.HiltAndroidApp
 
+// 所有使用 Hilt 的应用都必须包含一个带有 @HiltAndroidApp 注释的 Application 类
 @HiltAndroidApp
 class MyApplication : Application() {
 
