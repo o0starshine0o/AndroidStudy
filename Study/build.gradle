@@ -93,15 +93,22 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     // google
     implementation 'com.google.android.material:material:1.6.0'
-    // dagger Dependency Injection : https://github.com/google/dagger
-    implementation 'com.google.dagger:dagger:2.39.1'
-    kapt 'com.google.dagger:dagger-compiler:2.39.1'
-    implementation 'com.google.dagger:dagger-android:2.39.1'
-    implementation 'com.google.dagger:dagger-android-support:2.39.1'
-    kapt 'com.google.dagger:dagger-android-processor:2.39.1'
+//    // dagger Dependency Injection : https://github.com/google/dagger
+//    implementation 'com.google.dagger:dagger:2.39.1'
+//    kapt 'com.google.dagger:dagger-compiler:2.39.1'
+//    implementation 'com.google.dagger:dagger-android:2.39.1'
+//    implementation 'com.google.dagger:dagger-android-support:2.39.1'
+//    kapt 'com.google.dagger:dagger-android-processor:2.39.1'
     // hilt
-    implementation "com.google.dagger:hilt-android:2.28-alpha"
-    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
+    implementation 'com.google.dagger:hilt-android:2.42'
+    kapt 'com.google.dagger:hilt-compiler:2.42'
+    // For instrumentation tests
+    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.42'
+    kaptAndroidTest 'com.google.dagger:hilt-compiler:2.42'
+    // For local unit tests
+    testImplementation 'com.google.dagger:hilt-android-testing:2.42'
+    kaptTest 'com.google.dagger:hilt-compiler:2.42'
+
     // unit test
     testImplementation 'junit:junit:4.13.2'
     // android unit test

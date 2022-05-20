@@ -4,23 +4,34 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.abelhu.androidstudy.R
+import com.abelhu.androidstudy.databinding.FragmentGalleryBinding
+import com.abelhu.androidstudy.hilt.adapter.HiltAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Hilt 可以为带有 @AndroidEntryPoint 注释的其他 Android 类提供依赖项
+ */
+@AndroidEntryPoint
 class GalleryFragment : Fragment() {
 
-    private lateinit var galleryViewModel: GalleryViewModel
+    private val viewModel by lazy { ViewModelProvider(this).get(GalleryViewModel::class.java) }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        galleryViewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_gallery, container, false)
-        val textView: TextView = root.findViewById(R.id.text_gallery)
-        galleryViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+    private lateinit var binding: FragmentGalleryBinding
+
+    // 因为adapter是依赖fragment的,所以没有办法在这里注入adapter
+    private val adapter = HiltAdapter(this)
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentGalleryBinding.inflate(inflater)
+        return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.text.observe(viewLifecycleOwner) { binding.textGallery.text = it }
+
+        binding.recyclerView.adapter = adapter
     }
 }

@@ -36,7 +36,7 @@ buildscript {
         // matrix
         classpath "com.tencent.matrix:matrix-gradle-plugin:${MATRIX_VERSION}"
         // hilt,依赖注入
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.28-alpha'
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.42'
     }
 }
 

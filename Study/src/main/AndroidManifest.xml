@@ -48,6 +48,13 @@
             </intent-filter>
         </service>
 
+
+        <provider
+            android:name=".provider.C"
+            android:authorities="${applicationId}.provider.C"
+            android:exported="false"
+            android:multiprocess="true"/>
+
         <activity
             android:name=".ui.main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"

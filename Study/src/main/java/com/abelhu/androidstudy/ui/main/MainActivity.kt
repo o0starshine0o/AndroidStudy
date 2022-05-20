@@ -12,9 +12,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.abelhu.androidstudy.R
 import com.abelhu.androidstudy.databinding.ActivityMainBinding
 import com.abelhu.androidstudy.message.SendMessage
+import dagger.hilt.android.AndroidEntryPoint
 import org.greenrobot.eventbus.EventBus
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
