@@ -52,10 +52,6 @@ android {
         // Note that the viewBinding.enabled property is now deprecated.
         viewBinding true
     }
-    lintOptions {
-        // 静态检查有无法使用的包，暂时不管他
-        disable 'InvalidPackage'
-    }
     dexOptions {
         jumboMode = true
     }
@@ -67,6 +63,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     flavorDimensions "market"
+    lint {
+        disable 'InvalidPackage'
+    }
 //    // 多渠道打包
 //    productFlavors {
 //        tencent { dimension "market" }
@@ -91,8 +90,10 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
     implementation 'androidx.navigation:navigation-runtime-ktx:2.4.2'
     implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.test:core-ktx:1.4.0'
     // google
     implementation 'com.google.android.material:material:1.6.0'
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 //    // dagger Dependency Injection : https://github.com/google/dagger
 //    implementation 'com.google.dagger:dagger:2.39.1'
 //    kapt 'com.google.dagger:dagger-compiler:2.39.1'
