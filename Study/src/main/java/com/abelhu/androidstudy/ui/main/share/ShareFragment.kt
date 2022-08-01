@@ -1,6 +1,7 @@
 package com.abelhu.androidstudy.ui.main.share
 
 import android.annotation.SuppressLint
+import android.graphics.PixelFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -37,5 +38,13 @@ class ShareFragment : Fragment() {
             Thread.sleep(1980)
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.surface.setZOrderOnTop(true)
+        binding.surface.holder.setFormat(PixelFormat.TRANSPARENT)
+//        binding.surface.setZOrderMediaOverlay(true)
     }
 }

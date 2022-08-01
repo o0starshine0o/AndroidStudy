@@ -9,7 +9,7 @@ apply plugin: 'dagger.hilt.android.plugin'
 //apply from: 'tinkerPatch.gradle'
 
 android {
-    compileSdkVersion 32
+    compileSdk 32
     defaultConfig {
         applicationId 'com.abelhu.androidstudy'
         minSdkVersion 23
@@ -51,9 +51,6 @@ android {
         // Determines whether to support View Binding.
         // Note that the viewBinding.enabled property is now deprecated.
         viewBinding true
-    }
-    dexOptions {
-        jumboMode = true
     }
     kotlinOptions {
         jvmTarget = "1.8"
