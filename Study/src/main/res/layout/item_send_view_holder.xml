@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.abelhu.androidstudy.viewhost.NestedRecyclerViewHost
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.abelhu.androidstudy.view.textview.expandtextview.ExpandableTextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:padding="20dp"
+            android:text="想进入幼儿园成为一名正式的教师，就必须考取相应的幼师资格证，有了这样的证书才能够在幼儿园里面任教。然而同样身为老师，幼儿园的老师和中小学以及大学老师之间的差别较大，尤其是在收入方面比较悬殊。
+
+根据相关统计，在一二线城市幼师的收入基本都在4000元左右，而在三线或者四线城市，幼师每个月的收入可能连3000元都不足，而且这样的收入对应的并不是刚上任的新教师，而是已经工作一段时间的幼师所拿到手的实际工资。
+
+对于如此微薄的薪资，很多网友刚开始时表示并不相信，因为毕竟幼师也属于教师队伍，也有相应的事业单位编制，为什么收入如此之低，可当幼师们拿出工资条的时候，网友们则选择了集体沉默。
+
+
+三、为何幼师的工资较低
+
+1.学历层次不一样
+
+大部分的幼师的学历基本都是以专科和中专为主，而中小学的教师基本以本科学历为主，至于大学的教师，很多都是博士研究生，从学历层次上就决定了岗位的实际收入。
+
+虽然现在很多城市都在强调要提高幼师的学历层次，然而事实上由于愿意从事幼师的人群并不多，所以也没有更多的新人加入，这也使得在学历上提高的举措很难真正落地。
+
+2.服务对象不一致
+
+作为幼师所服务的对象，基本上都是从5岁到7岁之间的儿童，而中小学教师所服务的对象基本都是7岁以后的青少年。两者之间相比较，前者更加劳心劳力，然而幼师是以两位老师和一位保育员共同负责30个人左右的班级，而作为中小学通常是一个班主任负责40多位学生。
+
+
+3.教学内容有差距
+
+幼师在教学方面主要负责孩子的自理技能，并不会涉及太多的文化内容。中小学的教师主要教会孩子语文数学外语等科目的知识内容，后者对于教师的要求较高，同样孩子在进入大学之后，对于专业知识内容的需求量会更多，而教师则要求更加专业。
+
+基于以上种种原因，幼师的收入和其他教师队伍相比，的确具有相当大的差距，当然最近几年国家也在加大力度投入学前教育方面的资源，毕竟培养孩子要从小抓起。"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </com.abelhu.androidstudy.viewhost.NestedRecyclerViewHost>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

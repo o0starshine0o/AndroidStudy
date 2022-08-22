@@ -76,5 +76,110 @@
       <option name="name" value="maven8" />
       <option name="url" value="https://jitpack.io" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven9" />
+      <option name="name" value="maven9" />
+      <option name="url" value="https://mirrors.tencent.com/nexus/repository/maven-public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven13" />
+      <option name="name" value="maven13" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/tencent_public_snapshots" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven12" />
+      <option name="name" value="maven12" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/tencent_public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven9" />
+      <option name="name" value="maven9" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/thirdparty/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven14" />
+      <option name="name" value="maven14" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/qqsports" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven10" />
+      <option name="name" value="maven10" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/thirdparty-snapshots/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven16" />
+      <option name="name" value="maven16" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/montage" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven15" />
+      <option name="name" value="maven15" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/qqsports-snapshots" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven25" />
+      <option name="name" value="maven25" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/qfix-SnapShots" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven27" />
+      <option name="name" value="maven27" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/QAdSDK/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven24" />
+      <option name="name" value="maven24" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/qfix" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven20" />
+      <option name="name" value="maven20" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/pangolin-snapshots" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven30" />
+      <option name="name" value="maven30" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/dcl" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven19" />
+      <option name="name" value="maven19" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/pangolin" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven18" />
+      <option name="name" value="maven18" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/ilive-snapshots" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven29" />
+      <option name="name" value="maven29" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/tencentvideo-snapshot" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven23" />
+      <option name="name" value="maven23" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/RFix-Android-snapshot" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven21" />
+      <option name="name" value="maven21" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/wechat-releases" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven28" />
+      <option name="name" value="maven28" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/tencentvideo" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven17" />
+      <option name="name" value="maven17" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/ilive" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven22" />
+      <option name="name" value="maven22" />
+      <option name="url" value="https://mirrors.tencent.com/repository/maven/RFix-Android" />
+    </remote-repository>
   </component>
 </project>

@@ -7,7 +7,9 @@
         <entry key="Study/src/main/res/layout/app_bar_main.xml" value="0.20416666666666666" />
         <entry key="Study/src/main/res/layout/content_screen.xml" value="0.5760416666666667" />
         <entry key="Study/src/main/res/layout/default_wrapper.xml" value="0.5760416666666667" />
+        <entry key="Study/src/main/res/layout/fragment_send.xml" value="0.22760416666666666" />
         <entry key="Study/src/main/res/layout/fragment_share.xml" value="0.5619791666666667" />
+        <entry key="Study/src/main/res/layout/item_send_view_holder.xml" value="0.5901041666666667" />
         <entry key="Study/src/main/res/layout/other_wrapper.xml" value="0.2125" />
       </map>
     </option>
