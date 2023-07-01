@@ -3,6 +3,28 @@
   <component name="LeetcodeEditor">
     <option name="projectConfig">
       <map>
+        <entry key="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[1780]判断一个数字是否可以表示成三的幂的和.kt">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/doc/content/[1780]判断一个数字是否可以表示成三的幂的和.md" />
+              <option name="frontendQuestionId" value="leetcode.cn1780" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[1780]判断一个数字是否可以表示成三的幂的和.kt" />
+              <option name="titleSlug" value="check-if-number-is-a-sum-of-powers-of-three" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[516]最长回文子序列.kt">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/doc/content/[516]最长回文子序列.md" />
+              <option name="frontendQuestionId" value="leetcode.cn516" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[516]最长回文子序列.kt" />
+              <option name="titleSlug" value="longest-palindromic-subsequence" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[91]解码方法.kt">
           <value>
             <LeetcodeEditor>
