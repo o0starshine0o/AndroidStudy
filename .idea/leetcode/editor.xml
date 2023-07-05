@@ -14,6 +14,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[1227]飞机座位分配概率.kt">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/doc/content/[1227]飞机座位分配概率.md" />
+              <option name="frontendQuestionId" value="leetcode.cn1227" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[1227]飞机座位分配概率.kt" />
+              <option name="titleSlug" value="airplane-seat-assignment-probability" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[1780]判断一个数字是否可以表示成三的幂的和.kt">
           <value>
             <LeetcodeEditor>
