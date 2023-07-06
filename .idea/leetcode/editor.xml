@@ -113,6 +113,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[641]设计循环双端队列.kt">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/doc/content/[641]设计循环双端队列.md" />
+              <option name="frontendQuestionId" value="leetcode.cn641" />
+              <option name="host" value="leetcode.cn" />
+              <option name="path" value="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[641]设计循环双端队列.kt" />
+              <option name="titleSlug" value="design-circular-deque" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/Study/src/test/java/com/abelhu/leet/leetcode/editor/cn/[714]买卖股票的最佳时机含手续费.kt">
           <value>
             <LeetcodeEditor>
