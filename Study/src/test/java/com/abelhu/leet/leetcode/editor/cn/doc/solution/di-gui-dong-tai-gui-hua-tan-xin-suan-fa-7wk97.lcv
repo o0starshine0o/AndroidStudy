@@ -1,0 +1,274 @@
+本文用`数组`剪枝优化`递归`，尝试`中间变量`加速`动态规划`和`贪心算法`
+
+## 一 递归
+
+### 解题思路
+
+- 状态`s`：`true`有股票，`false`无股票。手续费卖出时扣除
+  - `true`，有股票时的最大利润 = 以下两者取大
+    - 持有。利润不变
+    - 卖出。利润 = 利润 + 股票价格 - 手续费。有股票 → 无股票
+  - `false`，无股票时的最大利润 = 以下两者取大
+    - 观望。利润不变
+    - 买入。利润 = 利润 - 股票价格。无股票 → 有股票
+- 最大利润 = 有股票时的最大利润 和 无股票时的最大利润 取大
+
+### 代码
+
+* javascript
+
+```javascript
+var maxProfit = function(prices, fee) {
+    d = (s, i) => i === prices.length  ? 0 :
+                  s ? Math.max(d(s, i + 1), d(false, i + 1) + prices[i] - fee) :
+                      Math.max(d(s, i + 1), d(true , i + 1) - prices[i])
+    return d(false, 0)
+};
+```
+
+测试用例`19`超时
+
+## 递归 · 剪枝
+
+### 解题思路
+
+- 以递归函数的`变化`的`形参`：`i`与`s`作`键名`，构造`缓存函数`
+- `i <= `数组长度，状态`s`为`布尔值`
+  - `true`： 取`i`
+  - `false`：取数组长度 + `i`
+- 得到的键名`唯一`，比`i + , + s`更充分利用空间
+
+### 代码
+
+Array
+
+* javascript
+
+```javascript
+var maxProfit = function(prices, fee) {
+    const len = prices.length, h = Array(len * 2)
+    let t
+    d = (s, i) => i === len  ? 0 : 
+                  h[t = s ? i : len + i] !== void 0 ? h[t] : h[t] = 
+                  (s ? Math.max(d(s, i + 1), d(false, i + 1) + prices[i] - fee) :
+                       Math.max(d(s, i + 1), d(true , i + 1) - prices[i]))
+    return d(false, 0)
+};
+```
+
+![递归用Array剪枝运行结果](https://pic.leetcode-cn.com/1608180406-bezqxg-1.png)
+
+Object
+
+* javascript
+
+```javascript
+var maxProfit = function(prices, fee) {
+    const len = prices.length, h = Object.create(null)
+    let t
+    d = (s, i) => i === len  ? 0 : 
+                  h[t = s ? i : len + i] !== void 0 ? h[t] : h[t] = 
+                  (s ? Math.max(d(s, i + 1), d(false, i + 1) + prices[i] - fee) :
+                      Math.max(d(s, i + 1), d(true , i + 1) - prices[i]))
+    return d(false, 0)
+};
+```
+
+![递归用Object剪枝运行结果](https://pic.leetcode-cn.com/1608180461-XiUzHb-2.png)
+
+Map
+
+* javascript
+
+```javascript
+var maxProfit = function(prices, fee) {
+    const len = prices.length, h = new Map
+    let t, t1
+    d = (s, i) => i === len  ? 0 : 
+                  h.has(t = s ? i : len + i) ? h.get(t) : (h.set(t, t1 =  
+                  (s ? Math.max(d(s, i + 1), d(false, i + 1) + prices[i] - fee) :
+                      Math.max(d(s, i + 1), d(true , i + 1) - prices[i]))), t1)
+    return d(false, 0)
+};
+```
+
+![递归用Map剪枝运行结果](https://pic.leetcode-cn.com/1608180513-lzdXBW-3.png)
+
+### 图示
+
+`1, 3 ,1`手续费`1`为例：红`i` 橙`s`　蓝 - 浅→深 - 向下递归　粉 - 浅→深 - 向上回溯累加
+![递归运行图示](https://pic.leetcode-cn.com/1608185103-jBJqTv-image.png)
+`0 false`左分支 向下递归 → 向上回溯 得到`0`后
+`0 false`右分支 向下递归 → 遇到缓存过的`i`和`s`，读缓存，不再向下递归。相应分支被`剪枝`
+
+## 二 动态规划
+
+### 解题思路
+
+- 最后一天，只有`2`种状态：手上`无股票`，手上`有股票`
+- 对应最大利润`dp` = [`无股票`最大利润，`有股票`最大利润]
+- 已知：`dp[0]` = `0` `dp[1]` = `-第0日股票价格`
+- 从`第1日`开始，状态转移方程
+  - dp[0] = max(观望：最大利润不变，卖出：`有股票`最大利润 + 当日股票价格 - 手续费)
+  - dp[1] = max(持有：最大利润不变，买入：`无股票`最大利润 - 当日股票价格)
+
+### 代码
+
+* javascript
+
+```javascript
+var maxProfit = function(prices, fee) {
+    const dp = [0, -prices[0]]
+    for(let i = 1, t; i < prices.length; i++) {
+        t = dp[0] // 中间变量可省略，因为当天买入卖出不影响结果
+        dp[0] = Math.max(dp[0], dp[1] + prices[i] - fee)
+        dp[1] = Math.max(dp[1],     t - prices[i])
+    }
+    return dp[0] // 最后一天，无股票 利润 > 有股票时 利润
+};
+```
+
+![动态规划 运行结果](https://pic.leetcode-cn.com/1608180305-cVNyUy-5.png)
+
+Reduce
+
+* javascript
+
+```javascript
+var maxProfit = function(prices, fee) {
+    return prices.reduce((p, v) => [Math.max(p[0], p[1] + v - fee), Math.max(p[1], p[0] - v)], [0, -prices[0]])[0]
+};
+```
+
+![动态规划 · Reduce运行结果](https://pic.leetcode-cn.com/1608200833-rsZBFz-1.png)
+
+Reduce · 优化：归并数组请避免浅拷贝和新建
+
+* javascript
+
+```javascript
+var maxProfit = function(prices, fee) {
+    return prices.reduce((p, v) => (p[0] = Math.max(p[0], p[1] + v - fee), p[1] = Math.max(p[1], p[0] - v), p), [0, -prices[0]])[0]
+};
+```
+
+![动态规划 · Reduce · 优化运行结果](https://pic.leetcode-cn.com/1608200895-rpZSTH-image.png)
+
+## 动态规划 · 状态机
+
+### 解题思路
+
+- 两个变量代替数组`dp`的两个元素，降低维度
+
+### 代码
+
+* javascript
+
+```javascript
+var maxProfit = function(prices, fee) {
+    let s0 = 0, s1 = -prices[0], i = 0
+    while(++i < prices.length) {
+        s0 = Math.max(s0, s1 + prices[i] - fee)
+        s1 = Math.max(s1, s0 - prices[i])
+    }
+    return s0
+};
+```
+
+![动态规划 · 状态机 运行结果](https://pic.leetcode-cn.com/1608180211-WpqMqj-6.png)
+
+中间变量
+
+* javascript
+
+```javascript
+var maxProfit = function(prices, fee) {
+    let s0 = 0, s1 = -prices[0], i = 0, t
+    while(++i < prices.length) {
+        t = s0
+        s0 = Math.max(s0, s1 + prices[i] - fee)
+        s1 = Math.max(s1,  t - prices[i])
+    }
+    return s0
+};
+```
+
+![动态规划 · 状态机 · 中间变量 运行结果](https://pic.leetcode-cn.com/1608201216-nnZDIL-1.png)
+
+## 三 贪心算法
+
+### 解题思路
+
+- 贪心策略：最低买，最高卖
+- 遍历
+  - `无股票`，找`最低买入价格`买入，不断更新`min`
+  - `有股票`
+    - 今天价格 - 最低买入价格`min` - 手续费 > 0，即有利润就`卖`
+      - 今天利润 = 昨天利润 + 今天价格 - 最低买入价格 - 手续费
+        - `新最低买入价格` = 今天价格 - 手续费，先假设`今天卖出`
+      - 第二天
+        - 今天价格  > 昨天价格。`改今天卖`。手续费昨天扣过，不再扣
+          - 今天利润 = 昨天利润 + 今天价格 - `新最低买入价格` - 手续费
+            - = 昨天利润 + 今天价格 - （昨天价格 - 手续费） - 手续费
+            - = 昨天利润 + 今天价格 - 昨天价格
+        - 今天价格 <= 昨天价格，先假设`昨天卖出`
+  - 回到`无股票`状态
+    - 今天价格 < `新最低买入价格`，准备买入，更新`min`
+    - 今天价格 >= `新最低买入价格`，观望
+      - 如果后面有比`昨天卖出`更高价格，昨天不卖了，改后面卖
+        - 后面利润计算方法和`有股票`时，第二天`改今天卖`时一样
+
+### 代码
+
+* javascript
+
+```javascript
+var maxProfit = function(prices, fee) {
+    let min = prices[0], r = 0, i = 0, t
+    while(++i < prices.length) {
+        if (prices[i] < min) {
+            min = prices[i]
+        } else if ((t = prices[i] - min - fee) > 0) {
+            r += t
+            min = prices[i] - fee
+        }
+    }
+    return r
+};
+```
+
+![贪心算法运行结果](https://pic.leetcode-cn.com/1608180160-eZLprx-8.png)
+
+Reduce
+
+* javascript
+
+```javascript
+var maxProfit = function(prices, fee, r = 0) {
+    return prices.reduce((p, v, i) => i ? (v < p ? v : v - p > fee ? (r += v - p - fee, v - fee) : p) : p, prices[0]), r
+};
+```
+
+![贪心 · Reduce运行结果](https://pic.leetcode-cn.com/1608193818-HxlXnn-8-reduce.png)
+
+### 图示
+
+![贪心算法过程演示](https://pic.leetcode-cn.com/1608189067-JRypqI-image.png)
+
+## 排行
+
+数据长度500，(0, 50000)随机数据100组，每种解法相应求解100次，每秒操作数
+![数据长度500，(0, 50000)随机数据100组运行结果](https://pic.leetcode-cn.com/1608202712-vJKiIw-100,500.png)
+数据长度5000，(0, 50000)随机数据100组，每种解法相应求解100次，每秒操作数
+![数据长度5000，(0, 50000)随机数据100组运行结果](https://pic.leetcode-cn.com/1608202732-CbWsIe-100,5000.png)
+数据长度500，(0, 50000)随机数据10000组，每种解法相应求解10000次，每秒操作数
+![数据长度500，(0, 50000)随机数据10000组运行结果](https://pic.leetcode-cn.com/1608202756-fikPqs-1000,500.png)
+数据长度50000，(0, 50000)随机数据100组，每种解法相应求解100次，每秒操作数
+![数据长度50000，(0, 50000)随机数据10000组运行结果](https://pic.leetcode-cn.com/1608203457-zNReJo-image.png)
+
+递归解法：剪枝后，数据长度`>=6984`时`爆栈`
+动态规划解法：中间变量减少运算依赖，自动优化。对于数组有轻微提升，`变量`反而不必要
+`Reudce · 数组`解法：归并时返回`[]`不断新建数组，影响性能
+- 利用数组的引用类型：`push`或`dp[索引]`赋值，返回`dp`，这样优化后`Reduce`更快
+- 同理，对于`递归`，递归前`push`，传参`数组`，回溯时`pop` >> 传参`数组的浅拷贝`
+

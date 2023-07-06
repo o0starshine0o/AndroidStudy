@@ -1,3 +1,5 @@
+import com.abelhu.leet.utils.log
+import org.junit.Assert
 import org.junit.Test
 
 //给定一个整数数组 prices，其中第 i 个元素代表了第 i 天的股票价格 ；非负整数 fee 代表了交易股票的手续费用。
@@ -28,6 +30,94 @@ import org.junit.Test
 // 
 // Related Topics 贪心算法 数组 动态规划 
 // 👍 469 👎 0
+
+class Solution7142 {
+    private fun maxProfit(prices: IntArray, fee: Int): Int {
+        val size = prices.size
+        // 构建一个n*2的矩阵
+        // dp[i][0] 代表当天如果持有股票的总利润
+        // dp[i][1] 代表当天如果抛售股票的总利润
+        // 则状态转移方程为:
+        // dp[i][0] = max{
+        //     dp[i-1][0], // 如果前一天持有, 那么继续持有就行
+        //     dp[i-1][1] - prices[i] // 如果前一天没有, 那么需要以当天价格买入
+        // }
+        // dp[i][1] = max{
+        //     dp[i-1][0] + prices[i] - fee, // 如果前一天持有, 那么此时需要抛售, 并且支付费用
+        //     dp[i-1][1] // 如果前一天没有, 那么继续观望就行
+        // }
+        // 最终需要求得dp[i][1]
+        val dp = Array(size) { IntArray(2) }
+        // 初始条件
+        dp[0][0] = -prices[0]
+        dp[0][1] = 0
+        // 动规求解
+        for (i in 1 until  size) {
+            dp[i][0] = kotlin.math.max(dp[i-1][0], dp[i-1][1] - prices[i])
+            dp[i][1] = kotlin.math.max(dp[i-1][0] + prices[i] - fee, dp[i-1][1])
+        }
+        return dp[size-1][1]
+    }
+
+    private fun maxProfit2(prices: IntArray, fee: Int): Int {
+        val size = prices.size
+        // 构建一个n*n的dp矩阵
+        // 其中 dp[i][j] 代表从i点买入j点卖出时能够获得的最大利润(已经算过fee了)
+        // 假设 从i点到j点可以完成1次(i点买j点卖)或者2次交易(类似子序列)
+        // 则状态转移方程为:
+        // dp[i][j] = max{
+        //     // 注意! dp[i][k]和dp[k+1][j]已经算过fee了, 不要重复计算
+        //     2次交易: max(0, dp[i][k]) + max(0, dp[k+1][j]), 其中i<=k<j
+        //     1次交易: prices[j] - prices[i] - fee
+        //     0次交易: 0
+        // }
+        // 观察可得, 为了得到dp[0][n]的值, 需要其上方和右方的数据
+        // 所以需要对角线序遍历数组
+        val dp = Array(size) { IntArray(size) }
+
+        // 初始宠[0,1]开始, 因为dp[i][i]都为0
+        var i = 0
+        var j = 1
+        // 用一个y来暂存层序的起点
+        var y = 1
+        // 如果层序的起点越界了, 代表矩阵下方计算完成
+        while (y < size) {
+            // 2次交易
+            var max = Int.MIN_VALUE
+            for (k in i until j) {
+                val profit = kotlin.math.max(0, dp[i][k]) + kotlin.math.max(0, dp[k + 1][j])
+                max = kotlin.math.max(max, profit)
+            }
+            // 1次交易
+            dp[i][j] = kotlin.math.max(max, prices[j] - prices[i] - fee)
+            // 0次交易
+            dp[i][j] = kotlin.math.max(dp[i][j], 0).log { "dp[$i][$j] = $it" }
+
+            // 标准对角线序
+            i++
+            j++
+
+            // 会越界了, 重新到层序的下一层起点
+            if (j >= size) {
+                y++
+                i = 0
+                j = y
+            }
+        }
+
+        return dp[0][size - 1]
+    }
+
+    @Test
+    fun test0() {
+        Assert.assertEquals(8, maxProfit(intArrayOf(1, 3, 2, 8, 4, 9), 2))
+    }
+
+    @Test
+    fun test1() {
+        Assert.assertEquals(6, maxProfit(intArrayOf(1, 3, 7, 5, 10, 3), 3))
+    }
+}
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
