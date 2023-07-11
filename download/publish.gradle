@@ -8,13 +8,11 @@ task javadoc(type: Javadoc) {
 }
 task generateJavadoc(type: Jar, dependsOn: dokkaJavadoc) {
     group = 'jar'
-    classifier = 'javadoc'
     from javadoc.destinationDir
 }
 task generateSourcesJar(type: Jar) {
     group = 'jar'
     from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
 }
 
 dokkaHtml {

@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.7">
-      <module name="AndroidStudy.download" target="17" />
-      <module name="AndroidStudy.Groovy" target="1.8" />
-      <module name="AndroidStudy.Groovy.main" target="1.8" />
-      <module name="AndroidStudy.Groovy.test" target="1.8" />
-      <module name="AndroidStudy.Plugin" target="1.8" />
-      <module name="AndroidStudy.Plugin.main" target="1.8" />
-      <module name="AndroidStudy.Plugin.test" target="1.8" />
-      <module name="AndroidStudy.Study" target="17" />
+    <bytecodeTargetLevel target="17">
       <module name="Annotation" target="1.7" />
       <module name="AnnotationCode" target="1.7" />
       <module name="Plugin" target="1.7" />

@@ -9,18 +9,16 @@ apply plugin: 'dagger.hilt.android.plugin'
 //apply from: 'tinkerPatch.gradle'
 
 android {
-    compileSdk 32
+    namespace 'com.abelhu.androidstudy'
+    compileSdk 33
     defaultConfig {
         applicationId 'com.abelhu.androidstudy'
         minSdkVersion 23
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode PROJ_VERSION_CODE.toInteger()
         versionName PROJ_VERSION
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        // 关闭自定义的Instrumentation和Looper检查
-        buildConfigField "Boolean", "CustomInstrumentation", "false"
-        buildConfigField "Boolean", "CustomLooper", "false"
     }
     buildTypes {
         debug {
@@ -28,7 +26,6 @@ android {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "Host", "\"https://www.baidu.com/\"")
             renderscriptDebuggable = true
             multiDexEnabled = true
         }
@@ -37,13 +34,12 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "Host", "\"https://www.qq.com/\"")
         }
     }
     sourceSets {
         main {
             // 为了方便移植，把java文件和aidl文件放在一起，但是由于gradle可能找不到位于aidl目录下的java文件，所以这边直接把设置java的查找路径也包含aidl目录
-            java.srcDirs = ['src/main/java', 'src/main/aidl']
+            java.srcDirs += 'src/main/aidl'
         }
     }
 
@@ -51,15 +47,18 @@ android {
         // Determines whether to support View Binding.
         // Note that the viewBinding.enabled property is now deprecated.
         viewBinding true
+        aidl true
+        buildConfig true
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     flavorDimensions "market"
+
     lint {
         disable 'InvalidPackage'
     }
@@ -77,19 +76,19 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     // androidx
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
-    implementation 'androidx.navigation:navigation-runtime-ktx:2.4.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-runtime-ktx:2.6.0'
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'androidx.test:core-ktx:1.4.0'
+    implementation 'androidx.test:core-ktx:1.5.0'
     // google
-    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
 //    // dagger Dependency Injection : https://github.com/google/dagger
 //    implementation 'com.google.dagger:dagger:2.39.1'
@@ -98,40 +97,40 @@ dependencies {
 //    implementation 'com.google.dagger:dagger-android-support:2.39.1'
 //    kapt 'com.google.dagger:dagger-android-processor:2.39.1'
     // hilt
-    implementation 'com.google.dagger:hilt-android:2.42'
-    kapt 'com.google.dagger:hilt-compiler:2.42'
+    implementation 'com.google.dagger:hilt-android:2.46.1'
+    kapt 'com.google.dagger:hilt-compiler:2.46.1'
     // For instrumentation tests
-    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.42'
-    kaptAndroidTest 'com.google.dagger:hilt-compiler:2.42'
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.46.1'
+    kaptAndroidTest 'com.google.dagger:hilt-compiler:2.46.1'
     // For local unit tests
-    testImplementation 'com.google.dagger:hilt-android-testing:2.42'
-    kaptTest 'com.google.dagger:hilt-compiler:2.42'
+    testImplementation 'com.google.dagger:hilt-android-testing:2.46.1'
+    kaptTest 'com.google.dagger:hilt-compiler:2.46.1'
 
     // unit test
     testImplementation 'junit:junit:4.13.2'
     // android unit test
-    testImplementation 'org.mockito:mockito-core:4.0.0'
+    testImplementation 'org.mockito:mockito-core:5.4.0'
     // UI testing with Espresso
-    androidTestImplementation 'androidx.test:core:1.4.0'
-    androidTestImplementation 'androidx.test:runner:1.4.0'
-    androidTestImplementation 'androidx.test:rules:1.4.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.ext:truth:1.4.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-web:3.4.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.4.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.4.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.4.0'
+    androidTestImplementation 'androidx.test:core:1.5.0'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test:rules:1.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.ext:truth:1.5.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-web:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.5.1'
     // UI testing with UI Automator
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
     // eventBus: https://github.com/greenrobot/EventBus
-    implementation 'org.greenrobot:eventbus:3.2.0'
+    implementation 'org.greenrobot:eventbus:3.3.1'
     // tcp: https://github.com/TooTallNate/Java-WebSocket
-    implementation 'org.java-websocket:Java-WebSocket:1.5.2'
+    implementation 'org.java-websocket:Java-WebSocket:1.5.3'
     // rxJava: https://github.com/ReactiveX/RxJava
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-    implementation 'io.reactivex.rxjava3:rxjava:3.1.1'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.6'
     // cache video: https://github.com/danikula/AndroidVideoCache
     implementation 'com.danikula:videocache:2.7.1'
 //    // using pager layout
@@ -144,36 +143,24 @@ dependencies {
     implementation project(":Annotation")
     kapt project(":AnnotationCode")
     // bytecode edit
-    implementation 'org.javassist:javassist:3.28.0-GA'
+    implementation 'org.javassist:javassist:3.29.2-GA'
 
     // jmh:
-    testImplementation 'org.openjdk.jmh:jmh-core:1.33'
-    kaptTest 'org.openjdk.jmh:jmh-generator-annprocess:1.33'
+    testImplementation 'org.openjdk.jmh:jmh-core:1.36'
+    kaptTest 'org.openjdk.jmh:jmh-generator-annprocess:1.36'
 
     implementation project(':download')
 
     // matrix
-    implementation "com.tencent.matrix:matrix-android-lib:2.0.1"
-    implementation "com.tencent.matrix:matrix-android-commons:2.0.1"
-    implementation "com.tencent.matrix:matrix-trace-canary:2.0.1"
-    implementation "com.tencent.matrix:matrix-resource-canary-android:2.0.1"
-    implementation "com.tencent.matrix:matrix-resource-canary-common:2.0.1"
-    implementation "com.tencent.matrix:matrix-io-canary:2.0.1"
-    implementation "com.tencent.matrix:matrix-sqlite-lint-android-sdk:2.0.1"
-    implementation "com.tencent.matrix:matrix-battery-canary:2.0.1"
+    implementation 'com.tencent.matrix:matrix-android-lib:2.1.0'
+    implementation 'com.tencent.matrix:matrix-android-commons:2.1.0'
+    implementation 'com.tencent.matrix:matrix-trace-canary:2.1.0'
+    implementation 'com.tencent.matrix:matrix-resource-canary-android:2.1.0'
+    implementation 'com.tencent.matrix:matrix-resource-canary-common:2.1.0'
+    implementation 'com.tencent.matrix:matrix-io-canary:2.1.0'
+    implementation 'com.tencent.matrix:matrix-sqlite-lint-android-sdk:2.1.0'
+    implementation 'com.tencent.matrix:matrix-battery-canary:2.1.0'
 
     // network
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-}
-
-// tinker， 因为依赖project.android.defaultConfig，所以需要放在配置文件的最后
-//apply from: 'tinker.gradle'
-
-apply plugin: 'com.tencent.matrix-plugin'
-matrix {
-    trace {
-        enable = true	//if you don't want to use trace canary, set false
-        baseMethodMapFile = "${project.buildDir}/matrix_output/Debug.methodmap"
-        blackListFile = "${project.projectDir}/matrixTrace/blackMethodList.txt"
-    }
 }

@@ -1,6 +1,7 @@
 buildscript {
-    ext.gradle_version = '7.2.1'
-    ext.kotlin_version = '1.6.21'
+    ext.gradle_version = '8.0.1'
+    ext.kotlin_version = '1.8.20' // 需要插件支持
+    ext.hilt_version = '2.46.1'
 
     repositories {
         mavenLocal()
@@ -36,7 +37,7 @@ buildscript {
         // matrix
         classpath "com.tencent.matrix:matrix-gradle-plugin:${MATRIX_VERSION}"
         // hilt,依赖注入
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.42'
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
     }
 }
 

@@ -1,6 +1,7 @@
 package com.abelhu.androidstudy.application
 
 import android.app.Application
+import android.view.Choreographer
 import com.abelhu.androidstudy.BuildConfig
 import com.abelhu.androidstudy.matrix.MatrixConfig
 import com.abelhu.androidstudy.matrix.MatrixListener
@@ -21,6 +22,7 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Choreographer.getInstance().postFrameCallback( FPSFrameCallback())
         registerActivityLifecycleCallbacks(MyApplicationLife.instance)
         initMatrix()
     }

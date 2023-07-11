@@ -23,10 +23,9 @@ gradlePlugin {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // 使用其中的transform
-    implementation "com.android.tools.build:gradle:$gradle_version"
+//    implementation "com.android.tools.build:gradle:$gradle_version"
 }
 
-sourceCompatibility = "8"
-targetCompatibility = "8"
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
