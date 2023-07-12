@@ -15,7 +15,7 @@ class SafeTypeAdapter<T>(
 
     override fun read(reader: JsonReader?): T? {
         val data = when (reader?.peek()) {
-            JsonToken.STRING -> safeGson.fromJson(reader.nextString(), type)
+            JsonToken.STRING -> normalGson.fromJson(reader.nextString(), type)
             else -> normalGson.fromJson(reader, type)
         }
         return data
