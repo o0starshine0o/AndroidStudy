@@ -17,6 +17,7 @@
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,18 +25,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:targetApi="s"
-        android:dataExtractionRules="@xml/data_extraction_rules">
+        tools:targetApi="s">
+        <activity
+            android:name=".touch.TouchActivity"
+            android:exported="false" />
 
         <service
             android:name=".tinker.TinkerResultService"
             android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <!-- 用于进程间的通信 -->
+            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 用于进程间的通信 -->
         <service
             android:name=".binder.service.MyBinderService"
-            android:exported="false" />
-        <!-- 用于aidl的服务 -->
+            android:exported="false" /> <!-- 用于aidl的服务 -->
         <service
             android:name=".aidl.AidlService"
             android:exported="true"
@@ -47,17 +48,16 @@
             </intent-filter>
         </service>
 
-
         <provider
             android:name=".provider.C"
             android:authorities="${applicationId}.provider.C"
             android:exported="false"
-            android:multiprocess="true"/>
+            android:multiprocess="true" />
 
         <activity
             android:name=".ui.main.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -65,24 +65,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.main.activity.mode.LaunchModeActivity"
             android:label="@string/title_activity_launch_mode"
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.screen.ScreenActivity"
+            android:exported="true"
             android:label="@string/title_activity_screen"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
-        </activity>
-        <!-- 用于验证Binder通信 -->
+        </activity> <!-- 用于验证Binder通信 -->
         <activity android:name=".binder.client.NormalActivity" />
     </application>
 
